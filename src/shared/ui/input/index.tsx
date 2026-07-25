@@ -3,7 +3,7 @@ import styles from './input.module.css'
 import { InputProps } from './input'
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ label, error, hint, leftIcon, rightIcon, className, ...props }, ref) => {
+  ({ label, error, leftIcon, rightIcon, className, ...props }, ref) => {
     return (
       <div className={`${styles.container} ${className || ''}`}>
         {label && <label className={styles.label}>{label}</label>}
@@ -14,7 +14,6 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           {rightIcon && <span className={styles.rightIcon}>{rightIcon}</span>}
         </div>
 
-        {!error && hint && <span className={styles.hintText}>{hint}</span>}
         {error && <span className={styles.errorText}>{error}</span>}
       </div>
     )
