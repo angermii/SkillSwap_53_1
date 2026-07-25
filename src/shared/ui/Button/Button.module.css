@@ -70,6 +70,19 @@
   background-color: #deebc5;
 }
 
+.social {
+  width: 100%; /* ширину задает контейнер формы */
+  gap: 12px;
+  color: #253017;
+  background-color: #fff;
+  border-color: #69735d;
+}
+
+.social:hover {
+  border-color: #abd27a;
+  color: #69735d;
+}
+
 .icon {
   display: flex;
   align-items: center;
