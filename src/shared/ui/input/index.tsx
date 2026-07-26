@@ -1,16 +1,54 @@
 import React from 'react'
 import styles from './input.module.css'
-import { InputProps } from './input'
+import { InputProps, InputRef } from './input'
+ 
+export const Input = React.forwardRef<InputRef, InputProps>(
+  (
+    {
+      label,
+      error,
+      leftIcon,
+      rightIcon,
+      className,
+      wrapperClassName,
+      inputClassName,
+      multiline,
+      ...props
+    },
+    ref,
+  ) => {
+    const fieldClassName = [styles.input, inputClassName].filter(Boolean).join(' ')
 
-export const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ label, error, leftIcon, rightIcon, className, ...props }, ref) => {
     return (
-      <div className={`${styles.container} ${className || ''}`}>
+      <div className={[styles.container, className].filter(Boolean).join(' ')}>
         {label && <label className={styles.label}>{label}</label>}
 
-        <div className={`${styles.wrapper} ${error ? styles.error : ''}`}>
+        <div
+          className={[
+            styles.wrapper,
+            multiline && styles.wrapperMultiline,
+            error && styles.error,
+            wrapperClassName,
+          ]
+            .filter(Boolean)
+            .join(' ')}
+        >
           {leftIcon && <span className={styles.leftIcon}>{leftIcon}</span>}
-          <input ref={ref} className={styles.input} {...props} />
+
+          {multiline ? (
+            <textarea
+              ref={ref as React.Ref<HTMLTextAreaElement>}
+              className={`${fieldClassName} ${styles.textarea}`}
+              {...(props as React.TextareaHTMLAttributes<HTMLTextAreaElement>)}
+            />
+          ) : (
+            <input
+              ref={ref as React.Ref<HTMLInputElement>}
+              className={fieldClassName}
+              {...(props as React.InputHTMLAttributes<HTMLInputElement>)}
+            />
+          )}
+
           {rightIcon && <span className={styles.rightIcon}>{rightIcon}</span>}
         </div>
 
@@ -19,4 +57,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     )
   },
 )
+
 Input.displayName = 'Input'
+
+export type { InputProps, InputRef } from './input'

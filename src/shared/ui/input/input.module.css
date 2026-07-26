@@ -4,6 +4,10 @@
   width: 100%;
 }
 
+.containerFullHeight {
+  height: 100%;
+}
+
 .label {
   font-size: 16px;
   font-weight: 500;
@@ -13,17 +17,19 @@
 
 .wrapper {
   display: flex;
-  flex: 1;
+  flex: 1 1 auto;
   align-items: stretch;
   position: relative;
   background: #fff;
   border: 2px solid #69735D;
   border-radius: 12px;
   padding: 0 20px;
-  width: 100%;
-  height: 100%;
   min-height: 48px;
   transition: all 0.2s ease-in-out;
+}
+
+.wrapper.wrapperMultiline {
+  padding: 12px 20px;
 }
 
 .wrapper:focus-within {
@@ -32,6 +38,7 @@
 }
 
 .wrapper.error {
+  align-items: stretch;
   border-color: #BF3920;
 }
 
@@ -40,15 +47,20 @@
   box-shadow: 0 1px 5px #BF3920;
 }
 
+.textarea {
+  resize: none;
+}
+
 .input {
   border: none;
   background: transparent;
   outline: none;
   width: 100%;
   min-width: 100px;
+  flex: 1;
   font-size: 16px;
   color: #253017;
-  padding: 0;
+  font-family: inherit;
 }
 
 .input::placeholder {
