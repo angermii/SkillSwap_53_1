@@ -97,5 +97,3 @@ export const SunIcon = createIcon(SunSvg)
 export const UserCircleIcon = createIcon(UserCircleSvg)
 export const UserIcon = createIcon(UserSvg)
 export const ViewPasswordIcon = createIcon(ViewPasswordSvg)
-
-export const ViewPassword = ViewPasswordIcon
