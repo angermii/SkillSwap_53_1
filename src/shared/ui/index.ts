@@ -1,7 +1,3 @@
-export * from './Button'
-export { Avatar } from './Avatar'
-export type { AvatarProps } from './Avatar'
-export * from './Label'
 export * from './input'
 export { Input } from './input'
 export type { InputProps, InputRef } from './input'
