@@ -1,3 +1,4 @@
+export * from './input'
 export * from './Button'
 export * from './icons';
 export { Avatar } from './Avatar'
