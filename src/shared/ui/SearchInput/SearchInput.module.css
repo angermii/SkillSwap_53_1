@@ -1,0 +1,16 @@
+.wrapper {
+  border: none;
+  background-color: var(--color-card-input);
+}
+
+.input::-webkit-search-cancel-button,
+.input::-webkit-search-decoration {
+  appearance: none;
+}
+
+.clearButton {
+  display: flex;
+  align-items: center;
+  color: var(--color-caption);
+  cursor: pointer;
+}
