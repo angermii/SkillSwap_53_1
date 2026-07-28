@@ -1,0 +1,55 @@
+.sidebar {
+  box-sizing: border-box;
+  width: 324px;
+  min-height: 752px;
+  padding: 40px;
+  background-color: var(--color-card-input);
+  border-radius: 24px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  height: 48px;
+  padding: 12px 20px;
+  color: var(--color-text);
+  font: inherit;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  background-color: transparent;
+  border: 0;
+  border-radius: 12px;
+  transition: background-color 150ms ease;
+}
+
+.item:hover {
+  background-color: var(--color-disabled);
+}
+
+/* active во время нажатия и выбранный пункт */
+.item:active,
+.item.active {
+  background-color: var(--color-button-hover);
+}
+
+.icon {
+  display: inline-flex;
+  flex: 0 0 24px;
+  align-items: center;
+  justify-content: center;
+}

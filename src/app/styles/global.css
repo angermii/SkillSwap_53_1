@@ -1,19 +1,19 @@
 @font-face {
-  font-family: "Jost";
+  font-family: Jost;
   src: url("../../shared/fonts/Jost-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "Roboto";
+  font-family: Roboto;
   src: url("../../shared/fonts/Roboto-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "Roboto";
+  font-family: Roboto;
   src: url("../../shared/fonts/Roboto-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
@@ -26,7 +26,7 @@
   --color-text-disabled: #9ca197;
   --color-toggle: #b2b9a9;
   --color-disabled: #e4e8df;
-  --color-card-input: #ffffff;
+  --color-card-input: #fff;
   --color-link-button: #508826;
   --color-accent: #abd27a;
   --color-button-hover: #deebc5;
@@ -52,10 +52,10 @@
   --space-2xl: 48px;
 
   /* Typography */
+
   /* Font families */
   --font-family-heading: "Jost", sans-serif;
   --font-family-body: "Roboto", sans-serif;
-
   --font-weight-regular: 400;
   --font-weight-medium: 500;
 
@@ -64,7 +64,6 @@
 --font-size-h2: 24px;
 --font-size-h3: 20px;
 --font-size-h4: 16px;
-
 --font-size-body: 16px;
 --font-size-caption: 12px;
 
@@ -73,7 +72,6 @@
 --line-height-h2: 32px;
 --line-height-h3: 24px;
 --line-height-h4: 24px;
-
 --line-height-body: 24px;
 --line-height-caption: 16px;
 
@@ -88,7 +86,8 @@
 }
 
 /* Тёмная тема — добавить поддержку через data-theme="dark" */
-/*[data-theme='dark'] {
+
+/* [data-theme='dark'] {
   --color-bg: #0f172a;
   --color-bg-secondary: #1e293b;
   --color-text: #f1f5f9;
