@@ -1,0 +1,21 @@
+.root {
+  position: relative;
+  display: inline-block;
+}
+
+.content {
+  position: absolute;
+  top: 100%;
+  z-index: 100;
+  width: max-content;
+  min-width: 100%;
+  max-width: calc(100vw - var(--space-lg) * 2);
+}
+
+.start {
+  left: 0;
+}
+
+.end {
+  right: 0;
+}
