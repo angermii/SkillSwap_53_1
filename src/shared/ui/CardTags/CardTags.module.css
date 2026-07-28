@@ -1,0 +1,24 @@
+.cardTags {
+  display: flex;
+  flex-direction: column;
+}
+  
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.heading {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  color: var(--color-text-primary, #253017);
+}
+
+.tagsWrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
