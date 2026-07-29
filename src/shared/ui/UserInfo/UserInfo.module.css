@@ -1,0 +1,33 @@
+.userInfo {
+  display: inline-flex;
+  gap: 12px;
+  align-items: center;
+  width: 100%;
+  max-width: 260px;
+  color: #253017;
+}
+
+.avatar {
+  flex-shrink: 0;
+}
+
+.content {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.name {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: -0.011em;
+}
+
+.details {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0.02em;
+}
