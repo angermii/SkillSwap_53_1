@@ -1,6 +1,7 @@
 .wrapper {
   border: none;
   background-color: var(--color-card-input);
+  padding: 0 12px;
 }
 
 .input::-webkit-search-cancel-button,
@@ -8,9 +9,14 @@
   appearance: none;
 }
 
+.input:focus::placeholder {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
 .clearButton {
   display: flex;
   align-items: center;
-  color: var(--color-caption);
+  color: var(--color-text);
   cursor: pointer;
 }
