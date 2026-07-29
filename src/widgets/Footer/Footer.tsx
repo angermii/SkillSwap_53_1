@@ -12,7 +12,7 @@ export const Footer = () => {
       </div>
       <nav className={styles.nav}>
         <div className={styles.column}>
-          <Link to="/about" className={styles.link}>
+          <Link to={ROUTES.ABOUT} className={styles.link}>
             О проекте
           </Link>
           <Link to={ROUTES.HOME} className={styles.link}>
@@ -20,12 +20,12 @@ export const Footer = () => {
           </Link>
         </div>
         <div className={styles.column}>
-          <span className={styles.text}>Контакты</span>
-          <span className={styles.text}>Блог</span>
+          <Link to="/contacts" className={styles.link}>Контакты</Link>
+          <Link to="/blog" className={styles.link}>Блог</Link>
         </div>
         <div className={styles.column}>
-          <span className={styles.text}>Политика конфиденциальности</span>
-          <span className={styles.text}>Пользовательское соглашение</span>
+          <Link to="/privacy" className={styles.link}>Политика конфиденциальности</Link>
+          <Link to="/agreement" className={styles.link}>Пользовательское соглашение</Link>
         </div>
       </nav>
     </footer>
