@@ -70,15 +70,14 @@
 .leftIcon {
   display: flex;
   align-items: center;
-  margin-right: 21px;
+  margin-right: var(--space-sm);
   color: #253017;
-  cursor: pointer;
 }
 
 .rightIcon {
   display: flex;
   align-items: center;
-  margin-left: 10px;
+  margin-left: var(--space-sm);
   color: #253017;
 }
 
