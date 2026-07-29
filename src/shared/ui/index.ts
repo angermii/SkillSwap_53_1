@@ -10,8 +10,11 @@ export { RadioButton } from './radio-button/RadioButton'
 export type { RadioButtonProps } from './radio-button/RadioButton'
 
 export { Logo } from './Logo'
+export * from './Headline'
+export * from './PasswordInput'
+export * from './SearchInput'
 export { IconButton } from './iconButton'
 export * from './Sidebar'
 export * from './Onboarding'
 export * from './SocialLoginButtons';
-
+export { LikeButton } from './likeButton';
