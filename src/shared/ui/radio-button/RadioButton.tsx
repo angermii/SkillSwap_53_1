@@ -1,39 +1,43 @@
 import React from 'react';
 
-import RadiobuttonActiveIcon from '../icons/RadiobuttonActiveIcon.svg';
-import RadiobuttonEmptyIcon from '../icons/RadiobuttonEmptyIcon.svg';
+import {
+  RadiobuttonActiveIcon,
+  RadiobuttonEmptyIcon,
+} from '../icons';
 
 import styles from './RadioButton.module.css';
 
-export type RadioButtonProps = Omit<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  'type'
-> & {
+export interface RadioButtonProps {
+  checked: boolean;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   label: string;
-};
+  value: string;
+}
 
 export const RadioButton = ({
-  label,
   checked,
-  ...props
+  onChange,
+  label,
+  value,
 }: RadioButtonProps) => {
-  const icon = checked
+  const Icon = checked
     ? RadiobuttonActiveIcon
     : RadiobuttonEmptyIcon;
 
   return (
     <label className={styles.label}>
       <input
-        {...props}
         type="radio"
         className={styles.input}
         checked={checked}
+        value={value}
+        onChange={onChange}
       />
 
-      <img
-        src={icon}
-        alt=""
-        className={styles.icon}
+      <Icon
+        className={`${styles.icon} ${
+          checked ? styles.active : ''
+        }`}
         aria-hidden="true"
       />
 
