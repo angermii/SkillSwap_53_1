@@ -14,3 +14,4 @@ export * from './Sidebar'
 export * from './Onboarding'
 export * from './SocialLoginButtons';
 export { LikeButton } from './likeButton';
+export * from './StepIndicator';
