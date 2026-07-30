@@ -16,5 +16,10 @@ export * from './SearchInput'
 export { IconButton } from './iconButton'
 export * from './Sidebar'
 export * from './Onboarding'
+export * from './Dropdown'
 export * from './SocialLoginButtons';
+
 export { LikeButton } from './likeButton';
+
+export { Checkbox } from './checkbox/Checkbox'
+export type { CheckboxProps } from './checkbox/Checkbox'
