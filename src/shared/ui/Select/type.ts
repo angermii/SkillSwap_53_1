@@ -1,8 +1,10 @@
+import { HTMLAttributes } from 'react'
+
 export type option = {
   name?: string
   value?: string
 }
-export interface SelectProps {
+export interface SelectProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'> {
   label?: string
   placeholder?: string
   iconSrc?: string

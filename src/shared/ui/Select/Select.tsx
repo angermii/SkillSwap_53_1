@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import clsx from 'clsx'
 import { option, SelectProps } from '@/shared/ui/Select/type.ts'
 
-export function Select({ label, placeholder, iconSrc, options = [], onChange }: SelectProps) {
+export function Select({ label, placeholder, iconSrc, options = [], onChange, className, ...restProps }: SelectProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [selected, setSelected] = useState<option | null>(null)
   const ref = useRef<HTMLDivElement>(null)
@@ -19,7 +19,7 @@ export function Select({ label, placeholder, iconSrc, options = [], onChange }: 
     }
   }, [])
   return (
-    <div className={Styles.selectWrapper}>
+    <div {...restProps} className={clsx(Styles.selectWrapper, className)}>
       <p className={Styles.label}>{label}</p>
       <div ref={ref} className={Styles.select}>
         <div
