@@ -6,13 +6,16 @@ export interface ErrorProps {
   title?: string
   description?: string
   children?: ReactNode
+  imageWidth?: number
+  imageHeight?: number
 }
 
-export const Error = ({ errorImg, title, description, children }: ErrorProps) => {
+export const Error = ({ errorImg, title, description, children, imageHeight, imageWidth
+}: ErrorProps) => {
   return (
     <div className={Styles.errorWrapper}>
       <div className={Styles.imgWrapper}>
-        <img src={errorImg} alt="" />
+        <img src={errorImg} alt="" height={imageHeight} width={imageWidth} />
       </div>
       <div className={Styles.info}>
         <div className={Styles.textWrapper}>

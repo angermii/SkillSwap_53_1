@@ -31,7 +31,7 @@
   gap: var(--space-xs);
 
   > h2{
-    font-family: Jost;
+    font-family: Jost,  sans-serif;
     font-weight: 500;
     line-height: 28px;
     font-size: var(--font-size-h2);
@@ -41,7 +41,8 @@
   > p {
     line-height: 24px;
     letter-spacing: 0.02em;
-    margin-bottom: var(--space-sm);
+    width: 100%;
+    text-align: center;
   }
 }
 
