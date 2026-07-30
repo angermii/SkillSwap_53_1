@@ -2,6 +2,7 @@ import Styles from './Select.module.css'
 import { useEffect, useRef, useState } from 'react'
 import clsx from 'clsx'
 import { option, SelectProps } from '@/shared/ui/Select/type.ts'
+import { ChevronDownIcon } from '@/shared/ui/icons'
 
 export function Select({ label, placeholder, iconSrc, options = [], onChange, className, ...restProps }: SelectProps) {
   const [isOpen, setIsOpen] = useState(false)
@@ -21,7 +22,7 @@ export function Select({ label, placeholder, iconSrc, options = [], onChange, cl
   return (
     <div {...restProps} className={clsx(Styles.selectWrapper, className)}>
       <p className={Styles.label}>{label}</p>
-      <div ref={ref} className={Styles.select}>
+      <div ref={ref} className={clsx(Styles.select, { [Styles.opened]: isOpen })}>
         <div
           className={clsx(Styles.placeholder, { [Styles.opened]: isOpen })}
           onClick={() => setIsOpen(!isOpen)}
@@ -34,7 +35,7 @@ export function Select({ label, placeholder, iconSrc, options = [], onChange, cl
           {iconSrc ? (
             <img src={iconSrc} alt="" />
           ) : (
-            <img src="public/chevron.svg" alt="" className={clsx({ [Styles.open]: isOpen })} />
+            <ChevronDownIcon className={clsx({ [Styles.open]: isOpen })} />
           )}
         </div>
         {isOpen && (
