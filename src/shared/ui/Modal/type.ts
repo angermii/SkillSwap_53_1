@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-export type ModalSize = 'small' | 'large'
+export type ModalSize = 'compact' | 'small' | 'large'
 
 export type ModalUIProps = {
   title: string

@@ -18,10 +18,18 @@
   letter-spacing: 0;
 }
 
+.compact,
 .small {
   width: 556px;
-  height: 420px;
   padding: 80px 60px;
+}
+
+.compact {
+  height: 420px;
+}
+
+.small {
+  height: 480px;
 }
 
 .large {
@@ -48,6 +56,7 @@
   text-align: center;
 }
 
+.compact .title,
 .small .title {
   font-size: var(--font-size-h2);
   line-height: 28px;
