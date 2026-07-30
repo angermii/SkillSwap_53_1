@@ -17,6 +17,7 @@ export * from './SearchInput'
 export { IconButton } from './iconButton'
 export * from './Sidebar'
 export * from './Onboarding'
+export * from './DatePickerActions'
 export * from './Dropdown'
 export * from './SocialLoginButtons';
 
