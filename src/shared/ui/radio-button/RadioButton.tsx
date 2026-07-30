@@ -12,6 +12,7 @@ export interface RadioButtonProps {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   label: string;
   value: string;
+  name: string;
 }
 
 export const RadioButton = ({
@@ -19,6 +20,7 @@ export const RadioButton = ({
   onChange,
   label,
   value,
+  name,
 }: RadioButtonProps) => {
   const Icon = checked
     ? RadiobuttonActiveIcon
@@ -31,6 +33,7 @@ export const RadioButton = ({
         className={styles.input}
         checked={checked}
         value={value}
+        name={name}
         onChange={onChange}
       />
 
