@@ -7,9 +7,7 @@ export const NotificationItem = ({title, description, date, button, status} : No
     <div className={Styles.Wrapper}>
       <div className={Styles.Notification}>
         <div className={Styles.Item}>
-          <div className={Styles.IconWrapper}>
-            <BulbIcon width={33.33} height={33.33} />
-          </div>
+          <BulbIcon size={40}/>
           <div className={Styles.Text}>
             <h4>{title}</h4>
             <p>{description}</p>
