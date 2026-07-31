@@ -20,6 +20,7 @@ export * from './Onboarding'
 export * from './DatePickerActions'
 export * from './Dropdown'
 export * from './SocialLoginButtons';
+export * from './Calendar'
 
 export { LikeButton } from './likeButton';
 export * from './StepIndicator';
