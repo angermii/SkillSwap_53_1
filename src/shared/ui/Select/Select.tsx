@@ -23,7 +23,7 @@ export function Select({ label, placeholder, iconSrc, options = [], onChange, cl
     <div {...restProps} className={clsx(Styles.selectWrapper, className)}>
       <p className={Styles.label}>{label}</p>
       <div ref={ref} className={clsx(Styles.select, { [Styles.opened]: isOpen })}>
-        <div
+        <button
           className={clsx(Styles.placeholder, { [Styles.opened]: isOpen })}
           onClick={() => setIsOpen(!isOpen)}
         >
@@ -37,7 +37,7 @@ export function Select({ label, placeholder, iconSrc, options = [], onChange, cl
           ) : (
             <ChevronDownIcon className={clsx({ [Styles.open]: isOpen })} />
           )}
-        </div>
+        </button>
         {isOpen && (
           <div className={Styles.options}>
             {options.map((option, index) => (

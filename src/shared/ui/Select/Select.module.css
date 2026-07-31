@@ -13,11 +13,12 @@
 }
 
 .select{
-  border: 1px solid #69735D;
-  border-radius: 12px;
   height: 48px;
   box-sizing: border-box;
+  border: 1px solid #69735D;
+  border-radius: 12px;
 }
+
 .select.opened {
   height: auto;
 }
@@ -26,18 +27,21 @@
   color: #253017;
 }
 
-.placeholder{
-  height: 100%;
+.placeholder {
+  width: 100%;
+  background: none;
+  height: 48px;
   padding: 12px 20px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
+  box-sizing: border-box;
 }
 
-.opened.placeholder.opened {
-  border: 1px solid #E4E8DF;
+.placeholder.opened {
+  border-bottom: 1px solid #E4E8DF;
   border-radius: 12px;
 }
 
