@@ -1,36 +1,97 @@
+import { useEffect, useRef, useState } from 'react'
 import clsx from 'clsx'
 
 import { Label } from '../Label'
 import type { LabelColor } from '../Label/type'
-import type { CardTagsProps } from './type'
+import type { CardTagsProps, SkillTag } from './type'
 import styles from './CardTags.module.css'
 
-const LABEL_COLORS: LabelColor[] = ['pink', 'blue', 'green', 'purple', 'yellow', 'peach', 'gray']
-
-function getColor(index: number): LabelColor {
-  return LABEL_COLORS[index % LABEL_COLORS.length]
+// цвет тега зависит от категории навыка
+const CATEGORY_COLORS: Record<SkillTag['category'], LabelColor> = {
+  business: 'purple',
+  art: 'pink',
+  languages: 'yellow',
+  education: 'blue',
+  home: 'peach',
+  health: 'green',
+  plus: 'gray',
 }
+
+const GAP = 4
+const OVERFLOW_WIDTH = 48
 
 type TagSectionProps = {
   heading: string
-  tags: string[]
-  maxVisibleTags: number
+  tags: SkillTag[]
 }
 
-function TagSection({ heading, tags, maxVisibleTags }: TagSectionProps) {
+function TagSection({ heading, tags }: TagSectionProps) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const itemRefs = useRef<(HTMLElement | null)[]>([])
+  const [visibleCount, setVisibleCount] = useState(tags.length)
+
+  // считаем, сколько тегов помещается по ширине контейнера
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container) return undefined
+
+    const calculate = () => {
+      const containerWidth = container.offsetWidth
+      let usedWidth = 0
+      let count = 0
+
+      for (let i = 0; i < tags.length; i += 1) {
+        const item = itemRefs.current[i]
+        if (!item) break
+
+        const isLast = i === tags.length - 1
+        const reserve = isLast ? 0 : OVERFLOW_WIDTH + GAP
+        const nextWidth = usedWidth + item.offsetWidth + (count > 0 ? GAP : 0)
+
+        if (nextWidth + reserve > containerWidth) break
+
+        usedWidth = nextWidth
+        count += 1
+      }
+
+      setVisibleCount(Math.max(count, 1))
+    }
+
+    calculate()
+
+    const observer = new ResizeObserver(calculate)
+    observer.observe(container)
+
+    return () => observer.disconnect()
+  }, [tags.length])
+
   if (tags.length === 0) return null
 
-  const visibleTags = tags.slice(0, maxVisibleTags)
-  const hiddenCount = tags.length - visibleTags.length
+  const hiddenCount = tags.length - visibleCount
 
   return (
     <div className={styles.section}>
-      <p className={styles.heading}>{heading}</p>
-      <div className={styles.tagsWrap}>
-        {visibleTags.map((tag, index) => (
-          <Label key={`${tag}-${index}`} text={tag} color={getColor(index)} />
+      <h4 className={styles.heading}>{heading}</h4>
+
+      <div className={styles.tagsWrap} ref={containerRef}>
+        {tags.slice(0, visibleCount).map((tag) => (
+          <Label key={tag.id} text={tag.title} color={CATEGORY_COLORS[tag.category]} />
         ))}
         {hiddenCount > 0 && <Label text={`+${hiddenCount}`} color="gray" />}
+      </div>
+
+      {/* скрытые теги — только чтобы измерить их реальную ширину */}
+      <div className={styles.measureWrap} aria-hidden="true">
+        {tags.map((tag, index) => (
+          <span
+            key={tag.id}
+            ref={(node) => {
+              itemRefs.current[index] = node
+            }}
+          >
+            <Label text={tag.title} color={CATEGORY_COLORS[tag.category]} />
+          </span>
+        ))}
       </div>
     </div>
   )
@@ -39,17 +100,19 @@ function TagSection({ heading, tags, maxVisibleTags }: TagSectionProps) {
 export const CardTags = ({
   teachTags,
   learnTags,
+  teachHeading = 'Может научить:',
+  learnHeading = 'Хочет научиться:',
   gap = 20,
-  maxVisibleTags = 2,
   className,
 }: CardTagsProps) => {
+  // отступ нужен только если рендерятся оба блока
   const showGap = teachTags.length > 0 && learnTags.length > 0
 
   return (
     <div className={clsx(styles.cardTags, className)}>
-      <TagSection heading="Может научить:" tags={teachTags} maxVisibleTags={maxVisibleTags} />
+      <TagSection heading={teachHeading} tags={teachTags} />
       <div style={showGap ? { marginTop: gap } : undefined}>
-        <TagSection heading="Хочет научиться:" tags={learnTags} maxVisibleTags={maxVisibleTags} />
+        <TagSection heading={learnHeading} tags={learnTags} />
       </div>
     </div>
   )

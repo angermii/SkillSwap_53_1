@@ -2,23 +2,34 @@
   display: flex;
   flex-direction: column;
 }
-  
+
 .section {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
 }
 
 .heading {
   margin: 0;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 20px;
-  color: var(--color-text-primary, #253017);
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-h4);
 }
 
 .tagsWrap {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: var(--space-xs);
+  overflow: hidden;
+}
+
+.measureWrap {
+  position: absolute;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: var(--space-xs);
+  visibility: hidden;
+  pointer-events: none;
 }
