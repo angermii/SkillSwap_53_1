@@ -24,6 +24,7 @@ export function Select({ label, placeholder, iconSrc, options = [], onChange, cl
       <p className={Styles.label}>{label}</p>
       <div ref={ref} className={clsx(Styles.select, { [Styles.opened]: isOpen })}>
         <button
+          type="button"
           className={clsx(Styles.placeholder, { [Styles.opened]: isOpen })}
           onClick={() => setIsOpen(!isOpen)}
         >
@@ -41,7 +42,8 @@ export function Select({ label, placeholder, iconSrc, options = [], onChange, cl
         {isOpen && (
           <div className={Styles.options}>
             {options.map((option, index) => (
-              <div
+              <button
+                type="button"
                 key={index}
                 className={clsx(Styles.option, {
                   [Styles.selected]: selected?.name === option.name,
@@ -55,7 +57,7 @@ export function Select({ label, placeholder, iconSrc, options = [], onChange, cl
                 }}
               >
                 <p>{option.name}</p>
-              </div>
+              </button>
             ))}
           </div>
         )}

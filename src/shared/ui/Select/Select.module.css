@@ -66,10 +66,13 @@
   color: #253017;
   padding: 4px 20px;
   cursor: pointer;
+  text-align: left;
+  border: none;
 }
 
 .option:hover{
   background-color: #E4E8DF;
+  border: none;
 }
 
 .selected{
