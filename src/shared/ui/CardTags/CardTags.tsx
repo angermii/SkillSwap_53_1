@@ -23,9 +23,10 @@ const OVERFLOW_WIDTH = 48
 type TagSectionProps = {
   heading: string
   tags: SkillTag[]
+  sectionGap: number
 }
 
-function TagSection({ heading, tags }: TagSectionProps) {
+function TagSection({ heading, tags, sectionGap }: TagSectionProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const itemRefs = useRef<(HTMLElement | null)[]>([])
   const [visibleCount, setVisibleCount] = useState(tags.length)
@@ -70,7 +71,7 @@ function TagSection({ heading, tags }: TagSectionProps) {
   const hiddenCount = tags.length - visibleCount
 
   return (
-    <div className={styles.section}>
+    <div className={styles.section} style={{ gap: sectionGap }}>
       <h4 className={styles.heading}>{heading}</h4>
 
       <div className={styles.tagsWrap} ref={containerRef}>
@@ -102,7 +103,8 @@ export const CardTags = ({
   learnTags,
   teachHeading = 'Может научить:',
   learnHeading = 'Хочет научиться:',
-  gap = 20,
+  gap = 12,
+  sectionGap = 8,
   className,
 }: CardTagsProps) => {
   // отступ нужен только если рендерятся оба блока
@@ -110,9 +112,9 @@ export const CardTags = ({
 
   return (
     <div className={clsx(styles.cardTags, className)}>
-      <TagSection heading={teachHeading} tags={teachTags} />
+      <TagSection heading={teachHeading} tags={teachTags} sectionGap={sectionGap} />
       <div style={showGap ? { marginTop: gap } : undefined}>
-        <TagSection heading={learnHeading} tags={learnTags} />
+        <TagSection heading={learnHeading} tags={learnTags} sectionGap={sectionGap} />
       </div>
     </div>
   )

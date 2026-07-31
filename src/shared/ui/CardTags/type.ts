@@ -18,5 +18,7 @@ export type CardTagsProps = {
   learnHeading?: string
   /** Отступ между блоками teach и learn, в пикселях */
   gap?: number
+  /** Отступ между заголовком и тегами внутри секции (8 — маленькая карточка, 14 — большая) */
+  sectionGap?: number
   className?: string
 }
