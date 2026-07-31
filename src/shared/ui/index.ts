@@ -23,3 +23,4 @@ export { LikeButton } from './likeButton';
 
 export { Checkbox } from './checkbox/Checkbox'
 export type { CheckboxProps } from './checkbox/Checkbox'
+export * from './EditableField'
