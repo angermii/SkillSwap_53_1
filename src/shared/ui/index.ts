@@ -21,6 +21,7 @@ export * from './Onboarding'
 export * from './DatePickerActions'
 export * from './Dropdown'
 export * from './SocialLoginButtons';
+export * from './Modal'
 export * from './Calendar'
 
 export { LikeButton } from './likeButton';
