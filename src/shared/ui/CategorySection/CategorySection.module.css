@@ -1,0 +1,52 @@
+.CategoryWrapper{
+  width: 488px;
+  display: inline-flex;
+  flex-direction: row;
+  gap: 12px;
+}
+
+.IconWrapper{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+.Section{
+  width: 436px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.Category{
+  font-family: Jost, sans-serif;
+  font-weight: var(--font-weight-medium);
+  line-height: 28px;
+  letter-spacing: -1.1%;
+  text-align: left;
+}
+
+.SubList{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.SubCat{
+  list-style-type: none;
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+}
+
+.SubButton{
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--color-text);
+  text-align: left;
+}
