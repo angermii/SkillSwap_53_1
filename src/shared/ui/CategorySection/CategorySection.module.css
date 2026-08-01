@@ -14,6 +14,12 @@
   height: 40px;
 }
 
+.IconWrapper > :first-child {
+  padding: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
 .Section{
   width: 436px;
   display: flex;
