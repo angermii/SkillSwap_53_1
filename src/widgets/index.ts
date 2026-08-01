@@ -1,1 +1,4 @@
-export { Footer } from './Footer';
+export { UserPhoto } from './userPhoto/userPhoto'
+export { Footer } from './Footer'
+export { GalleryCarousel } from './GalleryCarousel'
+export type { GalleryCarouselProps, GalleryImage } from './GalleryCarousel'
