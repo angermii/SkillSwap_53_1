@@ -1,1 +1,402 @@
-[]
+[
+  {
+    "id": "skill-001",
+    "title": "Основы фотографии",
+    "description": "Научу работать с композицией, светом и настройками камеры. Подойдёт для начинающих.",
+    "type": "teach",
+    "subcategoryId": "photography",
+    "imageUrl": "/images/skills/skill-001.jpg",
+    "authorId": "user-001",
+    "createdAt": "2026-02-20T10:00:00Z"
+  },
+  {
+    "id": "skill-002",
+    "title": "Английский язык для начинающих",
+    "description": "Помогу разобраться с базовой грамматикой, произношением и разговорной практикой.",
+    "type": "teach",
+    "subcategoryId": "english",
+    "imageUrl": "/images/skills/skill-002.jpg",
+    "authorId": "user-002",
+    "createdAt": "2026-02-21T10:00:00Z"
+  },
+  {
+    "id": "skill-003",
+    "title": "Изучение японского языка",
+    "description": "Ищу человека, который поможет освоить японский язык и базовую грамматику.",
+    "type": "learn",
+    "subcategoryId": "japanese",
+    "imageUrl": "/images/skills/skill-003.jpg",
+    "authorId": "user-003",
+    "createdAt": "2026-02-22T10:00:00Z"
+  },
+  {
+    "id": "skill-004",
+    "title": "Основы видеомонтажа",
+    "description": "Научу создавать видео, работать с монтажом и базовыми эффектами.",
+    "type": "teach",
+    "subcategoryId": "video-editing",
+    "imageUrl": "/images/skills/skill-004.jpg",
+    "authorId": "user-004",
+    "createdAt": "2026-02-23T10:00:00Z"
+  },
+  {
+    "id": "skill-005",
+    "title": "UI/UX дизайн",
+    "description": "Хочу научиться создавать удобные интерфейсы и работать с Figma.",
+    "type": "learn",
+    "subcategoryId": "design",
+    "imageUrl": "/images/skills/skill-005.jpg",
+    "authorId": "user-005",
+    "createdAt": "2026-02-24T10:00:00Z"
+  },
+  {
+    "id": "skill-006",
+    "title": "Приготовление домашней еды",
+    "description": "Покажу простые рецепты и техники приготовления вкусных блюд.",
+    "type": "teach",
+    "subcategoryId": "cooking",
+    "imageUrl": "/images/skills/skill-006.jpg",
+    "authorId": "user-006",
+    "createdAt": "2026-02-25T10:00:00Z"
+  },
+  {
+    "id": "skill-007",
+    "title": "Финансовая грамотность",
+    "description": "Научу планировать бюджет, вести расходы и разбираться в финансах.",
+    "type": "teach",
+    "subcategoryId": "home-finance",
+    "imageUrl": "/images/skills/skill-007.jpg",
+    "authorId": "user-007",
+    "createdAt": "2026-02-26T10:00:00Z"
+  },
+  {
+    "id": "skill-008",
+    "title": "Йога и медитация",
+    "description": "Хочу освоить базовые практики йоги и техники расслабления.",
+    "type": "learn",
+    "subcategoryId": "yoga",
+    "imageUrl": "/images/skills/skill-008.jpg",
+    "authorId": "user-008",
+    "createdAt": "2026-02-27T10:00:00Z"
+  },
+  {
+    "id": "skill-009",
+    "title": "Продвижение личного бренда",
+    "description": "Расскажу, как развивать личный бренд и создавать контент.",
+    "type": "teach",
+    "subcategoryId": "personal-brand",
+    "imageUrl": "/images/skills/skill-009.jpg",
+    "authorId": "user-009",
+    "createdAt": "2026-02-28T10:00:00Z"
+  },
+  {
+    "id": "skill-010",
+    "title": "Основы рисования",
+    "description": "Помогу освоить базовые техники рисунка и композиции.",
+    "type": "teach",
+    "subcategoryId": "drawing",
+    "imageUrl": "/images/skills/skill-010.jpg",
+    "authorId": "user-010",
+    "createdAt": "2026-03-01T10:00:00Z"
+  },
+  {
+    "id": "skill-011",
+    "title": "Управление командой",
+    "description": "Научу эффективно распределять задачи, давать обратную связь и выстраивать работу команды.",
+    "type": "teach",
+    "subcategoryId": "team-management",
+    "imageUrl": "/images/skills/skill-011.jpg",
+    "authorId": "user-011",
+    "createdAt": "2026-03-02T10:00:00Z"
+  },
+  {
+    "id": "skill-012",
+    "title": "Маркетинг и реклама",
+    "description": "Помогу разобраться в основах продвижения продуктов и создании рекламных кампаний.",
+    "type": "teach",
+    "subcategoryId": "marketing",
+    "imageUrl": "/images/skills/skill-012.jpg",
+    "authorId": "user-012",
+    "createdAt": "2026-03-03T10:00:00Z"
+  },
+  {
+    "id": "skill-013",
+    "title": "Продажи и переговоры",
+    "description": "Хочу улучшить навыки переговоров и научиться уверенно вести диалог с клиентами.",
+    "type": "learn",
+    "subcategoryId": "sales",
+    "imageUrl": "/images/skills/skill-013.jpg",
+    "authorId": "user-013",
+    "createdAt": "2026-03-04T10:00:00Z"
+  },
+  {
+    "id": "skill-014",
+    "title": "Резюме и подготовка к собеседованию",
+    "description": "Научу составлять сильное резюме и готовиться к техническим и HR-собеседованиям.",
+    "type": "teach",
+    "subcategoryId": "resume-interview",
+    "imageUrl": "/images/skills/skill-014.jpg",
+    "authorId": "user-014",
+    "createdAt": "2026-03-05T10:00:00Z"
+  },
+  {
+    "id": "skill-015",
+    "title": "Тайм-менеджмент",
+    "description": "Помогу организовать задачи, планировать день и повысить продуктивность.",
+    "type": "teach",
+    "subcategoryId": "time-management",
+    "imageUrl": "/images/skills/skill-015.jpg",
+    "authorId": "user-015",
+    "createdAt": "2026-03-06T10:00:00Z"
+  },
+  {
+    "id": "skill-016",
+    "title": "Проектное управление",
+    "description": "Хочу освоить основы управления проектами и планирования процессов.",
+    "type": "learn",
+    "subcategoryId": "project-management",
+    "imageUrl": "/images/skills/skill-016.jpg",
+    "authorId": "user-016",
+    "createdAt": "2026-03-07T10:00:00Z"
+  },
+  {
+    "id": "skill-017",
+    "title": "Испанский язык",
+    "description": "Научу базовой грамматике, произношению и разговорной практике.",
+    "type": "teach",
+    "subcategoryId": "spanish",
+    "imageUrl": "/images/skills/skill-017.jpg",
+    "authorId": "user-017",
+    "createdAt": "2026-03-08T10:00:00Z"
+  },
+  {
+    "id": "skill-018",
+    "title": "Немецкий язык",
+    "description": "Хочу изучить немецкий язык для общения и путешествий.",
+    "type": "learn",
+    "subcategoryId": "german",
+    "imageUrl": "/images/skills/skill-018.jpg",
+    "authorId": "user-018",
+    "createdAt": "2026-03-09T10:00:00Z"
+  },
+  {
+    "id": "skill-019",
+    "title": "Приготовление еды",
+    "description": "Покажу простые рецепты и техники приготовления домашних блюд.",
+    "type": "teach",
+    "subcategoryId": "cooking",
+    "imageUrl": "/images/skills/skill-019.jpg",
+    "authorId": "user-019",
+    "createdAt": "2026-03-10T10:00:00Z"
+  },
+  {
+    "id": "skill-020",
+    "title": "Домашние растения",
+    "description": "Помогу разобраться в уходе за комнатными растениями.",
+    "type": "teach",
+    "subcategoryId": "plants",
+    "imageUrl": "/images/skills/skill-020.jpg",
+    "authorId": "user-020",
+    "createdAt": "2026-03-11T10:00:00Z"
+  },
+  {
+    "id": "skill-021",
+    "title": "Ремонт своими руками",
+    "description": "Научу выполнять базовый ремонт дома: инструменты, материалы и простые работы.",
+    "type": "teach",
+    "subcategoryId": "repair",
+    "imageUrl": "/images/skills/skill-021.jpg",
+    "authorId": "user-021",
+    "createdAt": "2026-03-12T10:00:00Z"
+  },
+  {
+    "id": "skill-022",
+    "title": "Организация пространства",
+    "description": "Помогу научиться эффективно организовывать хранение вещей и порядок дома.",
+    "type": "learn",
+    "subcategoryId": "storage",
+    "imageUrl": "/images/skills/skill-022.jpg",
+    "authorId": "user-022",
+    "createdAt": "2026-03-13T10:00:00Z"
+  },
+  {
+    "id": "skill-023",
+    "title": "Рисование и иллюстрация",
+    "description": "Научу основам рисунка, работе с формой, цветом и композицией.",
+    "type": "teach",
+    "subcategoryId": "drawing",
+    "imageUrl": "/images/skills/skill-023.jpg",
+    "authorId": "user-023",
+    "createdAt": "2026-03-14T10:00:00Z"
+  },
+  {
+    "id": "skill-024",
+    "title": "Музыка и звук",
+    "description": "Хочу разобраться в основах работы со звуком и создании музыки.",
+    "type": "learn",
+    "subcategoryId": "music",
+    "imageUrl": "/images/skills/skill-024.jpg",
+    "authorId": "user-024",
+    "createdAt": "2026-03-15T10:00:00Z"
+  },
+  {
+    "id": "skill-025",
+    "title": "Актёрское мастерство",
+    "description": "Помогу развить навыки сценической речи, выражения эмоций и уверенности.",
+    "type": "teach",
+    "subcategoryId": "acting",
+    "imageUrl": "/images/skills/skill-025.jpg",
+    "authorId": "user-025",
+    "createdAt": "2026-03-16T10:00:00Z"
+  },
+  {
+    "id": "skill-026",
+    "title": "Креативное письмо",
+    "description": "Научу создавать интересные истории, персонажей и развивать стиль текста.",
+    "type": "teach",
+    "subcategoryId": "creative-writing",
+    "imageUrl": "/images/skills/skill-026.jpg",
+    "authorId": "user-026",
+    "createdAt": "2026-03-17T10:00:00Z"
+  },
+  {
+    "id": "skill-027",
+    "title": "Декор и DIY",
+    "description": "Хочу научиться создавать предметы интерьера своими руками.",
+    "type": "learn",
+    "subcategoryId": "diy",
+    "imageUrl": "/images/skills/skill-027.jpg",
+    "authorId": "user-027",
+    "createdAt": "2026-03-18T10:00:00Z"
+  },
+  {
+    "id": "skill-028",
+    "title": "Личностное развитие",
+    "description": "Помогу развить полезные привычки и лучше понимать свои цели.",
+    "type": "teach",
+    "subcategoryId": "self-development",
+    "imageUrl": "/images/skills/skill-028.jpg",
+    "authorId": "user-028",
+    "createdAt": "2026-03-19T10:00:00Z"
+  },
+  {
+    "id": "skill-029",
+    "title": "Навыки обучения",
+    "description": "Научу эффективнее изучать новые темы и запоминать информацию.",
+    "type": "teach",
+    "subcategoryId": "learning-skills",
+    "imageUrl": "/images/skills/skill-029.jpg",
+    "authorId": "user-029",
+    "createdAt": "2026-03-20T10:00:00Z"
+  },
+  {
+    "id": "skill-030",
+    "title": "Скорочтение",
+    "description": "Хочу улучшить скорость чтения и обработки информации.",
+    "type": "learn",
+    "subcategoryId": "speed-reading",
+    "imageUrl": "/images/skills/skill-030.jpg",
+    "authorId": "user-030",
+    "createdAt": "2026-03-21T10:00:00Z"
+  },
+  {
+    "id": "skill-031",
+    "title": "Навыки преподавания",
+    "description": "Научу структурировать материал и понятно объяснять сложные темы другим людям.",
+    "type": "teach",
+    "subcategoryId": "teaching-skills",
+    "imageUrl": "/images/skills/skill-031.jpg",
+    "authorId": "user-031",
+    "createdAt": "2026-03-22T10:00:00Z"
+  },
+  {
+    "id": "skill-032",
+    "title": "Коучинг",
+    "description": "Хочу изучить основы коучинга и техники работы с целями.",
+    "type": "learn",
+    "subcategoryId": "coaching",
+    "imageUrl": "/images/skills/skill-032.jpg",
+    "authorId": "user-032",
+    "createdAt": "2026-03-23T10:00:00Z"
+  },
+  {
+    "id": "skill-033",
+    "title": "Йога и медитация",
+    "description": "Научу базовым практикам йоги, дыхательным упражнениям и расслаблению.",
+    "type": "teach",
+    "subcategoryId": "yoga",
+    "imageUrl": "/images/skills/skill-033.jpg",
+    "authorId": "user-033",
+    "createdAt": "2026-03-24T10:00:00Z"
+  },
+  {
+    "id": "skill-034",
+    "title": "Питание и здоровый образ жизни",
+    "description": "Помогу разобраться в основах правильного питания и полезных привычках.",
+    "type": "teach",
+    "subcategoryId": "nutrition",
+    "imageUrl": "/images/skills/skill-034.jpg",
+    "authorId": "user-034",
+    "createdAt": "2026-03-25T10:00:00Z"
+  },
+  {
+    "id": "skill-035",
+    "title": "Ментальное здоровье",
+    "description": "Хочу научиться лучше понимать эмоции и поддерживать психологическое здоровье.",
+    "type": "learn",
+    "subcategoryId": "mental-health",
+    "imageUrl": "/images/skills/skill-035.jpg",
+    "authorId": "user-035",
+    "createdAt": "2026-03-26T10:00:00Z"
+  },
+  {
+    "id": "skill-036",
+    "title": "Осознанность",
+    "description": "Научу практикам осознанности и концентрации внимания.",
+    "type": "teach",
+    "subcategoryId": "mindfulness",
+    "imageUrl": "/images/skills/skill-036.jpg",
+    "authorId": "user-036",
+    "createdAt": "2026-03-27T10:00:00Z"
+  },
+  {
+    "id": "skill-037",
+    "title": "Физические тренировки",
+    "description": "Помогу составить программу тренировок и разобраться с техникой упражнений.",
+    "type": "teach",
+    "subcategoryId": "fitness",
+    "imageUrl": "/images/skills/skill-037.jpg",
+    "authorId": "user-037",
+    "createdAt": "2026-03-28T10:00:00Z"
+  },
+  {
+    "id": "skill-038",
+    "title": "Сон и восстановление",
+    "description": "Хочу улучшить режим сна и узнать больше о восстановлении организма.",
+    "type": "learn",
+    "subcategoryId": "sleep",
+    "imageUrl": "/images/skills/skill-038.jpg",
+    "authorId": "user-038",
+    "createdAt": "2026-03-29T10:00:00Z"
+  },
+{
+  "id": "skill-039",
+  "title": "Баланс жизни и работы",
+  "description": "Научу планировать нагрузку и находить баланс между работой и личной жизнью.",
+  "type": "teach",
+  "subcategoryId": "work-life-balance",
+  "imageUrl": "/images/skills/skill-039.jpg",
+  "authorId": "user-039",
+  "createdAt": "2026-03-30T10:00:00Z"
+},
+  {
+    "id": "skill-040",
+    "title": "Подготовка к IELTS",
+    "description": "Помогу подготовиться к международному экзамену по английскому языку.",
+    "type": "teach",
+    "subcategoryId": "language-exams",
+    "imageUrl": "/images/skills/skill-040.jpg",
+    "authorId": "user-040",
+    "createdAt": "2026-03-31T10:00:00Z"
+  }
+]

@@ -3,281 +3,281 @@
     "id": "user-001",
     "name": "Анна Смирнова",
     "email": "anna.smirnova@example.com",
-    "avatarUrl": null,
+    "avatarUrl": "/images/users/user-001.jpg",
     "createdAt": "2026-01-10T09:00:00Z"
   },
   {
     "id": "user-002",
     "name": "Иван Петров",
     "email": "ivan.petrov@example.com",
-    "avatarUrl": null,
+    "avatarUrl": "/images/users/user-002.jpg",
     "createdAt": "2026-01-11T10:30:00Z"
   },
   {
     "id": "user-003",
     "name": "Мария Иванова",
     "email": "maria.ivanova@example.com",
-    "avatarUrl": null,
+    "avatarUrl": "/images/users/user-003.jpg",
     "createdAt": "2026-01-12T12:15:00Z"
   },
   {
     "id": "user-004",
     "name": "Алексей Соколов",
     "email": "alexey.sokolov@example.com",
-    "avatarUrl": null,
+    "avatarUrl": "/images/users/user-004.jpg",
     "createdAt": "2026-01-13T09:45:00Z"
   },
   {
     "id": "user-005",
     "name": "Елена Волкова",
     "email": "elena.volkova@example.com",
-    "avatarUrl": null,
+    "avatarUrl": "/images/users/user-005.jpg",
     "createdAt": "2026-01-14T14:00:00Z"
   },
   {
     "id": "user-006",
     "name": "Дмитрий Кузнецов",
     "email": "dmitry.kuznetsov@example.com",
-    "avatarUrl": null,
+    "avatarUrl": "/images/users/user-006.jpg",
     "createdAt": "2026-01-15T16:20:00Z"
   },
   {
     "id": "user-007",
     "name": "Ольга Попова",
     "email": "olga.popova@example.com",
-    "avatarUrl": null,
+    "avatarUrl": "/images/users/user-007.jpg",
     "createdAt": "2026-01-16T11:10:00Z"
   },
   {
     "id": "user-008",
     "name": "Сергей Морозов",
     "email": "sergey.morozov@example.com",
-    "avatarUrl": null,
+    "avatarUrl": "/images/users/user-008.jpg",
     "createdAt": "2026-01-17T08:40:00Z"
   },
   {
     "id": "user-009",
     "name": "Наталья Новикова",
     "email": "natalya.novikova@example.com",
-    "avatarUrl": null,
+    "avatarUrl": "/images/users/user-009.jpg",
     "createdAt": "2026-01-18T13:25:00Z"
   },
   {
     "id": "user-010",
     "name": "Андрей Федоров",
     "email": "andrey.fedorov@example.com",
-    "avatarUrl": null,
+    "avatarUrl": "/images/users/user-010.jpg",
     "createdAt": "2026-01-19T15:50:00Z"
   },
   {
-    "id": "user-011",
-    "name": "Ирина Васильева",
-    "email": "irina.vasilyeva@example.com",
-    "avatarUrl": null,
-    "createdAt": "2026-01-20T10:00:00Z"
-  },
+  "id": "user-011",
+  "name": "Ирина Васильева",
+  "email": "irina.vasilyeva@example.com",
+  "avatarUrl": "/images/users/user-011.jpg",
+  "createdAt": "2026-01-20T10:00:00Z"
+},
+{
+  "id": "user-012",
+  "name": "Максим Орлов",
+  "email": "maxim.orlov@example.com",
+  "avatarUrl": "/images/users/user-012.jpg",
+  "createdAt": "2026-01-21T12:30:00Z"
+},
+{
+  "id": "user-013",
+  "name": "Светлана Белова",
+  "email": "svetlana.belova@example.com",
+  "avatarUrl": "/images/users/user-013.jpg",
+  "createdAt": "2026-01-22T09:15:00Z"
+},
+{
+  "id": "user-014",
+  "name": "Роман Егоров",
+  "email": "roman.egorov@example.com",
+  "avatarUrl": "/images/users/user-014.jpg",
+  "createdAt": "2026-01-23T17:00:00Z"
+},
+{
+  "id": "user-015",
+  "name": "Анастасия Павлова",
+  "email": "anastasia.pavlova@example.com",
+  "avatarUrl": "/images/users/user-015.jpg",
+  "createdAt": "2026-01-24T11:45:00Z"
+},
+{
+  "id": "user-016",
+  "name": "Владимир Николаев",
+  "email": "vladimir.nikolaev@example.com",
+  "avatarUrl": "/images/users/user-016.jpg",
+  "createdAt": "2026-01-25T13:20:00Z"
+},
+{
+  "id": "user-017",
+  "name": "Екатерина Алексеева",
+  "email": "ekaterina.alekseeva@example.com",
+  "avatarUrl": "/images/users/user-017.jpg",
+  "createdAt": "2026-01-26T08:30:00Z"
+},
+{
+  "id": "user-018",
+  "name": "Артём Михайлов",
+  "email": "artem.mikhailov@example.com",
+  "avatarUrl": "/images/users/user-018.jpg",
+  "createdAt": "2026-01-27T14:10:00Z"
+},
+{
+  "id": "user-019",
+  "name": "Татьяна Фролова",
+  "email": "tatyana.frolova@example.com",
+  "avatarUrl": "/images/users/user-019.jpg",
+  "createdAt": "2026-01-28T10:40:00Z"
+},
+{
+  "id": "user-020",
+  "name": "Никита Козлов",
+  "email": "nikita.kozlov@example.com",
+  "avatarUrl": "/images/users/user-020.jpg",
+  "createdAt": "2026-01-29T16:25:00Z"
+},
   {
-    "id": "user-012",
-    "name": "Максим Орлов",
-    "email": "maxim.orlov@example.com",
-    "avatarUrl": null,
-    "createdAt": "2026-01-21T12:30:00Z"
-  },
+  "id": "user-021",
+  "name": "Дарья Захарова",
+  "email": "darya.zakharova@example.com",
+  "avatarUrl": "/images/users/user-021.jpg",
+  "createdAt": "2026-01-30T09:50:00Z"
+},
+{
+  "id": "user-022",
+  "name": "Павел Воробьёв",
+  "email": "pavel.vorobyev@example.com",
+  "avatarUrl": "/images/users/user-022.jpg",
+  "createdAt": "2026-01-31T12:00:00Z"
+},
+{
+  "id": "user-023",
+  "name": "Юлия Громова",
+  "email": "yulia.gromova@example.com",
+  "avatarUrl": "/images/users/user-023.jpg",
+  "createdAt": "2026-02-01T15:15:00Z"
+},
+{
+  "id": "user-024",
+  "name": "Константин Лебедев",
+  "email": "konstantin.lebedev@example.com",
+  "avatarUrl": "/images/users/user-024.jpg",
+  "createdAt": "2026-02-02T11:35:00Z"
+},
+{
+  "id": "user-025",
+  "name": "Виктория Соколова",
+  "email": "victoria.sokolova@example.com",
+  "avatarUrl": "/images/users/user-025.jpg",
+  "createdAt": "2026-02-03T14:45:00Z"
+},
+{
+  "id": "user-026",
+  "name": "Михаил Захаров",
+  "email": "mikhail.zakharov@example.com",
+  "avatarUrl": "/images/users/user-026.jpg",
+  "createdAt": "2026-02-04T10:20:00Z"
+},
+{
+  "id": "user-027",
+  "name": "Ксения Андреева",
+  "email": "ksenia.andreeva@example.com",
+  "avatarUrl": "/images/users/user-027.jpg",
+  "createdAt": "2026-02-05T13:40:00Z"
+},
+{
+  "id": "user-028",
+  "name": "Илья Макаров",
+  "email": "ilya.makarov@example.com",
+  "avatarUrl": "/images/users/user-028.jpg",
+  "createdAt": "2026-02-06T16:00:00Z"
+},
+{
+  "id": "user-029",
+  "name": "Вероника Крылова",
+  "email": "veronika.krylova@example.com",
+  "avatarUrl": "/images/users/user-029.jpg",
+  "createdAt": "2026-02-07T09:25:00Z"
+},
+{
+  "id": "user-030",
+  "name": "Степан Романов",
+  "email": "stepan.romanov@example.com",
+  "avatarUrl": "/images/users/user-030.jpg",
+  "createdAt": "2026-02-08T12:55:00Z"
+},
   {
-    "id": "user-013",
-    "name": "Светлана Белова",
-    "email": "svetlana.belova@example.com",
-    "avatarUrl": null,
-    "createdAt": "2026-01-22T09:15:00Z"
-  },
-  {
-    "id": "user-014",
-    "name": "Роман Егоров",
-    "email": "roman.egorov@example.com",
-    "avatarUrl": null,
-    "createdAt": "2026-01-23T17:00:00Z"
-  },
-  {
-    "id": "user-015",
-    "name": "Анастасия Павлова",
-    "email": "anastasia.pavlova@example.com",
-    "avatarUrl": null,
-    "createdAt": "2026-01-24T11:45:00Z"
-  },
-  {
-    "id": "user-016",
-    "name": "Владимир Николаев",
-    "email": "vladimir.nikolaev@example.com",
-    "avatarUrl": null,
-    "createdAt": "2026-01-25T13:20:00Z"
-  },
-  {
-    "id": "user-017",
-    "name": "Екатерина Алексеева",
-    "email": "ekaterina.alekseeva@example.com",
-    "avatarUrl": null,
-    "createdAt": "2026-01-26T08:30:00Z"
-  },
-  {
-    "id": "user-018",
-    "name": "Артём Михайлов",
-    "email": "artem.mikhailov@example.com",
-    "avatarUrl": null,
-    "createdAt": "2026-01-27T14:10:00Z"
-  },
-  {
-    "id": "user-019",
-    "name": "Татьяна Фролова",
-    "email": "tatyana.frolova@example.com",
-    "avatarUrl": null,
-    "createdAt": "2026-01-28T10:40:00Z"
-  },
-  {
-    "id": "user-020",
-    "name": "Никита Козлов",
-    "email": "nikita.kozlov@example.com",
-    "avatarUrl": null,
-    "createdAt": "2026-01-29T16:25:00Z"
-  },
-  {
-    "id": "user-021",
-    "name": "Дарья Захарова",
-    "email": "darya.zakharova@example.com",
-    "avatarUrl": null,
-    "createdAt": "2026-01-30T09:50:00Z"
-  },
-  {
-    "id": "user-022",
-    "name": "Павел Воробьёв",
-    "email": "pavel.vorobyev@example.com",
-    "avatarUrl": null,
-    "createdAt": "2026-01-31T12:00:00Z"
-  },
-  {
-    "id": "user-023",
-    "name": "Юлия Громова",
-    "email": "yulia.gromova@example.com",
-    "avatarUrl": null,
-    "createdAt": "2026-02-01T15:15:00Z"
-  },
-  {
-    "id": "user-024",
-    "name": "Константин Лебедев",
-    "email": "konstantin.lebedev@example.com",
-    "avatarUrl": null,
-    "createdAt": "2026-02-02T11:35:00Z"
-  },
-  {
-    "id": "user-025",
-    "name": "Виктория Соколова",
-    "email": "victoria.sokolova@example.com",
-    "avatarUrl": null,
-    "createdAt": "2026-02-03T14:45:00Z"
-  },
-  {
-    "id": "user-026",
-    "name": "Михаил Захаров",
-    "email": "mikhail.zakharov@example.com",
-    "avatarUrl": null,
-    "createdAt": "2026-02-04T10:20:00Z"
-  },
-  {
-    "id": "user-027",
-    "name": "Ксения Андреева",
-    "email": "ksenia.andreeva@example.com",
-    "avatarUrl": null,
-    "createdAt": "2026-02-05T13:40:00Z"
-  },
-  {
-    "id": "user-028",
-    "name": "Илья Макаров",
-    "email": "ilya.makarov@example.com",
-    "avatarUrl": null,
-    "createdAt": "2026-02-06T16:00:00Z"
-  },
-  {
-    "id": "user-029",
-    "name": "Вероника Крылова",
-    "email": "veronika.krylova@example.com",
-    "avatarUrl": null,
-    "createdAt": "2026-02-07T09:25:00Z"
-  },
-  {
-    "id": "user-030",
-    "name": "Степан Романов",
-    "email": "stepan.romanov@example.com",
-    "avatarUrl": null,
-    "createdAt": "2026-02-08T12:55:00Z"
-  },
-  {
-    "id": "user-031",
-    "name": "Алина Фёдорова",
-    "email": "alina.fedorova@example.com",
-    "avatarUrl": null,
-    "createdAt": "2026-02-09T15:30:00Z"
-  },
-  {
-    "id": "user-032",
-    "name": "Евгений Морозов",
-    "email": "evgeny.morozov@example.com",
-    "avatarUrl": null,
-    "createdAt": "2026-02-10T11:10:00Z"
-  },
-  {
-    "id": "user-033",
-    "name": "Полина Киселёва",
-    "email": "polina.kiseleva@example.com",
-    "avatarUrl": null,
-    "createdAt": "2026-02-11T08:45:00Z"
-  },
-  {
-    "id": "user-034",
-    "name": "Григорий Белов",
-    "email": "grigory.belov@example.com",
-    "avatarUrl": null,
-    "createdAt": "2026-02-12T14:20:00Z"
-  },
-  {
-    "id": "user-035",
-    "name": "Марина Титова",
-    "email": "marina.titova@example.com",
-    "avatarUrl": null,
-    "createdAt": "2026-02-13T10:35:00Z"
-  },
-  {
-    "id": "user-036",
-    "name": "Роман Ковалёв",
-    "email": "roman.kovalev@example.com",
-    "avatarUrl": null,
-    "createdAt": "2026-02-14T16:15:00Z"
-  },
-  {
-    "id": "user-037",
-    "name": "Людмила Комарова",
-    "email": "lyudmila.komarova@example.com",
-    "avatarUrl": null,
-    "createdAt": "2026-02-15T09:40:00Z"
-  },
-  {
-    "id": "user-038",
-    "name": "Борис Фомин",
-    "email": "boris.fomin@example.com",
-    "avatarUrl": null,
-    "createdAt": "2026-02-16T13:00:00Z"
-  },
-  {
-    "id": "user-039",
-    "name": "София Власова",
-    "email": "sofia.vlasova@example.com",
-    "avatarUrl": null,
-    "createdAt": "2026-02-17T11:25:00Z"
-  },
-  {
-    "id": "user-040",
-    "name": "Александр Королёв",
-    "email": "alexander.korolev@example.com",
-    "avatarUrl": null,
-    "createdAt": "2026-02-18T15:50:00Z"
-  }
+  "id": "user-031",
+  "name": "Алина Фёдорова",
+  "email": "alina.fedorova@example.com",
+  "avatarUrl": "/images/users/user-031.jpg",
+  "createdAt": "2026-02-09T15:30:00Z"
+},
+{
+  "id": "user-032",
+  "name": "Евгений Морозов",
+  "email": "evgeny.morozov@example.com",
+  "avatarUrl": "/images/users/user-032.jpg",
+  "createdAt": "2026-02-10T11:10:00Z"
+},
+{
+  "id": "user-033",
+  "name": "Полина Киселёва",
+  "email": "polina.kiseleva@example.com",
+  "avatarUrl": "/images/users/user-033.jpg",
+  "createdAt": "2026-02-11T08:45:00Z"
+},
+{
+  "id": "user-034",
+  "name": "Григорий Белов",
+  "email": "grigory.belov@example.com",
+  "avatarUrl": "/images/users/user-034.jpg",
+  "createdAt": "2026-02-12T14:20:00Z"
+},
+{
+  "id": "user-035",
+  "name": "Марина Титова",
+  "email": "marina.titova@example.com",
+  "avatarUrl": "/images/users/user-035.jpg",
+  "createdAt": "2026-02-13T10:35:00Z"
+},
+{
+  "id": "user-036",
+  "name": "Роман Ковалёв",
+  "email": "roman.kovalev@example.com",
+  "avatarUrl": "/images/users/user-036.jpg",
+  "createdAt": "2026-02-14T16:15:00Z"
+},
+{
+  "id": "user-037",
+  "name": "Людмила Комарова",
+  "email": "lyudmila.komarova@example.com",
+  "avatarUrl": "/images/users/user-037.jpg",
+  "createdAt": "2026-02-15T09:40:00Z"
+},
+{
+  "id": "user-038",
+  "name": "Борис Фомин",
+  "email": "boris.fomin@example.com",
+  "avatarUrl": "/images/users/user-038.jpg",
+  "createdAt": "2026-02-16T13:00:00Z"
+},
+{
+  "id": "user-039",
+  "name": "София Власова",
+  "email": "sofia.vlasova@example.com",
+  "avatarUrl": "/images/users/user-039.jpg",
+  "createdAt": "2026-02-17T11:25:00Z"
+},
+{
+  "id": "user-040",
+  "name": "Александр Королёв",
+  "email": "alexander.korolev@example.com",
+  "avatarUrl": "/images/users/user-040.jpg",
+  "createdAt": "2026-02-18T15:50:00Z"
+}
 ]
 
