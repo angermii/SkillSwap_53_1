@@ -1,0 +1,45 @@
+.root {
+  width: 100%;
+}
+
+.wrapper {
+  border: 1px solid var(--color-text);
+}
+
+.wrapper.readOnly:focus-within {
+  box-shadow: none;
+}
+
+.wrapper.wrapperMultiline {
+  padding: 12px 20px;
+  display: flex;
+  align-items: stretch;
+  max-height: 120px;
+}
+
+.wrapper [class*='rightIcon'] {
+  margin-left: 10px;
+}
+
+.input:read-only {
+  cursor: default;
+}
+
+.actions {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.textarea {
+  line-height: var(--line-height-body);
+  scrollbar-width: none;
+}
+
+.textarea::-webkit-scrollbar {
+  display: none;
+}
+
+.textarea:read-only {
+  cursor: default;
+}
