@@ -27,4 +27,5 @@ export { LikeButton } from './likeButton';
 export * from './StepIndicator';
 export { Checkbox } from './checkbox/Checkbox'
 export type { CheckboxProps } from './checkbox/Checkbox'
+export * from './EditableField'
 export * from './NotificationItem'
