@@ -1,5 +1,5 @@
 import Styles from './PopUp.module.css'
-import { BulbIcon, CloseIcon } from '@/shared/ui'
+import { BulbIcon, Button, CloseIcon } from '@/shared/ui'
 import { PopUpProps } from '@/shared/ui/PopUp/types.ts'
 
 export const PopUp = ({ userName, type = 'withoutButton', onClickClose, onClickButton }: PopUpProps) => {
@@ -13,9 +13,9 @@ export const PopUp = ({ userName, type = 'withoutButton', onClickClose, onClickB
         <h3 className={Styles.Text}>{userName} предлагает вам обмен</h3>
       </div>
       {type === 'withButton' && (
-        <button className={Styles.Button} onClick={onClickButton}>
+        <Button variant="ghost" className={Styles.Button} onClick={onClickButton}>
           <span>Перейти</span>
-        </button>
+        </Button>
       )}
     </div>
   )
