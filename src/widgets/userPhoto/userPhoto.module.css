@@ -1,0 +1,21 @@
+.wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/* повысили приоритет над стилями IconButton при помощи дублирования класса */
+.editButton.editButton {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: var(--color-button-hover);
+}
+
+/* переопределили размеры иконки, чтобы она не растягивалась */
+.editButton svg {
+  width: 24px;
+  height: 24px;
+}
