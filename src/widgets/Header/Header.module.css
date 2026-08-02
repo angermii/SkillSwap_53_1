@@ -2,8 +2,8 @@
   display: flex;
   gap: 32px;
   align-items: center;
-
-  padding: 36px 36px 20px;
+  height: 104px;
+  padding: 36px 36px 24px 36px;
 
   background: var(--color-background);
 }
@@ -15,6 +15,12 @@
   flex: 1;
   min-width: 0;
 }
+
+.link {
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
 
 .navigation {
   display: flex;
@@ -32,18 +38,38 @@
 .actions {
   display: flex;
   align-items: center;
+}
+
+.loggedOutActions {
+  display: flex;
+  align-items: center;
   gap: 32px;
 }
 
-.link {
-  white-space: nowrap;
+.authActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
+
+.loggedInActions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
 
 .categoryButton {
   display: flex;
   align-items: center;
   gap: 4px;
-
+letter-spacing: 0.02em;
   white-space: nowrap;
 }
 

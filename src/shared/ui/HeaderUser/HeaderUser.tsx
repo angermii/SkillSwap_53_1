@@ -27,7 +27,7 @@ export const HeaderUser = ({
         <Avatar
           src={avatarSrc}
           alt={avatarAlt ?? name}
-          size={32}
+          size={48}
         />
       ) : (
         <span className={styles.avatarPlaceholder} aria-hidden="true">
