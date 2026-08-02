@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 
 import { Avatar } from '../Avatar';
-import { UserIcon } from '../icons';
+import { UserCircleIcon } from '../icons';
 import type { HeaderUserProps } from './type';
 
 import styles from './HeaderUser.module.css';
@@ -31,7 +31,7 @@ export const HeaderUser = ({
         />
       ) : (
         <span className={styles.avatarPlaceholder} aria-hidden="true">
-          <UserIcon size={32} />
+          <UserCircleIcon size={48} />
         </span>
       )}
     </button>
