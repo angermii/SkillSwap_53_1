@@ -3,4 +3,5 @@ export interface HeaderUserProps {
   avatarSrc?: string;
   avatarAlt?: string;
   className?: string;
+  onClick?: () => void;
 }
