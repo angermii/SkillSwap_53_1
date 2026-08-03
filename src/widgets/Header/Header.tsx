@@ -4,20 +4,21 @@ import styles from './Header.module.css'
 import { Button, Dropdown, HeaderUser, Logo, SearchInput } from '@/shared/ui'
 import { BellIcon, HeartIcon, MoonIcon, CloseIcon, ChevronDownIcon } from '@/shared/ui/icons'
 import clsx from 'clsx'
-import { useNavigate } from 'react-router-dom'
-import { ROUTES } from '@/shared/lib/constants'
 import { Link } from 'react-router-dom'
+import { ROUTES } from '@/shared/lib/constants'
 
-export const Header = ({ variant = 'loggedOut', user }: HeaderProps) => {
+export const Header = ({
+  variant = 'loggedOut',
+  user,
+  onLoginClick,
+  onRegisterClick,
+  onThemeClick,
+  onNotificationsClick,
+  onFavoritesClick,
+  onUserClick,
+  onCloseClick,
+}: HeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const navigate = useNavigate()
-  const handleLoginClick = () => {
-    navigate(ROUTES.LOGIN)
-  }
-
-  const handleRegisterClick = () => {
-    navigate(ROUTES.REGISTER)
-  }
 
   return (
     <header className={clsx(styles.header, variant === 'pure' && styles.headerPure)}>
@@ -60,16 +61,16 @@ export const Header = ({ variant = 'loggedOut', user }: HeaderProps) => {
         {/* Действия для неавторизованного пользователя */}
         {variant === 'loggedOut' && (
           <div className={styles.loggedOutActions}>
-            <button className={styles.iconButton}>
+            <button className={styles.iconButton} onClick={onThemeClick}>
               <MoonIcon />
             </button>
 
             <div className={styles.authActions}>
-              <Button variant="secondary" onClick={handleLoginClick}>
+              <Button variant="secondary" onClick={onLoginClick}>
                 Войти
               </Button>
 
-              <Button onClick={handleRegisterClick}>Зарегистрироваться</Button>
+              <Button onClick={onRegisterClick}>Зарегистрироваться</Button>
             </div>
           </div>
         )}
@@ -78,26 +79,30 @@ export const Header = ({ variant = 'loggedOut', user }: HeaderProps) => {
         {variant === 'loggedIn' && user && (
           <div className={styles.loggedInActions}>
             <div className={styles.icons}>
-              <button className={styles.iconButton}>
+              <button className={styles.iconButton} onClick={onThemeClick}>
                 <MoonIcon />
               </button>
 
-              <button className={styles.iconButton}>
+              <button className={styles.iconButton} onClick={onNotificationsClick}>
                 <BellIcon />
               </button>
 
-              <button className={styles.iconButton}>
+              <button className={styles.iconButton} onClick={onFavoritesClick}>
                 <HeartIcon />
               </button>
             </div>
 
-            <HeaderUser name={user.name} avatarSrc={user.avatarSrc ?? undefined} />
+            <HeaderUser
+              name={user.name}
+              avatarSrc={user.avatarUrl ?? undefined}
+              onClick={onUserClick}
+            />
           </div>
         )}
 
         {/* Упрощенный Header с кнопкой закрытия */}
         {variant === 'pure' && (
-          <Button variant="secondary" endIcon={<CloseIcon />}>
+          <Button variant="secondary" endIcon={<CloseIcon />} onClick={onCloseClick}>
             Закрыть
           </Button>
         )}
