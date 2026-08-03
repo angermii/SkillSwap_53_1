@@ -4,5 +4,9 @@ export type HeaderVariant =
   | 'pure';
 
 export type HeaderProps = {
-  variant?: HeaderVariant;
+  variant?: 'loggedOut' | 'loggedIn' | 'pure';
+  user?: {
+    name: string;
+    avatarSrc?: string | null;
+  };
 };

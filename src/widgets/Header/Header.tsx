@@ -3,20 +3,32 @@ import { useState } from 'react'
 import styles from './Header.module.css'
 import { Button, Dropdown, HeaderUser, Logo, SearchInput } from '@/shared/ui'
 import { BellIcon, HeartIcon, MoonIcon, CloseIcon, ChevronDownIcon } from '@/shared/ui/icons'
+import clsx from 'clsx'
+import { useNavigate } from 'react-router-dom'
+import { ROUTES } from '@/shared/lib/constants'
+import { Link } from 'react-router-dom'
 
-export const Header = ({ variant = 'loggedOut' }: HeaderProps) => {
+export const Header = ({ variant = 'loggedOut', user }: HeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const navigate = useNavigate()
+  const handleLoginClick = () => {
+    navigate(ROUTES.LOGIN)
+  }
+
+  const handleRegisterClick = () => {
+    navigate(ROUTES.REGISTER)
+  }
 
   return (
-    <header className={styles.header}>
+    <header className={clsx(styles.header, variant === 'pure' && styles.headerPure)}>
       <div className={styles.left}>
         <Logo />
         {/* Основная навигация скрывается в режиме pure */}
         {variant !== 'pure' && (
           <nav className={styles.navigation}>
-            <button type="button" className={styles.link}>
+            <Link to={ROUTES.ABOUT} className={styles.link}>
               О проекте
-            </button>
+            </Link>
 
             <Dropdown
               trigger={
@@ -44,55 +56,52 @@ export const Header = ({ variant = 'loggedOut' }: HeaderProps) => {
       </div>
 
       {/* Правая часть Header зависит от выбранного варианта */}
-<div className={styles.actions}>
-  {/* Действия для неавторизованного пользователя */}
-  {variant === 'loggedOut' && (
-    <div className={styles.loggedOutActions}>
-      <button className={styles.iconButton}>
-        <MoonIcon />
-      </button>
+      <div className={styles.actions}>
+        {/* Действия для неавторизованного пользователя */}
+        {variant === 'loggedOut' && (
+          <div className={styles.loggedOutActions}>
+            <button className={styles.iconButton}>
+              <MoonIcon />
+            </button>
 
-      <div className={styles.authActions}>
-        <Button variant="secondary">Войти</Button>
-        <Button>Зарегистрироваться</Button>
+            <div className={styles.authActions}>
+              <Button variant="secondary" onClick={handleLoginClick}>
+                Войти
+              </Button>
+
+              <Button onClick={handleRegisterClick}>Зарегистрироваться</Button>
+            </div>
+          </div>
+        )}
+
+        {/* Действия для авторизованного пользователя */}
+        {variant === 'loggedIn' && user && (
+          <div className={styles.loggedInActions}>
+            <div className={styles.icons}>
+              <button className={styles.iconButton}>
+                <MoonIcon />
+              </button>
+
+              <button className={styles.iconButton}>
+                <BellIcon />
+              </button>
+
+              <button className={styles.iconButton}>
+                <HeartIcon />
+              </button>
+            </div>
+
+            <HeaderUser name={user.name} avatarSrc={user.avatarSrc ?? undefined} />
+          </div>
+        )}
+
+        {/* Упрощенный Header с кнопкой закрытия */}
+        {variant === 'pure' && (
+          <Button variant="secondary" endIcon={<CloseIcon />}>
+            Закрыть
+          </Button>
+        )}
       </div>
-    </div>
-  )}
-
-  {/* Действия для авторизованного пользователя */}
-  {variant === 'loggedIn' && (
-    <div className={styles.loggedInActions}>
-      <div className={styles.icons}>
-        <button className={styles.iconButton}>
-          <MoonIcon />
-        </button>
-
-        <button className={styles.iconButton}>
-          <BellIcon />
-        </button>
-
-        <button className={styles.iconButton}>
-          <HeartIcon />
-        </button>
-      </div>
-
-      <HeaderUser
-        name="Мария"
-        avatarSrc="/avatar.jpg"
-      />
-    </div>
-  )}
-
-  {/* Упрощенный Header с кнопкой закрытия */}
-  {variant === 'pure' && (
-    <Button
-      variant="secondary"
-      endIcon={<CloseIcon />}
-    >
-      Закрыть
-    </Button>
-  )}
-</div>
     </header>
   )
 }

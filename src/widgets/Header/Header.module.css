@@ -3,8 +3,13 @@
   gap: 32px;
   align-items: center;
   height: 104px;
-  padding: 36px 36px 24px;
+  padding: 36px 36px 20px;
   background: var(--color-background);
+}
+
+.headerPure {
+  height: 84px;
+  padding: 36px 36px 0;
 }
 
 .left {
