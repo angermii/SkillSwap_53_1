@@ -1,0 +1,47 @@
+.card {
+  display: flex;
+  width: 100%;
+  max-width: 324px;
+  flex-direction: column;
+  overflow: hidden;
+  color: var(--color-text);
+  background: var(--color-card-input);
+  border-radius: var(--radius-lg);
+}
+
+.compact {
+  padding: 20px;
+  gap: 20px;
+}
+
+.expanded {
+  padding: 32px;
+  gap: 24px;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.tags {
+  width: 100%;
+  min-width: 0;
+}
+
+.detailsButton {
+  width: 100%;
+}
