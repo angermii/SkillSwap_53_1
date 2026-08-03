@@ -4,10 +4,26 @@ import clsx from 'clsx'
 import { option, SelectProps } from '@/shared/ui/Select/type.ts'
 import { ChevronDownIcon } from '@/shared/ui/icons'
 
-export function Select({ label, placeholder, iconSrc, options = [], onChange, className, ...restProps }: SelectProps) {
+export function Select({
+  label,
+  placeholder,
+  iconSrc,
+  options = [],
+  value,
+  onChange,
+  className,
+  ...restProps
+}: SelectProps) {
   const [isOpen, setIsOpen] = useState(false)
-  const [selected, setSelected] = useState<option | null>(null)
+  const [innerSelected, setSelected] = useState<option | null>(null)
   const ref = useRef<HTMLDivElement>(null)
+  // Если передан value — компонент управляемый: выбранный пункт ищем в options.
+  // Если нет — работает по-старому, на внутреннем состоянии.
+  const isControlled = value !== undefined
+  const selected = isControlled
+    ? (options.find((item) => item.value === value) ?? null)
+    : innerSelected
+
   useEffect(() => {
     const handleOutsideClick = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) {
