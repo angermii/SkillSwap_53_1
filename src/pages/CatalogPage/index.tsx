@@ -5,6 +5,6 @@ export default function CatalogPage() {
     <main>
       <h1>CatalogPage</h1>
       <p>Страница в разработке</p>
-      </main>
+    </main>
   )
 }

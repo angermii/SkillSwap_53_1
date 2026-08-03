@@ -14,12 +14,6 @@
   height: 40px;
 }
 
-.IconWrapper > :first-child {
-  padding: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-}
-
 .Section{
   width: 436px;
   display: flex;
@@ -55,4 +49,32 @@
   cursor: pointer;
   color: var(--color-text);
   text-align: left;
+}
+
+.yellow {
+  background-color: #ebe5c5;
+}
+
+.blue {
+  background-color: #e7f2f6;
+}
+
+.green {
+  background-color: #e9f7e7;
+}
+
+.purple {
+  background-color: #eee7f7;
+}
+
+.pink {
+  background-color: #f7e7f2;
+}
+
+.peach {
+  background-color: #f7ebe5;
+}
+
+.gray {
+  background-color: #e8ecf7;
 }
