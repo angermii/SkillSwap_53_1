@@ -41,7 +41,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: auto !important;
+  height: auto;
 
   > span {
     font-size: var(--font-size-caption);
