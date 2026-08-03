@@ -112,11 +112,6 @@
     "categoryId": "creativity"
   },
   {
-  "id": "design",
-  "title": "Дизайн",
-  "categoryId": "creativity"
-},
-  {
     "id": "photography",
     "title": "Фотография",
     "categoryId": "creativity"

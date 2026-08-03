@@ -31,6 +31,11 @@ export interface User {
   name: string;
   email: string;
   avatarUrl: string | null;
+
+  gender: 'female' | 'male';
+  age: number;
+  city: string;
+  description: string;
   createdAt: string;
 }
 

@@ -39,16 +39,16 @@
     "authorId": "user-004",
     "createdAt": "2026-02-23T10:00:00Z"
   },
-  {
-    "id": "skill-005",
-    "title": "UI/UX дизайн",
-    "description": "Хочу научиться создавать удобные интерфейсы и работать с Figma.",
-    "type": "learn",
-    "subcategoryId": "design",
-    "imageUrl": "/images/skills/skill-005.jpg",
-    "authorId": "user-005",
-    "createdAt": "2026-02-24T10:00:00Z"
-  },
+{
+  "id": "skill-005",
+  "title": "Основы цифрового рисования",
+  "description": "Хочу научиться рисовать на графическом планшете, работать с формой, линиями, цветом и композицией.",
+  "type": "learn",
+  "subcategoryId": "drawing",
+  "imageUrl": "/images/skills/skill-005.jpg",
+  "authorId": "user-005",
+  "createdAt": "2026-02-24T10:00:00Z"
+},
   {
     "id": "skill-006",
     "title": "Приготовление домашней еды",
@@ -389,14 +389,415 @@
   "authorId": "user-039",
   "createdAt": "2026-03-30T10:00:00Z"
 },
+{
+  "id": "skill-040",
+  "title": "Подготовка к IELTS",
+  "description": "Помогу подготовиться к международному экзамену по английскому языку.",
+  "type": "teach",
+  "subcategoryId": "language-exams",
+  "imageUrl": "/images/skills/skill-040.jpg",
+  "authorId": "user-040",
+  "createdAt": "2026-03-31T10:00:00Z"
+},
   {
-    "id": "skill-040",
-    "title": "Подготовка к IELTS",
-    "description": "Помогу подготовиться к международному экзамену по английскому языку.",
+    "id": "skill-041",
+    "title": "Изучение видеомонтажа",
+    "description": "Хочу научиться создавать видео, работать с монтажом и добавлять эффекты.",
     "type": "teach",
-    "subcategoryId": "language-exams",
-    "imageUrl": "/images/skills/skill-040.jpg",
-    "authorId": "user-040",
-    "createdAt": "2026-03-31T10:00:00Z"
-  }
+    "subcategoryId": "video-editing",
+    "imageUrl": "/images/skills/skill-041.jpg",
+    "authorId": "user-001",
+    "createdAt": "2026-04-01T10:00:00Z"
+  },
+  {
+    "id": "skill-042",
+    "title": "Японский язык для начинающих",
+    "description": "Хочу изучить японский язык, грамматику и базовые выражения.",
+    "type": "teach",
+    "subcategoryId": "japanese",
+    "imageUrl": "/images/skills/skill-042.jpg",
+    "authorId": "user-002",
+    "createdAt": "2026-04-02T10:00:00Z"
+  },
+  {
+    "id": "skill-043",
+    "title": "Английский язык для общения",
+    "description": "Хочу улучшить разговорный английский и практиковать язык.",
+    "type": "teach",
+    "subcategoryId": "english",
+    "imageUrl": "/images/skills/skill-043.jpg",
+    "authorId": "user-003",
+    "createdAt": "2026-04-03T10:00:00Z"
+  },
+  {
+    "id": "skill-044",
+    "title": "Цифровое рисование",
+    "description": "Хочу научиться создавать иллюстрации на графическом планшете.",
+    "type": "teach",
+    "subcategoryId": "drawing",
+    "imageUrl": "/images/skills/skill-044.jpg",
+    "authorId": "user-004",
+    "createdAt": "2026-04-04T10:00:00Z"
+  },
+  {
+    "id": "skill-045",
+    "title": "Основы фотографии",
+    "description": "Хочу научиться работать с камерой, светом и композицией.",
+    "type": "teach",
+    "subcategoryId": "photography",
+    "imageUrl": "/images/skills/skill-045.jpg",
+    "authorId": "user-005",
+    "createdAt": "2026-04-05T10:00:00Z"
+  },
+  {
+    "id": "skill-046",
+    "title": "Финансовое планирование",
+    "description": "Хочу научиться управлять бюджетом и планировать расходы.",
+    "type": "teach",
+    "subcategoryId": "home-finance",
+    "imageUrl": "/images/skills/skill-046.jpg",
+    "authorId": "user-006",
+    "createdAt": "2026-04-06T10:00:00Z"
+  },
+  {
+    "id": "skill-047",
+    "title": "Домашняя кулинария",
+    "description": "Хочу научиться готовить новые блюда и техники приготовления.",
+    "type": "teach",
+    "subcategoryId": "cooking",
+    "imageUrl": "/images/skills/skill-047.jpg",
+    "authorId": "user-007",
+    "createdAt": "2026-04-07T10:00:00Z"
+  },
+  {
+    "id": "skill-048",
+    "title": "Физические тренировки",
+    "description": "Хочу научиться правильно выполнять упражнения и составлять программы.",
+    "type": "teach",
+    "subcategoryId": "fitness",
+    "imageUrl": "/images/skills/skill-048.jpg",
+    "authorId": "user-008",
+    "createdAt": "2026-04-08T10:00:00Z"
+  },
+  {
+    "id": "skill-049",
+    "title": "Маркетинг в социальных сетях",
+    "description": "Хочу изучить продвижение проектов и создание контента.",
+    "type": "teach",
+    "subcategoryId": "marketing",
+    "imageUrl": "/images/skills/skill-049.jpg",
+    "authorId": "user-009",
+    "createdAt": "2026-04-09T10:00:00Z"
+  },
+  {
+    "id": "skill-050",
+    "title": "Иллюстрация",
+    "description": "Хочу развить навыки создания визуальных проектов.",
+    "type": "teach",
+    "subcategoryId": "drawing",
+    "imageUrl": "/images/skills/skill-050.jpg",
+    "authorId": "user-010",
+    "createdAt": "2026-04-10T10:00:00Z"
+  },
+  {
+    "id": "skill-051",
+    "title": "Коучинг",
+    "description": "Хочу изучить методы работы с людьми и постановки целей.",
+    "type": "teach",
+    "subcategoryId": "coaching",
+    "imageUrl": "/images/skills/skill-051.jpg",
+    "authorId": "user-011",
+    "createdAt": "2026-04-11T10:00:00Z"
+  },
+  {
+    "id": "skill-052",
+    "title": "Продажи",
+    "description": "Хочу научиться вести переговоры и работать с клиентами.",
+    "type": "teach",
+    "subcategoryId": "sales",
+    "imageUrl": "/images/skills/skill-052.jpg",
+    "authorId": "user-012",
+    "createdAt": "2026-04-12T10:00:00Z"
+  },
+  {
+    "id": "skill-053",
+    "title": "Публичные выступления",
+    "description": "Хочу стать увереннее в общении и презентациях.",
+    "type": "teach",
+    "subcategoryId": "acting",
+    "imageUrl": "/images/skills/skill-053.jpg",
+    "authorId": "user-013",
+    "createdAt": "2026-04-13T10:00:00Z"
+  },
+  {
+    "id": "skill-054",
+    "title": "Проектное управление",
+    "description": "Хочу научиться планировать проекты и управлять задачами.",
+    "type": "learn",
+    "subcategoryId": "project-management",
+    "imageUrl": "/images/skills/skill-054.jpg",
+    "authorId": "user-014",
+    "createdAt": "2026-04-14T10:00:00Z"
+  },
+  {
+    "id": "skill-055",
+    "title": "Скорочтение",
+    "description": "Хочу увеличить скорость чтения и обработки информации.",
+    "type": "learn",
+    "subcategoryId": "speed-reading",
+    "imageUrl": "/images/skills/skill-055.jpg",
+    "authorId": "user-015",
+    "createdAt": "2026-04-15T10:00:00Z"
+  },
+  {
+    "id": "skill-056",
+    "title": "Управление командой",
+    "description": "Хочу развить лидерские навыки и научиться работать с командой.",
+    "type": "learn",
+    "subcategoryId": "team-management",
+    "imageUrl": "/images/skills/skill-056.jpg",
+    "authorId": "user-016",
+    "createdAt": "2026-04-16T10:00:00Z"
+  },
+  {
+    "id": "skill-057",
+    "title": "Немецкий язык",
+    "description": "Хочу изучить немецкий язык для путешествий.",
+    "type": "learn",
+    "subcategoryId": "german",
+    "imageUrl": "/images/skills/skill-057.jpg",
+    "authorId": "user-017",
+    "createdAt": "2026-04-17T10:00:00Z"
+  },
+  {
+    "id": "skill-058",
+    "title": "Испанский язык",
+    "description": "Хочу освоить испанский язык и разговорные навыки.",
+    "type": "learn",
+    "subcategoryId": "spanish",
+    "imageUrl": "/images/skills/skill-058.jpg",
+    "authorId": "user-018",
+    "createdAt": "2026-04-18T10:00:00Z"
+  },
+  {
+    "id": "skill-059",
+    "title": "Продвинутая кулинария",
+    "description": "Хочу изучить новые техники приготовления блюд.",
+    "type": "learn",
+    "subcategoryId": "cooking",
+    "imageUrl": "/images/skills/skill-059.jpg",
+    "authorId": "user-019",
+    "createdAt": "2026-04-19T10:00:00Z"
+  },
+  {
+    "id": "skill-060",
+    "title": "Декорирование дома",
+    "description": "Хочу научиться создавать уютный интерьер.",
+    "type": "learn",
+    "subcategoryId": "diy",
+    "imageUrl": "/images/skills/skill-060.jpg",
+    "authorId": "user-020",
+    "createdAt": "2026-04-20T10:00:00Z"
+  },
+ {
+    "id": "skill-061",
+    "title": "Организация пространства",
+    "description": "Хочу научиться эффективно организовывать хранение вещей и пространство дома.",
+    "type": "learn",
+    "subcategoryId": "storage",
+    "imageUrl": "/images/skills/skill-061.jpg",
+    "authorId": "user-021",
+    "createdAt": "2026-04-21T10:00:00Z"
+  },
+  {
+    "id": "skill-062",
+    "title": "Основы ремонта",
+    "description": "Хочу научиться работать с инструментами и выполнять простой ремонт.",
+    "type": "learn",
+    "subcategoryId": "repair",
+    "imageUrl": "/images/skills/skill-062.jpg",
+    "authorId": "user-022",
+    "createdAt": "2026-04-22T10:00:00Z"
+  },
+  {
+    "id": "skill-063",
+    "title": "Создание музыки",
+    "description": "Хочу разобраться в создании музыки и работе со звуком.",
+    "type": "learn",
+    "subcategoryId": "music",
+    "imageUrl": "/images/skills/skill-063.jpg",
+    "authorId": "user-023",
+    "createdAt": "2026-04-23T10:00:00Z"
+  },
+  {
+    "id": "skill-064",
+    "title": "Видеомонтаж",
+    "description": "Хочу улучшить навыки монтажа видео и обработки материалов.",
+    "type": "learn",
+    "subcategoryId": "video-editing",
+    "imageUrl": "/images/skills/skill-064.jpg",
+    "authorId": "user-024",
+    "createdAt": "2026-04-24T10:00:00Z"
+  },
+  {
+    "id": "skill-065",
+    "title": "Креативное письмо",
+    "description": "Хочу научиться писать истории и развивать свой стиль.",
+    "type": "learn",
+    "subcategoryId": "creative-writing",
+    "imageUrl": "/images/skills/skill-065.jpg",
+    "authorId": "user-025",
+    "createdAt": "2026-04-25T10:00:00Z"
+  },
+  {
+    "id": "skill-066",
+    "title": "Актёрское мастерство",
+    "description": "Хочу развить сценическую речь, уверенность и выражение эмоций.",
+    "type": "learn",
+    "subcategoryId": "acting",
+    "imageUrl": "/images/skills/skill-066.jpg",
+    "authorId": "user-026",
+    "createdAt": "2026-04-26T10:00:00Z"
+  },
+  {
+    "id": "skill-067",
+    "title": "Дизайн интерьера",
+    "description": "Хочу научиться создавать красивые и удобные пространства.",
+    "type": "learn",
+    "subcategoryId": "diy",
+    "imageUrl": "/images/skills/skill-067.jpg",
+    "authorId": "user-027",
+    "createdAt": "2026-04-27T10:00:00Z"
+  },
+  {
+    "id": "skill-068",
+    "title": "Личностное развитие",
+    "description": "Хочу развить полезные привычки и лучше достигать целей.",
+    "type": "learn",
+    "subcategoryId": "self-development",
+    "imageUrl": "/images/skills/skill-068.jpg",
+    "authorId": "user-028",
+    "createdAt": "2026-04-28T10:00:00Z"
+  },
+  {
+    "id": "skill-069",
+    "title": "Эффективное обучение",
+    "description": "Хочу научиться быстрее запоминать информацию и изучать новые темы.",
+    "type": "learn",
+    "subcategoryId": "learning-skills",
+    "imageUrl": "/images/skills/skill-069.jpg",
+    "authorId": "user-029",
+    "createdAt": "2026-04-29T10:00:00Z"
+  },
+  {
+    "id": "skill-070",
+    "title": "Методика преподавания",
+    "description": "Хочу научиться понятно объяснять материал другим людям.",
+    "type": "learn",
+    "subcategoryId": "teaching-skills",
+    "imageUrl": "/images/skills/skill-070.jpg",
+    "authorId": "user-030",
+    "createdAt": "2026-04-30T10:00:00Z"
+  },
+  {
+    "id": "skill-071",
+    "title": "Основы коучинга",
+    "description": "Хочу изучить техники постановки целей и поддержки людей.",
+    "type": "learn",
+    "subcategoryId": "coaching",
+    "imageUrl": "/images/skills/skill-071.jpg",
+    "authorId": "user-031",
+    "createdAt": "2026-05-01T10:00:00Z"
+  },
+  {
+    "id": "skill-072",
+    "title": "Психология общения",
+    "description": "Хочу лучше понимать людей и развить навыки общения.",
+    "type": "learn",
+    "subcategoryId": "mental-health",
+    "imageUrl": "/images/skills/skill-072.jpg",
+    "authorId": "user-032",
+    "createdAt": "2026-05-02T10:00:00Z"
+  },
+  {
+    "id": "skill-073",
+    "title": "Здоровое питание",
+    "description": "Хочу научиться составлять рацион и понимать основы питания.",
+    "type": "learn",
+    "subcategoryId": "nutrition",
+    "imageUrl": "/images/skills/skill-073.jpg",
+    "authorId": "user-033",
+    "createdAt": "2026-05-03T10:00:00Z"
+  },
+  {
+    "id": "skill-074",
+    "title": "Фитнес и тренировки",
+    "description": "Хочу научиться правильно тренироваться и составлять программы.",
+    "type": "learn",
+    "subcategoryId": "fitness",
+    "imageUrl": "/images/skills/skill-074.jpg",
+    "authorId": "user-034",
+    "createdAt": "2026-05-04T10:00:00Z"
+  },
+  {
+    "id": "skill-075",
+    "title": "Осознанность и медитация",
+    "description": "Хочу научиться управлять вниманием и работать со стрессом.",
+    "type": "learn",
+    "subcategoryId": "mindfulness",
+    "imageUrl": "/images/skills/skill-075.jpg",
+    "authorId": "user-035",
+    "createdAt": "2026-05-05T10:00:00Z"
+  },
+  {
+    "id": "skill-076",
+    "title": "Эмоциональный интеллект",
+    "description": "Хочу лучше понимать эмоции и реакции людей.",
+    "type": "learn",
+    "subcategoryId": "mental-health",
+    "imageUrl": "/images/skills/skill-076.jpg",
+    "authorId": "user-036",
+    "createdAt": "2026-05-06T10:00:00Z"
+  },
+  {
+    "id": "skill-077",
+    "title": "Сон и восстановление",
+    "description": "Хочу улучшить режим сна и качество восстановления.",
+    "type": "learn",
+    "subcategoryId": "sleep",
+    "imageUrl": "/images/skills/skill-077.jpg",
+    "authorId": "user-037",
+    "createdAt": "2026-05-07T10:00:00Z"
+  },
+  {
+    "id": "skill-078",
+    "title": "Физическая подготовка",
+    "description": "Хочу улучшить здоровье и разобраться в тренировочном процессе.",
+    "type": "learn",
+    "subcategoryId": "fitness",
+    "imageUrl": "/images/skills/skill-078.jpg",
+    "authorId": "user-038",
+    "createdAt": "2026-05-08T10:00:00Z"
+  },
+  {
+    "id": "skill-079",
+    "title": "Тайм-менеджмент",
+    "description": "Хочу научиться лучше планировать задачи и распределять время.",
+    "type": "learn",
+    "subcategoryId": "time-management",
+    "imageUrl": "/images/skills/skill-079.jpg",
+    "authorId": "user-039",
+    "createdAt": "2026-05-09T10:00:00Z"
+  },
+{
+  "id": "skill-080",
+  "title": "Изучение испанского языка",
+  "description": "Хочу освоить новый язык для путешествий и общения.",
+  "type": "learn",
+  "subcategoryId": "spanish",
+  "imageUrl": "/images/skills/skill-080.jpg",
+  "authorId": "user-040",
+  "createdAt": "2026-05-10T10:00:00Z"
+}
 ]
+
