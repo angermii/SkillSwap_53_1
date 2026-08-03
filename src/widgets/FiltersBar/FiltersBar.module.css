@@ -1,0 +1,146 @@
+/* =========================================
+   1. ГЛАВНЫЙ КОНТЕЙНЕР (САЙДБАР)
+   ========================================= */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+  width: 100%;
+  max-width: 280px;
+  padding: 24px 0;
+  background-color: var(--color-background);
+}
+
+/* =========================================
+   2. ШАПКА ВИДЖЕТА
+   ========================================= */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: -16px; /* Компенсируем gap у сайдбара */
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--color-disabled);
+}
+
+.mainTitle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+  color: var(--color-text);
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-h3);
+}
+
+.count {
+  color: var(--color-caption);
+}
+
+.resetButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+  color: var(--color-link-button);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-regular);
+  transition: opacity 0.2s ease;
+}
+
+.resetButton:hover {
+  opacity: 0.8;
+}
+
+/* =========================================
+   3. СЕКЦИИ И СПИСКИ ФИЛЬТРОВ
+   ========================================= */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--color-text);
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-h4);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-h4);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* =========================================
+   4. АККОРДЕОН НАВЫКОВ
+   ========================================= */
+.categoryBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.categoryHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.subList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-left: 32px; /* Сдвиг под иконку родителя */
+}
+
+/* =========================================
+   5. ИНТЕРАКТИВНЫЕ ЭЛЕМЕНТЫ (КНОПКИ РАСКРЫТИЯ)
+   ========================================= */
+.chevronBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  color: var(--color-caption);
+  transition: color 0.2s ease;
+}
+
+.chevronBtn:hover {
+  color: var(--color-text);
+}
+
+.toggleBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  width: fit-content;
+  margin-top: 4px;
+  padding: 0;
+  color: var(--color-link-button);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-regular);
+}
+
+.toggleBtn:hover {
+  opacity: 0.8;
+}
+
+.chevron {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.2s ease;
+}
+
+.chevronUp {
+  transform: rotate(180deg);
+}
