@@ -13,6 +13,7 @@
 }
 
 .select{
+  position: relative;
   height: 48px;
   box-sizing: border-box;
   border: 1px solid #69735D;
@@ -20,7 +21,8 @@
 }
 
 .select.opened {
-  height: auto;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
 .label{
@@ -36,11 +38,15 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  letter-spacing: inherit;
   cursor: pointer;
   box-sizing: border-box;
 }
 
 .placeholder.opened {
+  position: relative;
+  z-index: 6;
+  background-color: #fff;
   border-bottom: 1px solid #E4E8DF;
   border-radius: 12px;
 }
@@ -54,11 +60,20 @@
 }
 
 .options{
-  width: 100%;
+  position: absolute;
+  top: 100%;
+  right: -1px;
+  left: -1px;
+  z-index: 5;
+  width: auto;
   display: flex;
   flex-direction: column;
   padding: 8px 0;
   gap: 4px;
+  background-color: #fff;
+  border: 1px solid #69735D;
+  border-top: none;
+  border-radius: 0 0 12px 12px;
 }
 
 .option{
