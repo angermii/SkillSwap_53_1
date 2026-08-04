@@ -1,0 +1,137 @@
+/* карточка формы второго и третьего шагов регистрации */
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 556px;
+  min-height: 692px;
+  padding: 40px 60px;
+  background-color: var(--color-card-input);
+  border-radius: var(--radius-lg);
+  letter-spacing: 0.02em;
+}
+
+/* контейнер всех полей текущего шага */
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.textField {
+  line-height: var(--line-height-body);
+  letter-spacing: 0.02em;
+}
+
+/* загрузка аватара */
+.avatarUpload {
+  position: relative;
+  align-self: center;
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  cursor: pointer;
+}
+
+.avatarPlaceholder path {
+  stroke-width: 0.5px;
+}
+
+.avatarAdd {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  color: var(--color-card-input);
+  background-color: var(--color-accent);
+  border-radius: 50%;
+}
+
+/* нативные поля загрузки скрыты, но остаются доступны через label */
+.hiddenInput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* дата рождения и пол  */
+.fieldsRow {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 22px;
+}
+
+/* многострочное поле описания навыка */
+.description {
+  height: 96px;
+  min-height: 96px;
+}
+
+/* область загрузки изображений навыка */
+.imagesUpload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 96px;
+  min-height: 96px;
+  padding: 16px 20px;
+  gap: 8px;
+  border: 1px dashed var(--color-caption);
+  border-radius: 12px;
+}
+
+.imagesUpload:focus-within {
+  border-color: var(--color-accent);
+}
+
+.imagesAction {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  color: var(--color-link-button);
+}
+
+.imagesIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  padding-top: 32px;
+}
+
+.actions > button {
+  width: 100%;
+}
+
+@media (width <= 600px) {
+  .form {
+    min-height: auto;
+    padding: 32px 20px;
+  }
+
+  .fieldsRow,
+  .actions {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
