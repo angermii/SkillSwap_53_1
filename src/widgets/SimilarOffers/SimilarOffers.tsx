@@ -3,7 +3,12 @@ import { UserCard } from '../UserCard'
 import type { SimilarOffersProps } from './type'
 import styles from './SimilarOffers.module.css'
 
-export const SimilarOffers = ({ cards, onNextClick, onDetailsClick }: SimilarOffersProps) => {
+export const SimilarOffers = ({
+  cards,
+  onNextClick,
+  onDetailsClick,
+  onLikeChange,
+}: SimilarOffersProps) => {
   if (cards.length === 0) return null
 
   const visibleCards = cards.slice(0, 4)
@@ -13,8 +18,15 @@ export const SimilarOffers = ({ cards, onNextClick, onDetailsClick }: SimilarOff
       <h2>Похожие предложения</h2>
 
       <div className={styles.cards}>
-        {visibleCards.map(({ skillId, user }) => (
-          <UserCard key={skillId} user={user} onDetailsClick={() => onDetailsClick?.(skillId)} />
+        {visibleCards.map(({ skillId, user, isLiked, likeCount }) => (
+          <UserCard
+            key={skillId}
+            user={user}
+            isLiked={isLiked}
+            likeCount={likeCount}
+            onDetailsClick={() => onDetailsClick(skillId)}
+            onLikeChange={(count, liked) => onLikeChange(skillId, count, liked)}
+          />
         ))}
 
         {cards.length >= 4 && (

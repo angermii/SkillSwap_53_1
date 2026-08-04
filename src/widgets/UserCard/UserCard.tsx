@@ -26,7 +26,7 @@ export const UserCard = ({
             <LikeButton
               count={likeCount}
               isLiked={isLiked}
-              onClick={(count, liked) => onLikeChange?.(user.id, count, liked)}
+              onClick={onLikeChange}
             />
           )}
         </div>
