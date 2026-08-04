@@ -2,6 +2,7 @@ import { useState } from 'react';
 import clsx from 'clsx';
 import { Checkbox, RadioButton, ChevronDownIcon, CloseIcon } from '@/shared/ui';
 import styles from './FiltersBar.module.css';
+
 //кодочек для проверки, вставляю в файл src/pages/CatalogPage/index.tsx
 //import { FiltersBar } from '@/widgets';
 
