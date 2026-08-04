@@ -1,0 +1,215 @@
+[
+  {
+    "id": "team-management",
+    "title": "Управление командой",
+    "categoryId": "business"
+  },
+  {
+    "id": "marketing",
+    "title": "Маркетинг и реклама",
+    "categoryId": "business"
+  },
+  {
+    "id": "sales",
+    "title": "Продажи и переговоры",
+    "categoryId": "business"
+  },
+  {
+    "id": "personal-brand",
+    "title": "Личный бренд",
+    "categoryId": "business"
+  },
+  {
+    "id": "resume-interview",
+    "title": "Резюме и собеседование",
+    "categoryId": "business"
+  },
+  {
+    "id": "time-management",
+    "title": "Тайм-менеджмент",
+    "categoryId": "business"
+  },
+  {
+    "id": "project-management",
+    "title": "Проектное управление",
+    "categoryId": "business"
+  },
+  {
+    "id": "entrepreneurship",
+    "title": "Предпринимательство",
+    "categoryId": "business"
+  },
+
+  {
+    "id": "english",
+    "title": "Английский",
+    "categoryId": "languages"
+  },
+  {
+    "id": "french",
+    "title": "Французский",
+    "categoryId": "languages"
+  },
+  {
+    "id": "spanish",
+    "title": "Испанский",
+    "categoryId": "languages"
+  },
+  {
+    "id": "german",
+    "title": "Немецкий",
+    "categoryId": "languages"
+  },
+  {
+    "id": "chinese",
+    "title": "Китайский",
+    "categoryId": "languages"
+  },
+  {
+    "id": "japanese",
+    "title": "Японский",
+    "categoryId": "languages"
+  },
+  {
+    "id": "language-exams",
+    "title": "Подготовка к экзаменам (IELTS, TOEFL)",
+    "categoryId": "languages"
+  },
+  {
+    "id": "cleaning",
+    "title": "Уборка и организация",
+    "categoryId": "home"
+  },
+  {
+    "id": "home-finance",
+    "title": "Домашние финансы",
+    "categoryId": "home"
+  },
+  {
+    "id": "cooking",
+    "title": "Приготовление еды",
+    "categoryId": "home"
+  },
+  {
+    "id": "plants",
+    "title": "Домашние растения",
+    "categoryId": "home"
+  },
+  {
+    "id": "repair",
+    "title": "Ремонт",
+    "categoryId": "home"
+  },
+  {
+    "id": "storage",
+    "title": "Хранение вещей",
+    "categoryId": "home"
+  },
+
+  {
+    "id": "drawing",
+    "title": "Рисование и иллюстрация",
+    "categoryId": "creativity"
+  },
+  {
+    "id": "photography",
+    "title": "Фотография",
+    "categoryId": "creativity"
+  },
+  {
+    "id": "video-editing",
+    "title": "Видеомонтаж",
+    "categoryId": "creativity"
+  },
+  {
+    "id": "music",
+    "title": "Музыка и звук",
+    "categoryId": "creativity"
+  },
+  {
+    "id": "acting",
+    "title": "Актёрское мастерство",
+    "categoryId": "creativity"
+  },
+  {
+    "id": "creative-writing",
+    "title": "Креативное письмо",
+    "categoryId": "creativity"
+  },
+  {
+    "id": "art-therapy",
+    "title": "Арт-терапия",
+    "categoryId": "creativity"
+  },
+  {
+    "id": "diy",
+    "title": "Декор и DIY",
+    "categoryId": "creativity"
+  },
+  {
+    "id": "self-development",
+    "title": "Личностное развитие",
+    "categoryId": "education"
+  },
+  {
+    "id": "learning-skills",
+    "title": "Навыки обучения",
+    "categoryId": "education"
+  },
+  {
+    "id": "cognitive-techniques",
+    "title": "Когнитивные техники",
+    "categoryId": "education"
+  },
+  {
+    "id": "speed-reading",
+    "title": "Скорочтение",
+    "categoryId": "education"
+  },
+  {
+    "id": "teaching-skills",
+    "title": "Навыки преподавания",
+    "categoryId": "education"
+  },
+  {
+    "id": "coaching",
+    "title": "Коучинг",
+    "categoryId": "education"
+  },
+
+  {
+    "id": "yoga",
+    "title": "Йога и медитация",
+    "categoryId": "health"
+  },
+  {
+    "id": "nutrition",
+    "title": "Питание и ЗОЖ",
+    "categoryId": "health"
+  },
+  {
+    "id": "mental-health",
+    "title": "Ментальное здоровье",
+    "categoryId": "health"
+  },
+  {
+    "id": "mindfulness",
+    "title": "Осознанность",
+    "categoryId": "health"
+  },
+  {
+    "id": "fitness",
+    "title": "Физические тренировки",
+    "categoryId": "health"
+  },
+  {
+    "id": "sleep",
+    "title": "Сон и восстановление",
+    "categoryId": "health"
+  },
+  {
+    "id": "work-life-balance",
+    "title": "Баланс жизни и работы",
+    "categoryId": "health"
+  }
+]
