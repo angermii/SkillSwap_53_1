@@ -22,6 +22,6 @@ export type UserCardProps = Omit<HTMLAttributes<HTMLElement>, 'children'> & {
   variant?: UserCardVariant
   isLiked?: boolean
   likeCount?: number
-  onDetailsClick?: (userId: string) => void
-  onLikeChange?: (userId: string, count: number, isLiked: boolean) => void
+  onDetailsClick?: () => void
+  onLikeChange?: (count: number, isLiked: boolean) => void
 }
