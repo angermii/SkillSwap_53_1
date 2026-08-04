@@ -4,11 +4,12 @@
 .sidebar {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xl);
+  gap: 40px;
   width: 100%;
-  max-width: 280px;
-  padding: 24px 0;
-  background-color: var(--color-background);
+  max-width: 332px;
+  padding: 24px;
+  background-color: var(--color-card-input);
+  border-radius: 12px;
 }
 
 /* =========================================
@@ -18,9 +19,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: -16px; /* Компенсируем gap у сайдбара */
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--color-disabled);
+  padding-bottom: 8px;
 }
 
 .mainTitle {
@@ -30,13 +29,14 @@
   margin: 0;
   color: var(--color-text);
   font-family: var(--font-family-heading);
-  font-size: var(--font-size-h3);
+  font-size: var(--font-size-h2);
   font-weight: var(--font-weight-medium);
-  line-height: var(--line-height-h3);
+  line-height: var(--line-height-h2);
+  letter-spacing: -0.011em;
 }
 
 .count {
-  color: var(--color-caption);
+  color: var(--color-text);
 }
 
 .resetButton {
@@ -56,21 +56,28 @@
 }
 
 /* =========================================
-   3. СЕКЦИИ И СПИСКИ ФИЛЬТРОВ
+   3. ОБЕРТКА И СЕКЦИИ ФИЛЬТРОВ
    ========================================= */
+.sectionsWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 32px; 
+}
+
 .section {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
 }
 
 .subtitle {
   margin: 0;
+  margin-bottom: 20px;
   color: var(--color-text);
   font-family: var(--font-family-heading);
-  font-size: var(--font-size-h4);
+  font-size: var(--font-size-h3);
   font-weight: var(--font-weight-medium);
   line-height: var(--line-height-h4);
+  letter-spacing: -0.011em;
 }
 
 .list {
@@ -123,7 +130,7 @@
   align-items: center;
   gap: 4px;
   width: fit-content;
-  margin-top: 4px;
+  margin-top: 12px; /* По комментарию ревьюера: от Казани до кнопки 12px */
   padding: 0;
   color: var(--color-link-button);
   font-family: var(--font-family-body);

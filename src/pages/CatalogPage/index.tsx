@@ -1,10 +1,15 @@
-// TODO: реализовать страницу CatalogPage
+import { FiltersBar } from '@/widgets';
 
 export default function CatalogPage() {
-  return (
-    <main>
-      <h1>CatalogPage</h1>
-      <p>Страница в разработке</p>
-    </main>
-  )
+return (
+    <main style={{ padding: '40px', backgroundColor: '#F9FAF7', minHeight: '100vh', display: 'flex', gap: '20px' }}>
+
+     {/* Выводим наш новый виджет */}
+      <FiltersBar />
+
+     {/* Здесь в будущем будет сетка с карточками навыков */}
+      <div>Тут будут карточки...</div>
+
+   </main>
+ );
 }
