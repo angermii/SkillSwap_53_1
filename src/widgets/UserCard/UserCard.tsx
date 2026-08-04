@@ -46,7 +46,7 @@ export const UserCard = ({
         />
 
         {isCompact && (
-          <Button className={styles.detailsButton} onClick={() => onDetailsClick?.(user.id)}>
+          <Button className={styles.detailsButton} onClick={onDetailsClick}>
             Подробнее
           </Button>
         )}
