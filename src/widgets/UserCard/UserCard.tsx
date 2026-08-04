@@ -26,7 +26,7 @@ export const UserCard = ({
             <LikeButton
               count={likeCount}
               isLiked={isLiked}
-              onClick={(count, liked) => onLikeChange?.(user.id, count, liked)}
+              onClick={onLikeChange}
             />
           )}
         </div>
@@ -46,7 +46,7 @@ export const UserCard = ({
         />
 
         {isCompact && (
-          <Button className={styles.detailsButton} onClick={() => onDetailsClick?.(user.id)}>
+          <Button className={styles.detailsButton} onClick={onDetailsClick}>
             Подробнее
           </Button>
         )}

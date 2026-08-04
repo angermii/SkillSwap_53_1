@@ -1,0 +1,29 @@
+.root {
+  display: block;
+  width: 100%;
+}
+
+.input:focus::placeholder {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.calendarButton {
+  display: flex;
+  align-items: center;
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.dropdown {
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--space-xs);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.calendar {
+  align-self: center;
+  padding: 0 var(--space-sm) var(--space-sm);
+}

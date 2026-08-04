@@ -24,9 +24,11 @@ export * from './SocialLoginButtons';
 export * from './Modal'
 export * from './Calendar'
 export { LikeButton } from './likeButton';
+export * from './CategorySection'
 export * from './StepIndicator';
 export { Checkbox } from './checkbox/Checkbox'
 export type { CheckboxProps } from './checkbox/Checkbox'
 export * from './EditableField'
 export * from './NotificationItem'
+export * from './EditableSelect'
 export * from './HeaderUser'
