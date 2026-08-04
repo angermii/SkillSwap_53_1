@@ -1,7 +1,7 @@
 [
   {
     "id": "user-001",
-    "name": "Анна Смирнова",
+    "name": "Анна",
     "email": "anna.smirnova@example.com",
     "avatarUrl": "/images/users/user-1.jpg",
     "gender": "female",
@@ -12,7 +12,7 @@
   },
   {
     "id": "user-002",
-    "name": "Иван Петров",
+    "name": "Иван",
     "email": "ivan.petrov@example.com",
     "avatarUrl": "/images/users/user-2.jpg",
     "gender": "male",
@@ -23,7 +23,7 @@
   },
   {
     "id": "user-003",
-    "name": "Мария Иванова",
+    "name": "Мария",
     "email": "maria.ivanova@example.com",
     "avatarUrl": "/images/users/user-3.jpg",
     "gender": "female",
@@ -34,7 +34,7 @@
   },
   {
     "id": "user-004",
-    "name": "Алексей Соколов",
+    "name": "Алексей",
     "email": "alexey.sokolov@example.com",
     "avatarUrl": "/images/users/user-4.jpg",
     "gender": "male",
@@ -45,7 +45,7 @@
   },
   {
     "id": "user-005",
-    "name": "Елена Волкова",
+    "name": "Елена",
     "email": "elena.volkova@example.com",
     "avatarUrl": "/images/users/user-5.jpg",
     "gender": "female",
@@ -56,7 +56,7 @@
   },
   {
     "id": "user-006",
-    "name": "Дмитрий Кузнецов",
+    "name": "Дмитрий",
     "email": "dmitry.kuznetsov@example.com",
     "avatarUrl": "/images/users/user-6.jpg",
     "gender": "male",
@@ -67,7 +67,7 @@
   },
   {
     "id": "user-007",
-    "name": "Ольга Попова",
+    "name": "Ольга",
     "email": "olga.popova@example.com",
     "avatarUrl": "/images/users/user-7.jpg",
     "gender": "female",
@@ -78,7 +78,7 @@
   },
   {
     "id": "user-008",
-    "name": "Сергей Морозов",
+    "name": "Сергей",
     "email": "sergey.morozov@example.com",
     "avatarUrl": "/images/users/user-8.jpg",
     "gender": "male",
@@ -89,7 +89,7 @@
   },
   {
     "id": "user-009",
-    "name": "Наталья Новикова",
+    "name": "Наталья",
     "email": "natalya.novikova@example.com",
     "avatarUrl": "/images/users/user-9.jpg",
     "gender": "female",
@@ -100,7 +100,7 @@
   },
   {
     "id": "user-010",
-    "name": "Андрей Федоров",
+    "name": "Андрей",
     "email": "andrey.fedorov@example.com",
     "avatarUrl": "/images/users/user-10.jpg",
     "gender": "male",
@@ -111,7 +111,7 @@
   },
   {
     "id": "user-011",
-    "name": "Ирина Васильева",
+    "name": "Ирина",
     "email": "irina.vasilyeva@example.com",
     "avatarUrl": "/images/users/user-11.jpg",
     "gender": "female",
@@ -122,7 +122,7 @@
   },
   {
     "id": "user-012",
-    "name": "Максим Орлов",
+    "name": "Максим",
     "email": "maxim.orlov@example.com",
     "avatarUrl": "/images/users/user-12.jpg",
     "gender": "male",
@@ -133,7 +133,7 @@
   },
   {
     "id": "user-013",
-    "name": "Светлана Белова",
+    "name": "Светлана",
     "email": "svetlana.belova@example.com",
     "avatarUrl": "/images/users/user-13.jpg",
     "gender": "female",
@@ -144,7 +144,7 @@
   },
   {
     "id": "user-014",
-    "name": "Роман Егоров",
+    "name": "Роман",
     "email": "roman.egorov@example.com",
     "avatarUrl": "/images/users/user-14.jpg",
     "gender": "male",
@@ -155,7 +155,7 @@
   },
   {
     "id": "user-015",
-    "name": "Анастасия Павлова",
+    "name": "Анастасия",
     "email": "anastasia.pavlova@example.com",
     "avatarUrl": "/images/users/user-15.jpg",
     "gender": "female",
@@ -166,7 +166,7 @@
   },
   {
     "id": "user-016",
-    "name": "Владимир Николаев",
+    "name": "Владимир",
     "email": "vladimir.nikolaev@example.com",
     "avatarUrl": "/images/users/user-16.jpg",
     "gender": "male",
@@ -177,7 +177,7 @@
   },
   {
     "id": "user-017",
-    "name": "Екатерина Алексеева",
+    "name": "Екатерина",
     "email": "ekaterina.alekseeva@example.com",
     "avatarUrl": "/images/users/user-17.jpg",
     "gender": "female",
@@ -188,7 +188,7 @@
   },
   {
     "id": "user-018",
-    "name": "Артём Михайлов",
+    "name": "Артём",
     "email": "artem.mikhailov@example.com",
     "avatarUrl": "/images/users/user-18.jpg",
     "gender": "male",
@@ -199,7 +199,7 @@
   },
   {
     "id": "user-019",
-    "name": "Татьяна Фролова",
+    "name": "Татьяна",
     "email": "tatyana.frolova@example.com",
     "avatarUrl": "/images/users/user-19.jpg",
     "gender": "female",
@@ -210,7 +210,7 @@
   },
   {
     "id": "user-020",
-    "name": "Никита Козлов",
+    "name": "Никита",
     "email": "nikita.kozlov@example.com",
     "avatarUrl": "/images/users/user-20.jpg",
     "gender": "male",
@@ -219,9 +219,9 @@
     "description": "Увлекаюсь комнатными растениями и благоустройством дома.",
     "createdAt": "2026-01-29T16:25:00Z"
   },
-   {
+  {
     "id": "user-021",
-    "name": "Дарья Захарова",
+    "name": "Дарья",
     "email": "darya.zakharova@example.com",
     "avatarUrl": "/images/users/user-21.jpg",
     "gender": "female",
@@ -232,7 +232,7 @@
   },
   {
     "id": "user-022",
-    "name": "Павел Воробьёв",
+    "name": "Павел",
     "email": "pavel.vorobyev@example.com",
     "avatarUrl": "/images/users/user-22.jpg",
     "gender": "male",
@@ -243,7 +243,7 @@
   },
   {
     "id": "user-023",
-    "name": "Юлия Громова",
+    "name": "Юлия",
     "email": "yulia.gromova@example.com",
     "avatarUrl": "/images/users/user-23.jpg",
     "gender": "female",
@@ -254,7 +254,7 @@
   },
   {
     "id": "user-024",
-    "name": "Константин Лебедев",
+    "name": "Константин",
     "email": "konstantin.lebedev@example.com",
     "avatarUrl": "/images/users/user-24.jpg",
     "gender": "male",
@@ -265,7 +265,7 @@
   },
   {
     "id": "user-025",
-    "name": "Виктория Соколова",
+    "name": "Виктория",
     "email": "victoria.sokolova@example.com",
     "avatarUrl": "/images/users/user-25.jpg",
     "gender": "female",
@@ -276,7 +276,7 @@
   },
   {
     "id": "user-026",
-    "name": "Михаил Захаров",
+    "name": "Михаил",
     "email": "mikhail.zakharov@example.com",
     "avatarUrl": "/images/users/user-26.jpg",
     "gender": "male",
@@ -287,7 +287,7 @@
   },
   {
     "id": "user-027",
-    "name": "Ксения Андреева",
+    "name": "Ксения",
     "email": "ksenia.andreeva@example.com",
     "avatarUrl": "/images/users/user-27.jpg",
     "gender": "female",
@@ -298,7 +298,7 @@
   },
   {
     "id": "user-028",
-    "name": "Илья Макаров",
+    "name": "Илья",
     "email": "ilya.makarov@example.com",
     "avatarUrl": "/images/users/user-28.jpg",
     "gender": "male",
@@ -309,7 +309,7 @@
   },
   {
     "id": "user-029",
-    "name": "Вероника Крылова",
+    "name": "Вероника",
     "email": "veronika.krylova@example.com",
     "avatarUrl": "/images/users/user-29.jpg",
     "gender": "female",
@@ -320,7 +320,7 @@
   },
   {
     "id": "user-030",
-    "name": "Степан Романов",
+    "name": "Степан",
     "email": "stepan.romanov@example.com",
     "avatarUrl": "/images/users/user-30.jpg",
     "gender": "male",
@@ -331,7 +331,7 @@
   },
   {
     "id": "user-031",
-    "name": "Алина Фёдорова",
+    "name": "Алина",
     "email": "alina.fedorova@example.com",
     "avatarUrl": "/images/users/user-31.jpg",
     "gender": "female",
@@ -342,7 +342,7 @@
   },
   {
     "id": "user-032",
-    "name": "Евгений Морозов",
+    "name": "Евгений",
     "email": "evgeny.morozov@example.com",
     "avatarUrl": "/images/users/user-32.jpg",
     "gender": "male",
@@ -353,7 +353,7 @@
   },
   {
     "id": "user-033",
-    "name": "Полина Киселёва",
+    "name": "Полина",
     "email": "polina.kiseleva@example.com",
     "avatarUrl": "/images/users/user-33.jpg",
     "gender": "female",
@@ -364,7 +364,7 @@
   },
   {
     "id": "user-034",
-    "name": "Григорий Белов",
+    "name": "Григорий",
     "email": "grigory.belov@example.com",
     "avatarUrl": "/images/users/user-34.jpg",
     "gender": "male",
@@ -375,7 +375,7 @@
   },
   {
     "id": "user-035",
-    "name": "Марина Титова",
+    "name": "Марина",
     "email": "marina.titova@example.com",
     "avatarUrl": "/images/users/user-35.jpg",
     "gender": "female",
@@ -386,7 +386,7 @@
   },
   {
     "id": "user-036",
-    "name": "Роман Ковалёв",
+    "name": "Роман",
     "email": "roman.kovalev@example.com",
     "avatarUrl": "/images/users/user-36.jpg",
     "gender": "male",
@@ -397,7 +397,7 @@
   },
   {
     "id": "user-037",
-    "name": "Людмила Комарова",
+    "name": "Людмила",
     "email": "lyudmila.komarova@example.com",
     "avatarUrl": "/images/users/user-37.jpg",
     "gender": "female",
@@ -408,7 +408,7 @@
   },
   {
     "id": "user-038",
-    "name": "Борис Фомин",
+    "name": "Борис",
     "email": "boris.fomin@example.com",
     "avatarUrl": "/images/users/user-38.jpg",
     "gender": "male",
@@ -419,7 +419,7 @@
   },
   {
     "id": "user-039",
-    "name": "София Власова",
+    "name": "София",
     "email": "sofia.vlasova@example.com",
     "avatarUrl": "/images/users/user-39.jpg",
     "gender": "female",
@@ -430,7 +430,7 @@
   },
   {
     "id": "user-040",
-    "name": "Александр Королёв",
+    "name": "Александр",
     "email": "alexander.korolev@example.com",
     "avatarUrl": "/images/users/user-40.jpg",
     "gender": "male",
@@ -440,4 +440,3 @@
     "createdAt": "2026-02-18T15:50:00Z"
   }
 ]
-
