@@ -1,8 +1,8 @@
 import Styles from './NotificationItem.module.css'
-import { NotificationItemProps } from './types.ts'
+import { Notification } from './types.ts'
 import { BulbIcon } from '@/shared/ui'
 
-export const NotificationItem = ({title, description, date, button, status} : NotificationItemProps) => {
+export const NotificationItem = ({title, description, date, button, status} : Notification) => {
   return (
     <div className={Styles.Wrapper}>
       <div className={Styles.Notification}>
