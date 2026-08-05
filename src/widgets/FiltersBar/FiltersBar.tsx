@@ -3,26 +3,61 @@ import clsx from 'clsx';
 import { Checkbox, RadioButton, ChevronDownIcon, CloseIcon } from '@/shared/ui';
 import styles from './FiltersBar.module.css';
 
-//кодочек для проверки, вставляю в файл src/pages/CatalogPage/index.tsx
-//import { FiltersBar } from '@/widgets';
+//Код для проверки
+// import { useState } from 'react';
+// // Импортируем и сам компонент, и данные из одного файла!
+// import { FiltersBar, FULL_SKILLS_DATA, FULL_CITIES_DATA } from '@/widgets/FiltersBar/FiltersBar';
 
-//export default function CatalogPage() {
-//return (
-//    <main style={{ padding: '40px', backgroundColor: '#F9FAF7', minHeight: '100vh', display: 'flex', gap: '20px' }}>
-//   {/* Выводим наш новый виджет */}
-  //    <FiltersBar />
-//
-//     {/* Здесь в будущем будет сетка с карточками навыков */}
-//      <div>Тут будут карточки...</div>
-//
-//   </main>
-// );
-//}
-//
+// export default function CatalogPage() {
+//   const [exchangeType, setExchangeType] = useState('all');
+//   const [authorGender, setAuthorGender] = useState('any');
+//   const [selectedSubcategories, setSelectedSubcategories] = useState<string[]>([]);
+//   const [selectedCities, setSelectedCities] = useState<string[]>([]);
+
+//   const handleReset = () => {
+//     setExchangeType('all');
+//     setAuthorGender('any');
+//     setSelectedSubcategories([]);
+//     setSelectedCities([]);
+//   };
+
+//   return (
+//     <main style={{ padding: '40px', display: 'flex', gap: '20px' }}>
+//       <FiltersBar 
+//         skillsData={FULL_SKILLS_DATA} // <-- Передаем данные через пропсы
+//         cities={FULL_CITIES_DATA}     // <-- Передаем данные через пропсы
+//         
+//         exchangeType={exchangeType}
+//         authorGender={authorGender}
+//         selectedSubcategories={selectedSubcategories}
+//         selectedCities={selectedCities}
+//         
+//         onExchangeTypeChange={setExchangeType}
+//         onGenderChange={setAuthorGender}
+//         onSubcategoriesChange={setSelectedSubcategories}
+//         onCitiesChange={setSelectedCities}
+//         onReset={handleReset}
+//       />
+//       <div>Тут будут карточки...</div>
+//     </main>
+//   );
+// }
 
 
-// Расширенные моковые данные с иерархией поднавыков
-const SKILLS_DATA = [
+
+
+
+// =========================================================================
+// 1. Данные и тип
+// =========================================================================
+
+export interface SkillCategory {
+  name: string;
+  subcategories: string[];
+}
+
+// Полный список навыков по макету
+export const FULL_SKILLS_DATA: SkillCategory[] = [
   {
     name: 'Бизнес и карьера',
     subcategories: ['Менеджмент', 'Маркетинг', 'Финансы', 'Стартапы'],
@@ -42,7 +77,7 @@ const SKILLS_DATA = [
   },
   {
     name: 'Иностранные языки',
-    subcategories: ['Английский', 'Испанский', 'Китайский', 'Немецкий'],
+    subcategories: ['Английский', 'Испанский', 'Французский', 'Немецкий', 'Китайский'],
   },
   {
     name: 'Образование и развитие',
@@ -58,7 +93,7 @@ const SKILLS_DATA = [
   },
 ];
 
-const CITIES = [
+export const FULL_CITIES_DATA = [
   'Москва',
   'Санкт-Петербург',
   'Новосибирск',
@@ -67,64 +102,92 @@ const CITIES = [
   'Нижний Новгород',
 ];
 
-export const FiltersBar = () => {
-  // --- Состояния ---
+// Пропсы 
+export interface FiltersBarProps {
+  skillsData: SkillCategory[];
+  cities: string[];
+  exchangeType: string;
+  authorGender: string;
+  selectedSubcategories: string[];
+  selectedCities: string[];
+  onExchangeTypeChange: (value: string) => void;
+  onGenderChange: (value: string) => void;
+  onSubcategoriesChange: (subcategories: string[]) => void;
+  onCitiesChange: (cities: string[]) => void;
+  onReset: () => void;
+}
+
+// =========================================================================
+// 2. Сам компонент
+// =========================================================================
+
+export const FiltersBar = ({
+  skillsData,
+  cities,
+  exchangeType,
+  authorGender,
+  selectedSubcategories,
+  selectedCities,
+  onExchangeTypeChange,
+  onGenderChange,
+  onSubcategoriesChange,
+  onCitiesChange,
+  onReset,
+}: FiltersBarProps) => {
+  
+  // Локальные состояния только для визуала (открыто/закрыто)
   const [showAllSkills, setShowAllSkills] = useState(false);
   const [showAllCities, setShowAllCities] = useState(false);
   const [expandedCategories, setExpandedCategories] = useState<string[]>(['Творчество и искусство']);
 
-  const [exchangeType, setExchangeType] = useState('all');
-  const [authorGender, setAuthorGender] = useState('any');
-  const [selectedSubcategories, setSelectedSubcategories] = useState<string[]>([]);
-  const [selectedCities, setSelectedCities] = useState<string[]>([]);
-
-  // Подсчет активных фильтров (по макету)
   const activeFiltersCount = 
     (exchangeType !== 'all' ? 1 : 0) + 
     (authorGender !== 'any' ? 1 : 0) + 
     selectedSubcategories.length + 
     selectedCities.length;
 
-  // --- Хэндлеры ---
-  const resetFilters = () => {
-    setExchangeType('all');
-    setAuthorGender('any');
-    setSelectedSubcategories([]);
-    setSelectedCities([]);
+  // --- Хэндлеры чекбоксов ---
+  const toggleSubcategory = (sub: string) => {
+    if (selectedSubcategories.includes(sub)) {
+      onSubcategoriesChange(selectedSubcategories.filter((s) => s !== sub));
+    } else {
+      onSubcategoriesChange([...selectedSubcategories, sub]);
+    }
   };
 
-  const toggleArrayItem = (
-    item: string,
-    setState: React.Dispatch<React.SetStateAction<string[]>>
-  ) => {
-    setState((prev) =>
-      prev.includes(item) ? prev.filter((i) => i !== item) : [...prev, item]
+  const toggleCity = (city: string) => {
+    if (selectedCities.includes(city)) {
+      onCitiesChange(selectedCities.filter((c) => c !== city));
+    } else {
+      onCitiesChange([...selectedCities, city]);
+    }
+  };
+
+  const toggleCategoryExpand = (categoryName: string) => {
+    setExpandedCategories((prev) =>
+      prev.includes(categoryName) 
+        ? prev.filter((c) => c !== categoryName) 
+        : [...prev, categoryName]
     );
   };
 
-  // Хэндлер раскрытия/скрытия подсписка
-  const toggleCategoryExpand = (categoryName: string) => {
-    toggleArrayItem(categoryName, setExpandedCategories);
-  };
-
-  const visibleSkills = showAllSkills ? SKILLS_DATA : SKILLS_DATA.slice(0, 6);
-  const visibleCities = showAllCities ? CITIES : CITIES.slice(0, 5);
+  const visibleSkills = showAllSkills ? skillsData : skillsData.slice(0, 6);
+  const visibleCities = showAllCities ? cities : cities.slice(0, 5);
 
   return (
     <aside className={styles.sidebar}>
-      {/* --- Шапка с кнопкой сброса --- */}
+      {/* --- Шапка --- */}
       <div className={styles.header}>
         <h2 className={styles.mainTitle}>
           Фильтры {activeFiltersCount > 0 && <span className={styles.count}>({activeFiltersCount})</span>}
         </h2>
         {activeFiltersCount > 0 && (
-          <button className={styles.resetButton} onClick={resetFilters}>
+          <button className={styles.resetButton} onClick={onReset}>
             Сбросить <CloseIcon size={16} />
           </button>
         )}
       </div>
 
-      {/* --- ОБЕРТКА ДЛЯ СЕКЦИЙ (чтобы работал gap: 32px) --- */}
       <div className={styles.sectionsWrapper}>
         
         {/* --- Тип обмена --- */}
@@ -135,38 +198,36 @@ export const FiltersBar = () => {
               label="Всё"
               value="all"
               checked={exchangeType === 'all'}
-              onChange={(e) => setExchangeType(e.target.value)}
+              onChange={(e) => onExchangeTypeChange(e.target.value)}
             />
             <RadioButton
               name="exchange_type"
               label="Хочу научиться"
               value="learn"
               checked={exchangeType === 'learn'}
-              onChange={(e) => setExchangeType(e.target.value)}
+              onChange={(e) => onExchangeTypeChange(e.target.value)}
             />
             <RadioButton
               name="exchange_type"
               label="Могу научить"
               value="teach"
               checked={exchangeType === 'teach'}
-              onChange={(e) => setExchangeType(e.target.value)}
+              onChange={(e) => onExchangeTypeChange(e.target.value)}
             />
           </div>
         </section>
 
-        {/* --- Навыки (Аккордеон) --- */}
+        {/* --- Навыки --- */}
         <section className={styles.section}>
           <h3 className={styles.subtitle}>Навыки</h3>
           <div className={styles.list}>
             {visibleSkills.map((category) => {
               const isExpanded = expandedCategories.includes(category.name);
-              // Считаем категорию отмеченной (появится минус), если выбран хотя бы один её поднавык
               const hasSelectedSubs = category.subcategories.some(sub => selectedSubcategories.includes(sub));
 
               return (
                 <div key={category.name} className={styles.categoryBlock}>
                   <div className={styles.categoryHeader}>
-                    {/* Клик по главной категории теперь ПРОСТО РАСКРЫВАЕТ СПИСОК */}
                     <Checkbox
                       label={category.name}
                       variant="category"
@@ -182,7 +243,6 @@ export const FiltersBar = () => {
                     </button>
                   </div>
                   
-                  {/* Подкатегории */}
                   {isExpanded && (
                     <div className={styles.subList}>
                       {category.subcategories.map(sub => (
@@ -191,7 +251,7 @@ export const FiltersBar = () => {
                           label={sub}
                           variant="subcategory"
                           checked={selectedSubcategories.includes(sub)}
-                          onChange={() => toggleArrayItem(sub, setSelectedSubcategories)}
+                          onChange={() => toggleSubcategory(sub)}
                         />
                       ))}
                     </div>
@@ -200,7 +260,7 @@ export const FiltersBar = () => {
               );
             })}
           </div>
-          {SKILLS_DATA.length > 6 && (
+          {skillsData.length > 6 && (
             <button
               type="button"
               className={styles.toggleBtn}
@@ -221,21 +281,21 @@ export const FiltersBar = () => {
               label="Не имеет значения"
               value="any"
               checked={authorGender === 'any'}
-              onChange={(e) => setAuthorGender(e.target.value)}
+              onChange={(e) => onGenderChange(e.target.value)}
             />
             <RadioButton
               name="author_gender"
               label="Мужской"
               value="male"
               checked={authorGender === 'male'}
-              onChange={(e) => setAuthorGender(e.target.value)}
+              onChange={(e) => onGenderChange(e.target.value)}
             />
             <RadioButton
               name="author_gender"
               label="Женский"
               value="female"
               checked={authorGender === 'female'}
-              onChange={(e) => setAuthorGender(e.target.value)}
+              onChange={(e) => onGenderChange(e.target.value)}
             />
           </div>
         </section>
@@ -250,11 +310,11 @@ export const FiltersBar = () => {
                 label={city}
                 variant="subcategory"
                 checked={selectedCities.includes(city)}
-                onChange={() => toggleArrayItem(city, setSelectedCities)}
+                onChange={() => toggleCity(city)}
               />
             ))}
           </div>
-          {CITIES.length > 5 && (
+          {cities.length > 5 && (
             <button
               type="button"
               className={styles.toggleBtn}
@@ -266,7 +326,7 @@ export const FiltersBar = () => {
           )}
         </section>
 
-      </div> {/* Конец .sectionsWrapper */}
+      </div>
     </aside>
   );
 };
