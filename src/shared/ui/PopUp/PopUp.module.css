@@ -1,0 +1,55 @@
+.Wrapper{
+  display: inline-flex;
+  min-height: 72px;
+  width: 340px;
+  padding: 24px 34px 24px 24px;
+  background-color: var(--color-button-hover);
+  border-radius: var(--radius-lg);
+  position: relative;
+}
+
+.Close{
+  position: absolute;
+  top: var( --space-xs);
+  right: var( --space-xs);
+}
+
+.Info{
+  width: 282px;
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-sm);
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.Text {
+  width: 250px;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  font-size: var(--font-size-h3);
+  font-family: Jost, sans-serif;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: -1.1%;
+  line-height: var(--line-height-h3);
+}
+
+.Button{
+  position: absolute;
+  background-color: var(--color-card-input);
+  right: var( --space-sm);
+  bottom: var( --space-sm);
+  border-radius: 20px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+
+  > span {
+    font-size: var(--font-size-caption);
+    line-height: var(--line-height-caption);
+    letter-spacing: 2%;
+    color: var( --color-text);
+  }
+}
