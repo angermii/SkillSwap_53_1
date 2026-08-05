@@ -9,7 +9,7 @@ export const PopUp = ({ userName, type = 'withoutButton', onClickClose, onClickB
         <CloseIcon />
       </button>
       <div className={Styles.Info}>
-        <BulbIcon size={24} />
+        <BulbIcon />
         <h3 className={Styles.Text}>{userName} предлагает вам обмен</h3>
       </div>
       {type === 'withButton' && (
