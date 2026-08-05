@@ -12,3 +12,9 @@ export async function fetchSkillById(id: string): Promise<Skill | undefined> {
   const skills = await fetchSkills()
   return skills.find((skill) => skill.id === id)
 }
+
+// возвращает все навыки указанного пользователя
+export async function fetchSkillByUserId(userId: string): Promise<Skill[]> {
+  const skills = await fetchSkills()
+  return skills.filter((skill) => skill.authorId === userId)
+}
