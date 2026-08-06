@@ -25,5 +25,5 @@
 
 .calendar {
   align-self: center;
-  padding: 0 var(--space-sm) var(--space-sm);
+  padding: 0 27px var(--space-md);
 }
