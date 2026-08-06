@@ -1,6 +1,17 @@
-export { UserPhoto } from './userPhoto/userPhoto'
 export { Footer } from './Footer'
+export { AuthForm } from './AuthForm'
+export { UserPhoto } from './userPhoto/userPhoto'
 export { GalleryCarousel } from './GalleryCarousel'
 export type { GalleryCarouselProps, GalleryImage } from './GalleryCarousel'
 export { Notifications } from './Notifications'
 export type { NotificationsProps } from './Notifications'
+
+export { Header } from './Header'
+export * from './UserCard'
+export * from './FiltersBar';
+export { UserSkillWidget } from './UserSkillWidget'
+export * from './SimilarOffers'
+export * from './DatePicker'
+export * from './RegistrationForm'
+export * from './CategoryMenu'
+export * from './UserDashboard'

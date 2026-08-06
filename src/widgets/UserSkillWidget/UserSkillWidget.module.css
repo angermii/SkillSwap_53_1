@@ -1,0 +1,43 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.header h2 {
+  font-family: var(--font-family-heading);
+  margin: 0 0 8px;
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-h2);
+  color: var(--color-text);
+}
+
+.header p {
+  font-family: var(--font-family-body);
+  margin: 0;
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  color: var(--color-caption);
+}
+
+.topActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: minmax(0, 399px) minmax(0, 440px);
+  justify-content: space-between;
+}
+
+.contentModal {
+  grid-template-columns: minmax(0, 420px) minmax(0, 440px);
+}
