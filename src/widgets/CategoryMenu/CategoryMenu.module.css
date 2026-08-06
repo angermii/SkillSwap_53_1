@@ -1,0 +1,10 @@
+.Wrapper{
+  background-color: var(--color-card-input);
+  border: 1px solid var(--color-caption);
+  padding: 60px;
+  border-radius: var(--radius-lg);
+  width: 1136px;
+  display: grid;
+  grid-template-columns: repeat(2, 488px);
+  gap: 40px;
+}

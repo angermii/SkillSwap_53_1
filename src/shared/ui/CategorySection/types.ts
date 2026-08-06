@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-export interface Props {
+export interface CategorySectionProps {
   icon: ReactNode
   iconColor: string
   category: string
