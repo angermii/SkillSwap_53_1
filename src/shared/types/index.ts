@@ -22,6 +22,7 @@ export interface Skill {
   imageUrl: string | null;
   authorId: string;
   createdAt: string;
+  likeCount: number;
 }
 
 // ─── User ────────────────────────────────────────────────
