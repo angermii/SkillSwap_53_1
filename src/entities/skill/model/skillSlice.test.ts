@@ -21,6 +21,7 @@ const testSkill: Skill = {
   imageUrl: null,
   authorId: 'user-001',
   createdAt: '2026-01-01T00:00:00.000Z',
+  likeCount: 0,
 }
 
 describe('skillSlice', () => {
