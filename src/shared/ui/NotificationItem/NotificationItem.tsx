@@ -1,8 +1,8 @@
 import Styles from './NotificationItem.module.css'
 import { Notification } from './types.ts'
-import { BulbIcon } from '@/shared/ui'
+import { BulbIcon, Button } from '@/shared/ui'
 
-export const NotificationItem = ({title, description, date, button, status} : Notification) => {
+export const NotificationItem = ({title, description, date, status, onClick} : Notification) => {
   return (
     <div className={Styles.Wrapper}>
       <div className={Styles.Notification}>
@@ -15,7 +15,7 @@ export const NotificationItem = ({title, description, date, button, status} : No
         </div>
         <p className={Styles.Date}>{date}</p>
       </div>
-      {button && status==='unread' && <div className={Styles.ButtonWrapper}>{button}</div>}
+      {status==='unread' && <Button onClick={onClick} className={Styles.ButtonWrapper}>Перейти</Button>}
     </div>
   )
 }

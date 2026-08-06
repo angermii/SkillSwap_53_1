@@ -6,9 +6,10 @@ export interface NotificationsProps {
   notifications?: Notification[];
   readAll?: () => void;
   clearAll?: () => void;
+  onClick?: () => void;
 }
 
-export const Notifications = ({notifications, readAll, clearAll} : NotificationsProps) => {
+export const Notifications = ({notifications = [], readAll, clearAll, onClick} : NotificationsProps) => {
   const unread = notifications.filter((item) => item.status === "unread");
   const read = notifications.filter((item) => item.status === "read");
   if (notifications.length === 0) {
@@ -37,6 +38,7 @@ export const Notifications = ({notifications, readAll, clearAll} : Notifications
                   description={item.description}
                   date={item.date}
                   button={item.button}
+                  onClick={onClick}
                   status={item.status}
                 />
               ))}
