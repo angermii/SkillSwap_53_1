@@ -46,6 +46,7 @@ export const Header = ({
               }
               isOpen={isMenuOpen}
               onClose={() => setIsMenuOpen(false)}
+              contentClassName={styles.dropdownHeader}
             >
               <CategoryMenu sections={categorySections} />
             </Dropdown>

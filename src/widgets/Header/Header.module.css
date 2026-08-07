@@ -25,7 +25,6 @@
   letter-spacing: 0.02em;
 }
 
-
 .navigation {
   display: flex;
   align-items: center;
@@ -68,12 +67,11 @@
   gap: 20px;
 }
 
-
 .categoryButton {
   display: flex;
   align-items: center;
   gap: 4px;
-letter-spacing: 0.02em;
+  letter-spacing: 0.02em;
   white-space: nowrap;
 }
 
@@ -96,4 +94,8 @@ letter-spacing: 0.02em;
   border: none;
   background: transparent;
   cursor: pointer;
+}
+
+.dropdownHeader {
+  transform: translateX(-293px) translateY(22px);
 }
