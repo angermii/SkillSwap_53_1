@@ -2,7 +2,7 @@ import type { Skill, SkillSubcategory, User } from '@/shared/types'
 import type { CardTagsProps } from '@/shared/ui'
 import type { UserCardData } from '@/widgets'
 
-// тип тега не экспортируется из бочки shared/ui, поэтому выводим его из пропсов CardTags
+// тип тега не экспортируется из shared/ui, поэтому вывел его из пропсов CardTags
 type SkillTag = CardTagsProps['teachTags'][number]
 
 export type FavoriteCard = {

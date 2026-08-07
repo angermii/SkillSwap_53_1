@@ -16,7 +16,7 @@ export default function FavoritesPage() {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
-  // id лайкнутых навыков берём из слайса favorites
+  // id лайкнутых навыков из слайса favorites
   const favoriteIds = useAppSelector((state) => state.favorites.ids)
   const skills = useAppSelector((state) => state.skill.skills)
   const users = useAppSelector((state) => state.user.items)
