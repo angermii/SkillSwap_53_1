@@ -22,6 +22,7 @@ const testSkill: Skill = {
   authorId: 'user-001',
   likeCount: 0, // количество лайков в тестовых данных
   createdAt: '2026-01-01T00:00:00.000Z',
+  likeCount: 0,
 }
 
 describe('skillSlice', () => {
