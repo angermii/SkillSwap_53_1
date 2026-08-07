@@ -1,23 +1,41 @@
 import { describe, expect, it } from 'vitest'
 import type { Skill } from '@/entities/skill/model/types'
+import type { User } from '@/entities/user/model/types'
 import { searchSkills } from './searchSkills'
 
-// Создаем полные объекты навыков по существующему типу Skill
-const createSkill = (id: string, title: string): Skill => ({
+// создаем полные объекты по существующим типам Skill и User
+const createSkill = (id: string, title: string, authorId: string): Skill => ({
   id,
   title,
   description: '',
   type: 'teach',
   subcategoryId: '',
   imageUrl: null,
-  authorId: '',
+  authorId,
   createdAt: '2026-01-01T00:00:00.000Z',
   likeCount: 0,
 })
 
+const createUser = (id: string, name: string, city: string): User => ({
+  id,
+  name,
+  city,
+  email: '',
+  avatarUrl: null,
+  gender: 'female',
+  age: 25,
+  description: '',
+  createdAt: '2026-01-01T00:00:00.000Z',
+})
+
 const skills = [
-  createSkill('skill-1', 'Основы фотографии'),
-  createSkill('skill-2', 'Английский язык'),
+  createSkill('skill-1', 'Основы фотографии', 'user-1'),
+  createSkill('skill-2', 'Английский язык', 'user-2'),
+]
+
+const users = [
+  createUser('user-1', 'Анна Смирнова', 'Москва'),
+  createUser('user-2', 'Борис Петров', 'Казань'),
 ]
 
 describe('searchSkills', () => {
@@ -46,5 +64,13 @@ describe('searchSkills', () => {
     searchSkills(skills, 'фото')
 
     expect(skills).toEqual(originalSkills)
+  })
+
+  it('ищет по имени пользователя без учёта регистра', () => {
+    expect(searchSkills(skills, 'СМИРНОВА', users)).toEqual([skills[0]])
+  })
+
+  it('ищет по городу без учёта регистра', () => {
+    expect(searchSkills(skills, 'КАЗ', users)).toEqual([skills[1]])
   })
 })
