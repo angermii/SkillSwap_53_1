@@ -6,10 +6,12 @@ import { BellIcon, HeartIcon, MoonIcon, CloseIcon, ChevronDownIcon } from '@/sha
 import clsx from 'clsx'
 import { Link } from 'react-router-dom'
 import { ROUTES } from '@/shared/lib/constants'
+import { CategoryMenu } from '@/widgets/CategoryMenu'
 
 export const Header = ({
   variant = 'loggedOut',
   user,
+  categorySections = [],
   onLoginClick,
   onRegisterClick,
   onThemeClick,
@@ -38,7 +40,6 @@ export const Header = ({
                   className={styles.categoryButton}
                   onClick={() => setIsMenuOpen((prev) => !prev)}
                 >
-                  {/*<div>Категории будут добавлены после merge CategorySection</div>*/}
                   <span>Все навыки</span>
                   <ChevronDownIcon />
                 </button>
@@ -46,7 +47,7 @@ export const Header = ({
               isOpen={isMenuOpen}
               onClose={() => setIsMenuOpen(false)}
             >
-              <div>Категории будут добавлены после merge CategorySection</div>
+              <CategoryMenu sections={categorySections} />
             </Dropdown>
 
             <div className={styles.search}>
