@@ -8,7 +8,7 @@
     "imageUrl": "/images/skills/skill-001.jpg",
     "authorId": "user-001",
     "createdAt": "2026-02-20T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 5
   },
   {
     "id": "skill-002",
@@ -30,7 +30,7 @@
     "imageUrl": "/images/skills/skill-003.jpg",
     "authorId": "user-003",
     "createdAt": "2026-02-22T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 6
   },
   {
     "id": "skill-004",
@@ -41,7 +41,7 @@
     "imageUrl": "/images/skills/skill-004.jpg",
     "authorId": "user-004",
     "createdAt": "2026-02-23T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 110
   },
 {
   "id": "skill-005",
@@ -52,7 +52,7 @@
   "imageUrl": "/images/skills/skill-005.jpg",
   "authorId": "user-005",
   "createdAt": "2026-02-24T10:00:00Z",
-  "likeCount": 0
+  "likeCount": 8
 },
   {
     "id": "skill-006",
@@ -63,7 +63,7 @@
     "imageUrl": "/images/skills/skill-006.jpg",
     "authorId": "user-006",
     "createdAt": "2026-02-25T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 56
   },
   {
     "id": "skill-007",
@@ -74,7 +74,7 @@
     "imageUrl": "/images/skills/skill-007.jpg",
     "authorId": "user-007",
     "createdAt": "2026-02-26T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 3
   },
   {
     "id": "skill-008",
@@ -96,7 +96,7 @@
     "imageUrl": "/images/skills/skill-009.jpg",
     "authorId": "user-009",
     "createdAt": "2026-02-28T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 41
   },
   {
     "id": "skill-010",
@@ -107,7 +107,7 @@
     "imageUrl": "/images/skills/skill-010.jpg",
     "authorId": "user-010",
     "createdAt": "2026-03-01T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 11
   },
   {
     "id": "skill-011",
@@ -118,7 +118,7 @@
     "imageUrl": "/images/skills/skill-011.jpg",
     "authorId": "user-011",
     "createdAt": "2026-03-02T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 4
   },
   {
     "id": "skill-012",
@@ -140,7 +140,7 @@
     "imageUrl": "/images/skills/skill-013.jpg",
     "authorId": "user-013",
     "createdAt": "2026-03-04T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 3
   },
   {
     "id": "skill-014",
@@ -151,7 +151,7 @@
     "imageUrl": "/images/skills/skill-014.jpg",
     "authorId": "user-014",
     "createdAt": "2026-03-05T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 9
   },
   {
     "id": "skill-015",
@@ -162,7 +162,7 @@
     "imageUrl": "/images/skills/skill-015.jpg",
     "authorId": "user-015",
     "createdAt": "2026-03-06T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 18
   },
   {
     "id": "skill-016",
@@ -173,7 +173,7 @@
     "imageUrl": "/images/skills/skill-016.jpg",
     "authorId": "user-016",
     "createdAt": "2026-03-07T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 23
   },
   {
     "id": "skill-017",
@@ -184,7 +184,7 @@
     "imageUrl": "/images/skills/skill-017.jpg",
     "authorId": "user-017",
     "createdAt": "2026-03-08T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 41
   },
   {
     "id": "skill-018",
@@ -195,7 +195,7 @@
     "imageUrl": "/images/skills/skill-018.jpg",
     "authorId": "user-018",
     "createdAt": "2026-03-09T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 125
   },
   {
     "id": "skill-019",
@@ -206,7 +206,7 @@
     "imageUrl": "/images/skills/skill-019.jpg",
     "authorId": "user-019",
     "createdAt": "2026-03-10T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 20
   },
   {
     "id": "skill-020",
@@ -217,7 +217,7 @@
     "imageUrl": "/images/skills/skill-020.jpg",
     "authorId": "user-020",
     "createdAt": "2026-03-11T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 23
   },
   {
     "id": "skill-021",
@@ -228,7 +228,7 @@
     "imageUrl": "/images/skills/skill-021.jpg",
     "authorId": "user-021",
     "createdAt": "2026-03-12T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 11
   },
   {
     "id": "skill-022",
@@ -239,7 +239,7 @@
     "imageUrl": "/images/skills/skill-022.jpg",
     "authorId": "user-022",
     "createdAt": "2026-03-13T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 7
   },
   {
     "id": "skill-023",
@@ -250,7 +250,7 @@
     "imageUrl": "/images/skills/skill-023.jpg",
     "authorId": "user-023",
     "createdAt": "2026-03-14T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 16
   },
   {
     "id": "skill-024",
@@ -261,7 +261,7 @@
     "imageUrl": "/images/skills/skill-024.jpg",
     "authorId": "user-024",
     "createdAt": "2026-03-15T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 17
   },
   {
     "id": "skill-025",
@@ -272,7 +272,7 @@
     "imageUrl": "/images/skills/skill-025.jpg",
     "authorId": "user-025",
     "createdAt": "2026-03-16T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 19
   },
   {
     "id": "skill-026",
@@ -283,7 +283,7 @@
     "imageUrl": "/images/skills/skill-026.jpg",
     "authorId": "user-026",
     "createdAt": "2026-03-17T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 15
   },
   {
     "id": "skill-027",
@@ -305,7 +305,7 @@
     "imageUrl": "/images/skills/skill-028.jpg",
     "authorId": "user-028",
     "createdAt": "2026-03-19T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 14
   },
   {
     "id": "skill-029",
@@ -316,7 +316,7 @@
     "imageUrl": "/images/skills/skill-029.jpg",
     "authorId": "user-029",
     "createdAt": "2026-03-20T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 6
   },
   {
     "id": "skill-030",
@@ -327,7 +327,7 @@
     "imageUrl": "/images/skills/skill-030.jpg",
     "authorId": "user-030",
     "createdAt": "2026-03-21T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 8
   },
   {
     "id": "skill-031",
@@ -338,7 +338,7 @@
     "imageUrl": "/images/skills/skill-031.jpg",
     "authorId": "user-031",
     "createdAt": "2026-03-22T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 13
   },
   {
     "id": "skill-032",
@@ -349,7 +349,7 @@
     "imageUrl": "/images/skills/skill-032.jpg",
     "authorId": "user-032",
     "createdAt": "2026-03-23T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 26
   },
   {
     "id": "skill-033",
@@ -360,7 +360,7 @@
     "imageUrl": "/images/skills/skill-033.jpg",
     "authorId": "user-033",
     "createdAt": "2026-03-24T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 45
   },
   {
     "id": "skill-034",
@@ -371,7 +371,7 @@
     "imageUrl": "/images/skills/skill-034.jpg",
     "authorId": "user-034",
     "createdAt": "2026-03-25T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 63
   },
   {
     "id": "skill-035",
@@ -382,7 +382,7 @@
     "imageUrl": "/images/skills/skill-035.jpg",
     "authorId": "user-035",
     "createdAt": "2026-03-26T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 12
   },
   {
     "id": "skill-036",
@@ -393,7 +393,7 @@
     "imageUrl": "/images/skills/skill-036.jpg",
     "authorId": "user-036",
     "createdAt": "2026-03-27T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 4
   },
   {
     "id": "skill-037",
@@ -404,7 +404,7 @@
     "imageUrl": "/images/skills/skill-037.jpg",
     "authorId": "user-037",
     "createdAt": "2026-03-28T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 5
   },
   {
     "id": "skill-038",
@@ -415,7 +415,7 @@
     "imageUrl": "/images/skills/skill-038.jpg",
     "authorId": "user-038",
     "createdAt": "2026-03-29T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 16
   },
 {
   "id": "skill-039",
@@ -426,7 +426,7 @@
   "imageUrl": "/images/skills/skill-039.jpg",
   "authorId": "user-039",
   "createdAt": "2026-03-30T10:00:00Z",
-  "likeCount": 0
+  "likeCount": 3
 },
 {
   "id": "skill-040",
@@ -437,7 +437,7 @@
   "imageUrl": "/images/skills/skill-040.jpg",
   "authorId": "user-040",
   "createdAt": "2026-03-31T10:00:00Z",
-  "likeCount": 0
+  "likeCount": 4
 },
   {
     "id": "skill-041",
@@ -448,7 +448,7 @@
     "imageUrl": "/images/skills/skill-041.jpg",
     "authorId": "user-001",
     "createdAt": "2026-04-01T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 23
   },
   {
     "id": "skill-042",
@@ -459,7 +459,7 @@
     "imageUrl": "/images/skills/skill-042.jpg",
     "authorId": "user-002",
     "createdAt": "2026-04-02T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 4
   },
   {
     "id": "skill-043",
@@ -470,7 +470,7 @@
     "imageUrl": "/images/skills/skill-043.jpg",
     "authorId": "user-003",
     "createdAt": "2026-04-03T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 1
   },
   {
     "id": "skill-044",
@@ -481,7 +481,7 @@
     "imageUrl": "/images/skills/skill-044.jpg",
     "authorId": "user-004",
     "createdAt": "2026-04-04T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 6
   },
   {
     "id": "skill-045",
@@ -492,7 +492,7 @@
     "imageUrl": "/images/skills/skill-045.jpg",
     "authorId": "user-005",
     "createdAt": "2026-04-05T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 7
   },
   {
     "id": "skill-046",
@@ -503,7 +503,7 @@
     "imageUrl": "/images/skills/skill-046.jpg",
     "authorId": "user-006",
     "createdAt": "2026-04-06T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 8
   },
   {
     "id": "skill-047",
@@ -514,7 +514,7 @@
     "imageUrl": "/images/skills/skill-047.jpg",
     "authorId": "user-007",
     "createdAt": "2026-04-07T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 32
   },
   {
     "id": "skill-048",
@@ -525,7 +525,7 @@
     "imageUrl": "/images/skills/skill-048.jpg",
     "authorId": "user-008",
     "createdAt": "2026-04-08T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 46
   },
   {
     "id": "skill-049",
@@ -536,7 +536,7 @@
     "imageUrl": "/images/skills/skill-049.jpg",
     "authorId": "user-009",
     "createdAt": "2026-04-09T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 87
   },
   {
     "id": "skill-050",
@@ -547,7 +547,7 @@
     "imageUrl": "/images/skills/skill-050.jpg",
     "authorId": "user-010",
     "createdAt": "2026-04-10T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 56
   },
   {
     "id": "skill-051",
@@ -558,7 +558,7 @@
     "imageUrl": "/images/skills/skill-051.jpg",
     "authorId": "user-011",
     "createdAt": "2026-04-11T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 31
   },
   {
     "id": "skill-052",
@@ -569,7 +569,7 @@
     "imageUrl": "/images/skills/skill-052.jpg",
     "authorId": "user-012",
     "createdAt": "2026-04-12T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 21
   },
   {
     "id": "skill-053",
@@ -580,7 +580,7 @@
     "imageUrl": "/images/skills/skill-053.jpg",
     "authorId": "user-013",
     "createdAt": "2026-04-13T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 5
   },
   {
     "id": "skill-054",
@@ -602,7 +602,7 @@
     "imageUrl": "/images/skills/skill-055.jpg",
     "authorId": "user-015",
     "createdAt": "2026-04-15T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 1
   },
   {
     "id": "skill-056",
@@ -613,7 +613,7 @@
     "imageUrl": "/images/skills/skill-056.jpg",
     "authorId": "user-016",
     "createdAt": "2026-04-16T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 3
   },
   {
     "id": "skill-057",
@@ -624,7 +624,7 @@
     "imageUrl": "/images/skills/skill-057.jpg",
     "authorId": "user-017",
     "createdAt": "2026-04-17T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 27
   },
   {
     "id": "skill-058",
@@ -635,7 +635,7 @@
     "imageUrl": "/images/skills/skill-058.jpg",
     "authorId": "user-018",
     "createdAt": "2026-04-18T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 6
   },
   {
     "id": "skill-059",
@@ -646,7 +646,7 @@
     "imageUrl": "/images/skills/skill-059.jpg",
     "authorId": "user-019",
     "createdAt": "2026-04-19T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 45
   },
   {
     "id": "skill-060",
@@ -668,7 +668,7 @@
     "imageUrl": "/images/skills/skill-061.jpg",
     "authorId": "user-021",
     "createdAt": "2026-04-21T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 4
   },
   {
     "id": "skill-062",
@@ -679,7 +679,7 @@
     "imageUrl": "/images/skills/skill-062.jpg",
     "authorId": "user-022",
     "createdAt": "2026-04-22T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 41
   },
   {
     "id": "skill-063",
@@ -690,7 +690,7 @@
     "imageUrl": "/images/skills/skill-063.jpg",
     "authorId": "user-023",
     "createdAt": "2026-04-23T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 13
   },
   {
     "id": "skill-064",
@@ -701,7 +701,7 @@
     "imageUrl": "/images/skills/skill-064.jpg",
     "authorId": "user-024",
     "createdAt": "2026-04-24T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 78
   },
   {
     "id": "skill-065",
@@ -712,7 +712,7 @@
     "imageUrl": "/images/skills/skill-065.jpg",
     "authorId": "user-025",
     "createdAt": "2026-04-25T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 45
   },
   {
     "id": "skill-066",
@@ -723,7 +723,7 @@
     "imageUrl": "/images/skills/skill-066.jpg",
     "authorId": "user-026",
     "createdAt": "2026-04-26T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 63
   },
   {
     "id": "skill-067",
@@ -734,7 +734,7 @@
     "imageUrl": "/images/skills/skill-067.jpg",
     "authorId": "user-027",
     "createdAt": "2026-04-27T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 8
   },
   {
     "id": "skill-068",
@@ -745,7 +745,7 @@
     "imageUrl": "/images/skills/skill-068.jpg",
     "authorId": "user-028",
     "createdAt": "2026-04-28T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 6
   },
   {
     "id": "skill-069",
@@ -756,7 +756,7 @@
     "imageUrl": "/images/skills/skill-069.jpg",
     "authorId": "user-029",
     "createdAt": "2026-04-29T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 19
   },
   {
     "id": "skill-070",
@@ -767,7 +767,7 @@
     "imageUrl": "/images/skills/skill-070.jpg",
     "authorId": "user-030",
     "createdAt": "2026-04-30T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 28
   },
   {
     "id": "skill-071",
@@ -778,7 +778,7 @@
     "imageUrl": "/images/skills/skill-071.jpg",
     "authorId": "user-031",
     "createdAt": "2026-05-01T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 12
   },
   {
     "id": "skill-072",
@@ -800,7 +800,7 @@
     "imageUrl": "/images/skills/skill-073.jpg",
     "authorId": "user-033",
     "createdAt": "2026-05-03T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 6
   },
   {
     "id": "skill-074",
@@ -811,7 +811,7 @@
     "imageUrl": "/images/skills/skill-074.jpg",
     "authorId": "user-034",
     "createdAt": "2026-05-04T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 3
   },
   {
     "id": "skill-075",
@@ -822,7 +822,7 @@
     "imageUrl": "/images/skills/skill-075.jpg",
     "authorId": "user-035",
     "createdAt": "2026-05-05T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 1
   },
   {
     "id": "skill-076",
@@ -833,7 +833,7 @@
     "imageUrl": "/images/skills/skill-076.jpg",
     "authorId": "user-036",
     "createdAt": "2026-05-06T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 40
   },
   {
     "id": "skill-077",
@@ -844,7 +844,7 @@
     "imageUrl": "/images/skills/skill-077.jpg",
     "authorId": "user-037",
     "createdAt": "2026-05-07T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 25
   },
   {
     "id": "skill-078",
@@ -855,7 +855,7 @@
     "imageUrl": "/images/skills/skill-078.jpg",
     "authorId": "user-038",
     "createdAt": "2026-05-08T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 12
   },
   {
     "id": "skill-079",
@@ -866,7 +866,7 @@
     "imageUrl": "/images/skills/skill-079.jpg",
     "authorId": "user-039",
     "createdAt": "2026-05-09T10:00:00Z",
-    "likeCount": 0
+    "likeCount": 8
   },
 {
   "id": "skill-080",
@@ -877,6 +877,6 @@
   "imageUrl": "/images/skills/skill-080.jpg",
   "authorId": "user-040",
   "createdAt": "2026-05-10T10:00:00Z",
-  "likeCount": 0
+  "likeCount": 7
 }
 ]
