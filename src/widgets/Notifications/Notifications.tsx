@@ -37,7 +37,6 @@ export const Notifications = ({notifications = [], readAll, clearAll, onClick} :
                   title={item.title}
                   description={item.description}
                   date={item.date}
-                  button={item.button}
                   onClick={onClick}
                   status={item.status}
                 />
