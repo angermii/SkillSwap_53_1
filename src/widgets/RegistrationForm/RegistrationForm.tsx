@@ -19,6 +19,7 @@ import type { RegistrationFormProps, RegistrationTextField } from './type'
 export const RegistrationForm = ({
   currentStep,
   data,
+  errors = {},
   genderOptions,
   cityOptions,
   categoryOptions,
@@ -42,25 +43,32 @@ export const RegistrationForm = ({
     onAvatarChange(event.target.files?.[0] ?? null)
   }
 
-  // передает выбранные изображения навыка родительскому компоненту
+  // добавляет новые изображения к уже выбранным
   const handleImagesChange = (event: ChangeEvent<HTMLInputElement>) => {
-    onImagesChange(Array.from(event.target.files ?? []))
+    const newImages = Array.from(event.target.files ?? [])
+
+    onImagesChange([...data.skillImages, ...newImages])
   }
 
-  // поддерживает перетаскивание изображений в область загрузки
+  // добавляет перетащенные изображения к уже выбранным
   const handleImagesDrop = (event: DragEvent<HTMLLabelElement>) => {
     event.preventDefault()
 
-    const images = Array.from(event.dataTransfer.files).filter((file) =>
+    const newImages = Array.from(event.dataTransfer.files).filter((file) =>
       file.type.startsWith('image/'),
     )
 
-    onImagesChange(images)
+    onImagesChange([...data.skillImages, ...newImages])
   }
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     onNext()
+  }
+
+  // не отображает форму при некорректном номере шага
+  if (currentStep !== 2 && currentStep !== 3) {
+    return null
   }
 
   return (
@@ -94,6 +102,7 @@ export const RegistrationForm = ({
 
           <Input
             inputClassName={styles.textField}
+            error={errors.name}
             label="Имя"
             placeholder="Введите ваше имя"
             value={data.name}
@@ -104,6 +113,7 @@ export const RegistrationForm = ({
             {/* временное поле до появления полноценного компонента DatePicker */}
             <Input
               inputClassName={styles.textField}
+              error={errors.birthDate}
               label="Дата рождения"
               placeholder="дд.мм.гггг"
               value={data.birthDate}
@@ -111,38 +121,70 @@ export const RegistrationForm = ({
               onChange={handleTextChange('birthDate')}
             />
 
-            <Select
-              label="Пол"
-              value={data.gender}
-              placeholder="Не указан"
-              options={genderOptions}
-              onChange={(value) => onFieldChange('gender', value)}
-            />
+            <div className={styles.fieldGroup}>
+              <Select
+                label="Пол"
+                value={data.gender}
+                placeholder="Не указан"
+                options={genderOptions}
+                onChange={(value) => onFieldChange('gender', value)}
+              />
+
+              {errors.gender && (
+                <span className={styles.errorText} role="alert">
+                  {errors.gender}
+                </span>
+              )}
+            </div>
           </div>
 
-          <EditableSelect
-            label="Город"
-            value={data.city}
-            placeholder="Не указан"
-            options={cityOptions}
-            onChange={(value) => onFieldChange('city', value)}
-          />
+          <div className={styles.fieldGroup}>
+            <EditableSelect
+              label="Город"
+              value={data.city}
+              placeholder="Не указан"
+              options={cityOptions}
+              onChange={(value) => onFieldChange('city', value)}
+            />
 
-          <Select
-            label="Категория навыка, которому хотите научиться"
-            value={data.learningCategory}
-            placeholder="Выберите категорию"
-            options={categoryOptions}
-            onChange={(value) => onFieldChange('learningCategory', value)}
-          />
+            {errors.city && (
+              <span className={styles.errorText} role="alert">
+                {errors.city}
+              </span>
+            )}
+          </div>
 
-          <Select
-            label="Подкатегория навыка, которому хотите научиться"
-            value={data.learningSubcategory}
-            placeholder="Выберите подкатегорию"
-            options={learningSubcategoryOptions}
-            onChange={(value) => onFieldChange('learningSubcategory', value)}
-          />
+          <div className={styles.fieldGroup}>
+            <Select
+              label="Категория навыка, которому хотите научиться"
+              value={data.learningCategory}
+              placeholder="Выберите категорию"
+              options={categoryOptions}
+              onChange={(value) => onFieldChange('learningCategory', value)}
+            />
+
+            {errors.learningCategory && (
+              <span className={styles.errorText} role="alert">
+                {errors.learningCategory}
+              </span>
+            )}
+          </div>
+
+          <div className={styles.fieldGroup}>
+            <Select
+              label="Подкатегория навыка, которому хотите научиться"
+              value={data.learningSubcategory}
+              placeholder="Выберите подкатегорию"
+              options={learningSubcategoryOptions}
+              onChange={(value) => onFieldChange('learningSubcategory', value)}
+            />
+
+            {errors.learningSubcategory && (
+              <span className={styles.errorText} role="alert">
+                {errors.learningSubcategory}
+              </span>
+            )}
+          </div>
         </div>
       )}
 
@@ -151,30 +193,48 @@ export const RegistrationForm = ({
         <div className={styles.fields}>
           <Input
             inputClassName={styles.textField}
+            error={errors.skillName}
             label="Название навыка"
             placeholder="Введите название вашего навыка"
             value={data.skillName}
             onChange={handleTextChange('skillName')}
           />
 
-          <Select
-            label="Категория навыка"
-            value={data.skillCategory}
-            placeholder="Выберите категорию навыка"
-            options={categoryOptions}
-            onChange={(value) => onFieldChange('skillCategory', value)}
-          />
+          <div className={styles.fieldGroup}>
+            <Select
+              label="Категория навыка"
+              value={data.skillCategory}
+              placeholder="Выберите категорию навыка"
+              options={categoryOptions}
+              onChange={(value) => onFieldChange('skillCategory', value)}
+            />
 
-          <Select
-            label="Подкатегория навыка"
-            value={data.skillSubcategory}
-            placeholder="Выберите подкатегорию навыка"
-            options={skillSubcategoryOptions}
-            onChange={(value) => onFieldChange('skillSubcategory', value)}
-          />
+            {errors.skillCategory && (
+              <span className={styles.errorText} role="alert">
+                {errors.skillCategory}
+              </span>
+            )}
+          </div>
+
+          <div className={styles.fieldGroup}>
+            <Select
+              label="Подкатегория навыка"
+              value={data.skillSubcategory}
+              placeholder="Выберите подкатегорию навыка"
+              options={skillSubcategoryOptions}
+              onChange={(value) => onFieldChange('skillSubcategory', value)}
+            />
+
+            {errors.skillSubcategory && (
+              <span className={styles.errorText} role="alert">
+                {errors.skillSubcategory}
+              </span>
+            )}
+          </div>
 
           <Input
             inputClassName={styles.textField}
+            error={errors.skillDescription}
             multiline
             label="Описание"
             placeholder="Коротко опишите, чему можете научить"

@@ -28,10 +28,16 @@ export type RegistrationTextField = Exclude<
   'avatarUrl' | 'skillImages'
 >
 
+// сообщения об ошибках для текстовых полей и списков формы
+export type RegistrationFormErrors = Partial<
+  Record<RegistrationTextField, string>
+>
+
 // данные и обработчики, которые RegistrationForm получает от родительского компонента
 export type RegistrationFormProps = {
   currentStep: RegistrationStep
   data: RegistrationFormData
+  errors?: RegistrationFormErrors
 
   // варианты для выпадающих списков
   genderOptions: RegistrationOption[]
