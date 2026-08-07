@@ -1,12 +1,11 @@
-import { ReactNode, useState } from 'react';
+import { useState, ReactNode } from 'react';
 import clsx from 'clsx';
 
-import { Headline, Button } from '@/shared/ui'; //импортирую button
+import { Headline, Button } from '@/shared/ui'; 
 import { UserCard } from '@/widgets/UserCard'; 
 import type { UserCardData } from '@/widgets/UserCard'; 
 
 import styles from './UserCatalog.module.css';
-
 
 export interface CatalogSection {
   id: string | number;
@@ -25,27 +24,36 @@ export interface UserCatalogProps {
   onDetailsClick?: (id: string | number) => void;
   onLikeChange?: (id: string | number, count: number, isLiked: boolean) => void;
   likedState?: Record<string | number, boolean>;
+  likeCounts?: Record<string | number, number>; // Добавилf пропс для количества лайков
 }
 
-/* Кодочек для проверки. Вставляю в файл src/pages/CatalogPage/index.tsx
+
+/* Кодочек для проверки компонента
 import { useState } from 'react';
 import { UserCatalog } from '@/widgets/UserCatalog'; 
 import dbUsers from '../../../public/db/users.json';
 
 const CatalogPage = () => {
-  // Локальный стейт для хранения лайков (пока не подключен глобальный стор)
+  // Локальные стейты для хранения статуса лайка и количества лайков
   const [likedState, setLikedState] = useState<Record<string | number, boolean>>({});
+  const [likeCounts, setLikeCounts] = useState<Record<string | number, number>>({});
 
   // Обработчик клика по кнопке "Подробнее"
   const handleDetailsClick = (id: string | number) => {
     console.log('Переход на профиль пользователя с ID:', id);
   };
 
-  // Обработчик изменения лайка
+  // Обработчик изменения лайка (принимает id, новое количество и статус)
   const handleLikeChange = (id: string | number, count: number, isLiked: boolean) => {
     setLikedState((prev) => ({
       ...prev,
       [id]: isLiked,
+    }));
+    
+    // Сохраняем обновленное количество лайков
+    setLikeCounts((prev) => ({
+      ...prev,
+      [id]: count,
     }));
   };
 
@@ -85,15 +93,15 @@ const CatalogPage = () => {
         onDetailsClick={handleDetailsClick}
         onLikeChange={handleLikeChange}
         likedState={likedState}
+        likeCounts={likeCounts} // Передаем стейт с цифрами в виджет
       />
     </main>
   );
 };
 
 export default CatalogPage;
+
 */
-
-
 
 const MAX_VISIBLE_CARDS = 6; 
 const INITIAL_VISIBLE_CARDS = 3;
@@ -102,12 +110,14 @@ const CatalogSectionItem = ({
   section, 
   onDetailsClick, 
   onLikeChange, 
-  likedState 
+  likedState,
+  likeCounts
 }: { 
   section: CatalogSection;
   onDetailsClick?: (id: string | number) => void;
   onLikeChange?: (id: string | number, count: number, isLiked: boolean) => void;
   likedState?: Record<string | number, boolean>;
+  likeCounts?: Record<string | number, number>;
 }) => {
   const [visibleCount, setVisibleCount] = useState(
     section.isExpandable ? INITIAL_VISIBLE_CARDS : section.users.length
@@ -150,7 +160,7 @@ const CatalogSectionItem = ({
               user={user} 
               variant="compact" 
               isLiked={likedState?.[user.id] || false}
-              likeCount={0} 
+              likeCount={likeCounts?.[user.id] || 0} // Передаем динамическое значение
               onDetailsClick={onDetailsClick}
               onLikeChange={onLikeChange}
             />
@@ -173,10 +183,10 @@ export const UserCatalog = ({
   className,
   onDetailsClick,
   onLikeChange,
-  likedState
+  likedState,
+  likeCounts
 }: UserCatalogProps) => {
   
-  // 1. Если передан плоский массив пользователей (режим фильтрации)
   if (users) {
     return (
       <div className={clsx(styles.catalog, className)}>
@@ -196,7 +206,7 @@ export const UserCatalog = ({
                   user={user} 
                   variant="compact" 
                   isLiked={likedState?.[user.id] || false}
-                  likeCount={0}
+                  likeCount={likeCounts?.[user.id] || 0} // Передаем динамическое значение
                   onDetailsClick={onDetailsClick}
                   onLikeChange={onLikeChange}
                 />
@@ -212,7 +222,6 @@ export const UserCatalog = ({
     );
   }
 
-  // 2. Если передан массив секций (режим главной страницы)
   if (sections?.length) {
     return (
       <div className={clsx(styles.catalog, className)}>
@@ -223,6 +232,7 @@ export const UserCatalog = ({
             onDetailsClick={onDetailsClick}
             onLikeChange={onLikeChange}
             likedState={likedState}
+            likeCounts={likeCounts} // Прокидываем пропс вниз
           />
         ))}
       </div>
