@@ -9,7 +9,7 @@ export type RegistrationOption = {
 // данные, которые пользователь заполняет на втором и третьем шаге
 export type RegistrationFormData = {
   name: string
-  birthDate: string
+  birthDate?: Date
   gender: string
   city: string
   learningCategory: string
@@ -48,6 +48,7 @@ export type RegistrationFormProps = {
 
   // обработчики изменения данных и переходов между шагами
   onFieldChange: (field: RegistrationTextField, value: string) => void
+  onBirthDateChange: (date: Date | undefined) => void
   onAvatarChange: (file: File | null) => void
   onImagesChange: (files: File[]) => void
   onBack: () => void
