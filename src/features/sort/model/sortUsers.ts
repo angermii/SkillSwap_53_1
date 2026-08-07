@@ -1,4 +1,4 @@
-import type { Skill } from '@/shared/types'
+import type { Skill, User } from '@/shared/types'
 
 // тип сортировки: популярность, дата, рекомендации
 export type SortType = 'popularity' | 'date' | 'recommendations'
@@ -7,41 +7,52 @@ export type SortType = 'popularity' | 'date' | 'recommendations'
 export type DateOrder = 'newest' | 'oldest'
 
 // сортировка по популярности: по убыванию лайков
-export const sortByPopularity = (skills: Skill[]): Skill[] => {
-  return [...skills].sort((a, b) => b.likeCount - a.likeCount)
+export const sortByPopularity = (users: User[], skillByAuthorId: Map<string, Skill>): User[] => {
+  return [...users].sort((a, b) => {
+    const aLikes = skillByAuthorId.get(a.id)?.likeCount ?? 0
+    const bLikes = skillByAuthorId.get(b.id)?.likeCount ?? 0
+
+    return bLikes - aLikes
+  })
 }
 
 // сортировка по дате: по умолчанию сначала новые, направление можно менять
-export const sortByDate = (skills: Skill[], order: DateOrder = 'newest'): Skill[] => {
-  return [...skills].sort((a, b) => {
+export const sortByDate = (users: User[], order: DateOrder = 'newest'): User[] => {
+  return [...users].sort((a, b) => {
     const aTime = new Date(a.createdAt).getTime()
     const bTime = new Date(b.createdAt).getTime()
 
     if (order === 'oldest') {
       return aTime - bTime // сначала старые
     }
-
     return bTime - aTime // сначала новые
   })
 }
 
 // рекомендуемое: рандом
-export const sortByRecommendations = (skills: Skill[]): Skill[] => {
-  return [...skills].sort(() => Math.random() - 0.5)
+export const sortByRecommendations = (users: User[]): User[] => {
+  return [...users].sort(() => Math.random() - 0.5)
 }
 
 // главная функция сортировки, выбирает кейс по типу сортировки
-export const sortSkills = (
+export const sortUsers = (
+  users: User[],
   skills: Skill[],
   sortType: SortType,
   dateOrder: DateOrder = 'newest',
-): Skill[] => {
+): User[] => {
+  // собираем навыки по пользователям один раз для быстрого доступа
+  const skillByAuthorId = new Map<string, Skill>()
+  skills.forEach((skill) => {
+    skillByAuthorId.set(skill.authorId, skill)
+  })
+
   switch (sortType) {
     case 'popularity':
-      return sortByPopularity(skills)
+      return sortByPopularity(users, skillByAuthorId)
     case 'date':
-      return sortByDate(skills, dateOrder)
+      return sortByDate(users, dateOrder)
     case 'recommendations':
-      return sortByRecommendations(skills)
+      return sortByRecommendations(users)
   }
 }
