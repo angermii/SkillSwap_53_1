@@ -109,42 +109,42 @@
   {
     "id": "drawing",
     "title": "Рисование и иллюстрация",
-    "categoryId": "creativity"
+    "categoryId": "art"
   },
   {
     "id": "photography",
     "title": "Фотография",
-    "categoryId": "creativity"
+    "categoryId": "art"
   },
   {
     "id": "video-editing",
     "title": "Видеомонтаж",
-    "categoryId": "creativity"
+    "categoryId": "art"
   },
   {
     "id": "music",
     "title": "Музыка и звук",
-    "categoryId": "creativity"
+    "categoryId": "art"
   },
   {
     "id": "acting",
     "title": "Актёрское мастерство",
-    "categoryId": "creativity"
+    "categoryId": "art"
   },
   {
     "id": "creative-writing",
     "title": "Креативное письмо",
-    "categoryId": "creativity"
+    "categoryId": "art"
   },
   {
     "id": "art-therapy",
     "title": "Арт-терапия",
-    "categoryId": "creativity"
+    "categoryId": "art"
   },
   {
     "id": "diy",
     "title": "Декор и DIY",
-    "categoryId": "creativity"
+    "categoryId": "art"
   },
   {
     "id": "self-development",

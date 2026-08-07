@@ -15,7 +15,7 @@ const iconMap = {
   business: CategoryBusinessIcon,
   languages: CategoryLanguagesIcon,
   home: CategoryHomeIcon,
-  creativity: CategoryArtIcon,
+  art: CategoryArtIcon,
   education: CategoryEducationIcon,
   health: CategoryHealthIcon,
 } as const
@@ -25,7 +25,7 @@ const colorMap = {
   business: 'purple',
   languages: 'yellow',
   home: 'peach',
-  creativity: 'pink',
+  art: 'pink',
   education: 'blue',
   health: 'green',
 } as const
