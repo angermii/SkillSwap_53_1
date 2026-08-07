@@ -29,3 +29,19 @@ export const sortByDate = (skills: Skill[], order: DateOrder = 'newest'): Skill[
 export const sortByRecommendations = (skills: Skill[]): Skill[] => {
   return [...skills].sort(() => Math.random() - 0.5)
 }
+
+// главная функция сортировки, выбирает кейс по типу сортировки
+export const sortSkills = (
+  skills: Skill[],
+  sortType: SortType,
+  dateOrder: DateOrder = 'newest',
+): Skill[] => {
+  switch (sortType) {
+    case 'popularity':
+      return sortByPopularity(skills)
+    case 'date':
+      return sortByDate(skills, dateOrder)
+    case 'recommendations':
+      return sortByRecommendations(skills)
+  }
+}

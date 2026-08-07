@@ -1,6 +1,6 @@
 import { describe, test, expect } from 'vitest'
 import type { Skill } from '@/shared/types'
-import { sortByPopularity, sortByDate, sortByRecommendations } from './sortUtils'
+import { sortByPopularity, sortByDate, sortByRecommendations, sortSkills } from './sortUtils'
 
 describe('sortUtils', () => {
   const mockSkills: Skill[] = [
@@ -90,6 +90,43 @@ describe('sortUtils', () => {
     test('не мутирует исходный массив', () => {
       const original = [...mockSkills]
       sortByRecommendations(mockSkills)
+
+      expect(mockSkills).toEqual(original)
+    })
+  })
+
+  describe('sortSkills', () => {
+    test('с sortType = popularity, сортирует по убыванию лайков ', () => {
+      const result = sortSkills(mockSkills, 'popularity')
+      expect(result.map((skill) => skill.id)).toEqual(['skill-003', 'skill-001', 'skill-002'])
+    })
+
+    test('с sortType = date, по умолчанию сначала новые', () => {
+      const result = sortSkills(mockSkills, 'date')
+      expect(result.map((skill) => skill.id)).toEqual(['skill-003', 'skill-002', 'skill-001'])
+    })
+
+    test('с sortType = date и dateOrder = newest, сортирует сначала новые', () => {
+      const result = sortSkills(mockSkills, 'date', 'newest')
+      expect(result.map((skill) => skill.id)).toEqual(['skill-003', 'skill-002', 'skill-001'])
+    })
+
+    test('с sortType = date и dateOrder = oldest, сортирует сначала старые', () => {
+      const result = sortSkills(mockSkills, 'date', 'oldest')
+
+      expect(result.map((skill) => skill.id)).toEqual(['skill-001', 'skill-002', 'skill-003'])
+    })
+
+    test('с sortType = recommendations, возвращает массив той же длины и с теми же элементами', () => {
+      const result = sortSkills(mockSkills, 'recommendations')
+
+      expect(result).toHaveLength(mockSkills.length)
+      expect(result).toEqual(expect.arrayContaining(mockSkills))
+    })
+
+    test('не мутирует исходный массив', () => {
+      const original = [...mockSkills]
+      sortSkills(mockSkills, 'popularity')
 
       expect(mockSkills).toEqual(original)
     })
