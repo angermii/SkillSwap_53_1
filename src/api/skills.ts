@@ -1,4 +1,4 @@
-import type { Skill } from '@/shared/types'
+import type { Skill, SkillSubcategory } from '@/shared/types'
 
 const BASE_URL = '/db'
 
@@ -17,4 +17,11 @@ export async function fetchSkillById(id: string): Promise<Skill | undefined> {
 export async function fetchSkillByUserId(userId: string): Promise<Skill[]> {
   const skills = await fetchSkills()
   return skills.filter((skill) => skill.authorId === userId)
+}
+
+// возвращает подкатегории навыков — нужны для тегов в карточках
+export async function fetchSkillSubcategories(): Promise<SkillSubcategory[]> {
+  const response = await fetch(`${BASE_URL}/skillSubcategories.json`)
+  if (!response.ok) throw new Error('Failed to fetch skill subcategories')
+  return response.json()
 }
