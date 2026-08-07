@@ -11,17 +11,11 @@ export const searchUsers = (skills: Skill[], query: string, users: User[] = []):
   }
 
   return users.filter((user) => {
-    // находим навык пользователя
-    const skill = skills.find((s) => s.authorId === user.id)
-
-    // если у пользователя нет навыка — пропускаем
-    if (!skill) {
+    const userSkills = skills.filter((s) => s.authorId === user.id)
+    if (userSkills.length === 0) {
       return false
     }
-
-    const searchableValues = [skill.title, user.name, user.city]
-
-    // ищем совпадение хотя бы в одном разрешенном поле
+    const searchableValues = [user.name, user.city, ...userSkills.map((skill) => skill.title)]
     return searchableValues.some((value) => value?.toLowerCase().includes(normalizedQuery))
   })
 }

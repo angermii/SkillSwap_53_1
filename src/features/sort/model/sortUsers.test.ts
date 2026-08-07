@@ -78,15 +78,19 @@ describe('sortUsers', () => {
 
   describe('sortByPopularity', () => {
     test('сортирует по убыванию лайков', () => {
-      const skillByAuthorId = new Map(mockSkills.map((skill) => [skill.authorId, skill]))
-      const result = sortByPopularity(mockUsers, skillByAuthorId)
-      expect(result.map((user) => user.id)).toEqual(['user-003', 'user-001', 'user-002'])
+      const teachLikesMap = new Map(
+        mockSkills
+          .filter((skill) => skill.type === 'teach')
+          .map((skill) => [skill.authorId, skill.likeCount]),
+      )
+      const result = sortByPopularity(mockUsers, teachLikesMap)
+      expect(result.map((user) => user.id)).toEqual(['user-001', 'user-002', 'user-003'])
     })
 
     test('не мутирует исходный массив', () => {
-      const skillByAuthorId = new Map(mockSkills.map((skill) => [skill.authorId, skill]))
+      const teachLikesMap = new Map(mockSkills.map((skill) => [skill.authorId, skill.likeCount]))
       const original = [...mockUsers]
-      sortByPopularity(mockUsers, skillByAuthorId)
+      sortByPopularity(mockUsers, teachLikesMap)
       expect(mockUsers).toEqual(original)
     })
   })
@@ -131,7 +135,7 @@ describe('sortUsers', () => {
   describe('sortUsers', () => {
     test('с sortType = popularity, сортирует по убыванию лайков ', () => {
       const result = sortUsers(mockUsers, mockSkills, 'popularity')
-      expect(result.map((user) => user.id)).toEqual(['user-003', 'user-001', 'user-002'])
+      expect(result.map((user) => user.id)).toEqual(['user-001', 'user-002', 'user-003'])
     })
 
     test('с sortType = date, по умолчанию сначала новые', () => {

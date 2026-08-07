@@ -7,10 +7,10 @@ export type SortType = 'popularity' | 'date' | 'recommendations'
 export type DateOrder = 'newest' | 'oldest'
 
 // сортировка по популярности: по убыванию лайков
-export const sortByPopularity = (users: User[], skillByAuthorId: Map<string, Skill>): User[] => {
+export const sortByPopularity = (users: User[], teachLikesMap: Map<string, number>): User[] => {
   return [...users].sort((a, b) => {
-    const aLikes = skillByAuthorId.get(a.id)?.likeCount ?? 0
-    const bLikes = skillByAuthorId.get(b.id)?.likeCount ?? 0
+    const aLikes = teachLikesMap.get(a.id) ?? 0
+    const bLikes = teachLikesMap.get(b.id) ?? 0
 
     return bLikes - aLikes
   })
@@ -41,15 +41,17 @@ export const sortUsers = (
   sortType: SortType,
   dateOrder: DateOrder = 'newest',
 ): User[] => {
-  // собираем навыки по пользователям один раз для быстрого доступа
-  const skillByAuthorId = new Map<string, Skill>()
+  // собираем лайки у teach навыков
+  const teachLikesMap = new Map<string, number>()
   skills.forEach((skill) => {
-    skillByAuthorId.set(skill.authorId, skill)
+    if (skill.type === 'teach') {
+      teachLikesMap.set(skill.authorId, skill.likeCount)
+    }
   })
 
   switch (sortType) {
     case 'popularity':
-      return sortByPopularity(users, skillByAuthorId)
+      return sortByPopularity(users, teachLikesMap)
     case 'date':
       return sortByDate(users, dateOrder)
     case 'recommendations':
