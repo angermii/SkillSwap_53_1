@@ -23,6 +23,19 @@
   letter-spacing: 0.02em;
 }
 
+/* сообщение об ошибке для компонентов без встроенного error */
+.fieldGroup {
+  width: 100%;
+}
+
+.errorText {
+  display: block;
+  margin-top: 4px;
+  color: var(--color-error);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+}
+
 /* загрузка аватара */
 .avatarUpload {
   position: relative;

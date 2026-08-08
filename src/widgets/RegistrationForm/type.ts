@@ -9,7 +9,7 @@ export type RegistrationOption = {
 // данные, которые пользователь заполняет на втором и третьем шаге
 export type RegistrationFormData = {
   name: string
-  birthDate: string
+  birthDate?: Date
   gender: string
   city: string
   learningCategory: string
@@ -28,10 +28,16 @@ export type RegistrationTextField = Exclude<
   'avatarUrl' | 'skillImages'
 >
 
+// сообщения об ошибках для текстовых полей и списков формы
+export type RegistrationFormErrors = Partial<
+  Record<RegistrationTextField, string>
+>
+
 // данные и обработчики, которые RegistrationForm получает от родительского компонента
 export type RegistrationFormProps = {
   currentStep: RegistrationStep
   data: RegistrationFormData
+  errors?: RegistrationFormErrors
 
   // варианты для выпадающих списков
   genderOptions: RegistrationOption[]
@@ -42,6 +48,7 @@ export type RegistrationFormProps = {
 
   // обработчики изменения данных и переходов между шагами
   onFieldChange: (field: RegistrationTextField, value: string) => void
+  onBirthDateChange: (date: Date | undefined) => void
   onAvatarChange: (file: File | null) => void
   onImagesChange: (files: File[]) => void
   onBack: () => void
