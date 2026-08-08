@@ -4,6 +4,7 @@ export type ModalSize = 'compact' | 'small' | 'large'
 
 export type ModalUIProps = {
   title: string
+  description?: string
   onClose: () => void
   children: ReactNode
   icon?: ReactNode

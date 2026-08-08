@@ -6,7 +6,7 @@ import type { ModalUIProps } from './type'
 import styles from './ModalUI.module.css'
 
 export const ModalUI = memo(
-  ({ title, onClose, children, icon, size = 'small', className }: ModalUIProps) => {
+  ({ title, description, onClose, children, icon, size = 'small', className }: ModalUIProps) => {
     const titleId = useId()
 
     useEffect(() => {
@@ -38,6 +38,10 @@ export const ModalUI = memo(
           <h2 className={styles.title} id={titleId}>
             {title}
           </h2>
+
+          {description && (
+            <p className={styles.description}>{description}</p>
+          )}
 
           <div className={styles.content}>{children}</div>
         </div>

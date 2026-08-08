@@ -21,3 +21,17 @@
 .panels > * {
   flex: 0 0 556px;
 }
+
+.registrationSkill {
+  width: 100%;
+}
+
+.registrationActions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.registrationActions > button {
+  width: 204px;
+}

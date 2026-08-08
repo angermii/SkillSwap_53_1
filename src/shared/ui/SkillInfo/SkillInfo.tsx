@@ -16,14 +16,10 @@ export const SkillInfo = ({
         <h2 className={styles.title}>{title}</h2>
         <p className={styles.subtitle}>{subtitle}</p>
       </div>
-      
+
       <p className={styles.description}>{description}</p>
-      
-      {children && (
-        <div className={styles.actions}>
-          {children}
-        </div>
-      )}
+
+      {children && <div className={styles.actions}>{children}</div>}
     </div>
   )
 }

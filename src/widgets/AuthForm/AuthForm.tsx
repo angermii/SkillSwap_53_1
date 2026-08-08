@@ -10,9 +10,10 @@ export type AuthFormProps = {
   variant: 'login' | 'register'
   onSubmit: (data: { email: string; password: string }) => void
   onLinkClick?: () => void
+  error?: string
 }
 
-export const AuthForm = ({ variant, onSubmit, onLinkClick }: AuthFormProps) => {
+export const AuthForm = ({ variant, onSubmit, onLinkClick, error }: AuthFormProps) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
@@ -57,6 +58,7 @@ export const AuthForm = ({ variant, onSubmit, onLinkClick }: AuthFormProps) => {
             placeholder="Введите email"
             value={email}
             onChange={handleEmailChange}
+            error={error}
           />
           <PasswordInput
             label="Пароль"
@@ -64,6 +66,7 @@ export const AuthForm = ({ variant, onSubmit, onLinkClick }: AuthFormProps) => {
             hint={passwordHint}
             value={password}
             onChange={handlePasswordChange}
+            error={error}
           />
         </div>
       </div>
