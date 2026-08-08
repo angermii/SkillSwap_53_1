@@ -14,6 +14,9 @@ export const Header = ({
   user,
   categorySections = [],
   notifications = [],
+  readAll,
+  clearAll,
+  onNotificationClick,
   onLoginClick,
   onRegisterClick,
   onThemeClick,
@@ -106,7 +109,12 @@ export const Header = ({
 
             {isNotificationsOpen && (
               <div className={styles.notificationWidget}>
-                <Notifications notifications={notifications} />
+                <Notifications
+                  notifications={notifications}
+                  readAll={readAll}
+                  clearAll={clearAll}
+                  onClick={onNotificationClick}
+                />
               </div>
             )}
           </div>

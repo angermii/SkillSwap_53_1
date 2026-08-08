@@ -10,6 +10,11 @@ export type HeaderProps = {
   categorySections?: CategorySectionProps[]
   notifications?: Notification[]
 
+  // Уведомления
+  readAll?: () => void
+  clearAll?: () => void
+  onNotificationClick?: () => void
+
   // LoggedOut
   onLoginClick?: () => void
   onRegisterClick?: () => void
