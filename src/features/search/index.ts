@@ -1,1 +1,1 @@
-export { searchSkills } from './model/searchSkills'
+export { searchUsers } from './model/searchUsers'

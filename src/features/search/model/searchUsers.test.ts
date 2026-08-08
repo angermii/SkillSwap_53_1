@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import type { Skill } from '@/entities/skill/model/types'
 import type { User } from '@/entities/user/model/types'
-import { searchSkills } from './searchSkills'
+import { searchUsers } from './searchUsers'
 
 // создаем полные объекты по существующим типам Skill и User
 const createSkill = (id: string, title: string, authorId: string): Skill => ({
@@ -38,39 +38,41 @@ const users = [
   createUser('user-2', 'Борис Петров', 'Казань'),
 ]
 
-describe('searchSkills', () => {
+describe('searchUsers', () => {
   it('ищет по части названия без учета регистра', () => {
-    expect(searchSkills(skills, 'ФОТО')).toEqual([skills[0]])
+    expect(searchUsers(skills, 'ФОТО', users)).toEqual([users[0]])
   })
 
   it('возвращает новый результат при изменении запроса', () => {
-    const photoResult = searchSkills(skills, 'фото')
-    const englishResult = searchSkills(skills, 'английский')
+    const photoResult = searchUsers(skills, 'фото', users)
+    const englishResult = searchUsers(skills, 'английский', users)
 
-    expect(photoResult).toEqual([skills[0]])
-    expect(englishResult).toEqual([skills[1]])
+    expect(photoResult).toEqual([users[0]])
+    expect(englishResult).toEqual([users[1]])
   })
 
-  it('возвращает новый массив со всеми навыками для пустого запроса', () => {
-    const result = searchSkills(skills, '   ')
+  it('возвращает новый массив со всеми пользователями для пустого запроса', () => {
+    const result = searchUsers(skills, '   ', users)
 
-    expect(result).toEqual(skills)
-    expect(result).not.toBe(skills)
+    expect(result).toEqual(users)
+    expect(result).not.toBe(users)
   })
 
   it('не изменяет исходный массив навыков', () => {
     const originalSkills = skills.map((skill) => ({ ...skill }))
+    const originalUsers = users.map((user) => ({ ...user }))
 
-    searchSkills(skills, 'фото')
+    searchUsers(skills, 'фото', users)
 
     expect(skills).toEqual(originalSkills)
+    expect(users).toEqual(originalUsers)
   })
 
   it('ищет по имени пользователя без учёта регистра', () => {
-    expect(searchSkills(skills, 'СМИРНОВА', users)).toEqual([skills[0]])
+    expect(searchUsers(skills, 'СМИРНОВА', users)).toEqual([users[0]])
   })
 
   it('ищет по городу без учёта регистра', () => {
-    expect(searchSkills(skills, 'КАЗ', users)).toEqual([skills[1]])
+    expect(searchUsers(skills, 'КАЗ', users)).toEqual([users[1]])
   })
 })

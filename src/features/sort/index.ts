@@ -1,2 +1,2 @@
-export type { SortType, DateOrder } from './model/sortUtils'
-export { sortByPopularity, sortByDate, sortByRecommendations, sortSkills } from './model/sortUtils'
+export type { SortType, DateOrder } from './model/sortUsers'
+export { sortByPopularity, sortByDate, sortByRecommendations, sortUsers } from './model/sortUsers'
