@@ -36,6 +36,7 @@
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
   white-space: pre-wrap;
+  overflow-wrap: break-word;
 }
 
 .actions {

@@ -73,5 +73,10 @@
 }
 
 .large .content {
-  margin-top: 8px;
+  margin-top: 40px;
+}
+
+.description {
+  font-size: 12px;
+  align-self: center;
 }

@@ -1,2 +1,2 @@
-export { SkillInfo } from './SkillInfo';
-export type { SkillInfoProps } from './type';
+export { SkillInfo } from './SkillInfo'
+export type { SkillInfoProps } from './type'
