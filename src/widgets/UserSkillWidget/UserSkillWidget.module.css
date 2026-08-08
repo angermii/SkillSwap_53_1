@@ -79,6 +79,7 @@
 .content {
   display: grid;
   grid-template-columns: minmax(0, 420px) minmax(0, 440px);
+
   /* justify-content: space-between; */
   place-self: center;
   column-gap: 44px;
