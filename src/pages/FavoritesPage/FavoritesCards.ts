@@ -1,4 +1,5 @@
-import type { Skill, SkillSubcategory, User } from '@/shared/types'
+import type { Skill, SkillSubcategory } from '@/entities/skill/model/types'
+import type { User } from '@/entities/user/model/types'
 import type { CardTagsProps } from '@/shared/ui'
 import type { UserCardData } from '@/widgets'
 
