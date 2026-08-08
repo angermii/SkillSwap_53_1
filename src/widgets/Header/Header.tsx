@@ -7,21 +7,22 @@ import clsx from 'clsx'
 import { Link } from 'react-router-dom'
 import { ROUTES } from '@/shared/lib/constants'
 import { CategoryMenu } from '@/widgets/CategoryMenu'
+import { Notifications } from '@/widgets/Notifications'
 
 export const Header = ({
   variant = 'loggedOut',
   user,
   categorySections = [],
+  notifications = [],
   onLoginClick,
   onRegisterClick,
   onThemeClick,
-  onNotificationsClick,
   onFavoritesClick,
   onUserClick,
   onCloseClick,
 }: HeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false)
   return (
     <header className={clsx(styles.header, variant === 'pure' && styles.headerPure)}>
       <div className={styles.left}>
@@ -85,7 +86,10 @@ export const Header = ({
                 <MoonIcon />
               </button>
 
-              <button className={styles.iconButton} onClick={onNotificationsClick}>
+              <button
+                className={styles.iconButton}
+                onClick={() => setIsNotificationsOpen((prev) => !prev)}
+              >
                 <BellIcon />
               </button>
 
@@ -99,6 +103,12 @@ export const Header = ({
               avatarSrc={user.avatarUrl ?? undefined}
               onClick={onUserClick}
             />
+
+            {isNotificationsOpen && (
+              <div className={styles.notificationWidget}>
+                <Notifications notifications={notifications} />
+              </div>
+            )}
           </div>
         )}
 
