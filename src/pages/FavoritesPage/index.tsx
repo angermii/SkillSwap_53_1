@@ -1,11 +1,17 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo } from 'react'
 import { generatePath, useNavigate } from 'react-router-dom'
-import { fetchSkillSubcategories } from '@/api/skills'
-import { fetchSkill } from '@/entities/skill/model/skillSlice'
+import {
+  selectSkills,
+  selectSkillSubcategoriesById,
+  selectSkillSubcategoriesError,
+  selectSkillSubcategoriesLoading,
+  selectSkillsError,
+  selectSkillsLoading,
+} from '@/entities/skill/model/selectors'
+import { fetchSkill, fetchSkillSubcategories } from '@/entities/skill/model/skillSlice'
 import { fetchUsers } from '@/entities/user/model/userSlice'
 import { toggleFavorite } from '@/features/favorites'
 import { ROUTES } from '@/shared/lib/constants'
-import type { SkillSubcategory } from '@/shared/types'
 import { Headline } from '@/shared/ui'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { Footer, UserCard } from '@/widgets'
@@ -15,41 +21,31 @@ import styles from './FavoritesPage.module.css'
 export default function FavoritesPage() {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-
   // id лайкнутых навыков из слайса favorites
   const favoriteIds = useAppSelector((state) => state.favorites.ids)
-  const skills = useAppSelector((state) => state.skill.skills)
+  const skills = useAppSelector(selectSkills)
   const users = useAppSelector((state) => state.user.items)
-  const isLoading = useAppSelector((state) => state.skill.loading || state.user.loading)
-  const error = useAppSelector((state) => state.skill.error ?? state.user.error)
+  // подкатегории нужны для тегов карточки — теперь берём их из слайса skill
+  const subcategoriesById = useAppSelector(selectSkillSubcategoriesById)
 
-  // подкатегории нужны только для тегов, отдельного слайса под них нет
-  const [subcategories, setSubcategories] = useState<SkillSubcategory[]>([])
+  // у каждого запроса свой флаг, поэтому объединяем их явно на уровне страницы
+  const isLoading = useAppSelector(
+    (state) =>
+      selectSkillsLoading(state) || selectSkillSubcategoriesLoading(state) || state.user.loading,
+  )
+  const error = useAppSelector(
+    (state) => selectSkillsError(state) ?? selectSkillSubcategoriesError(state) ?? state.user.error,
+  )
 
   useEffect(() => {
     void dispatch(fetchSkill())
     void dispatch(fetchUsers())
+    void dispatch(fetchSkillSubcategories())
   }, [dispatch])
 
-  useEffect(() => {
-    let isActive = true
-
-    fetchSkillSubcategories()
-      .then((items) => {
-        if (isActive) setSubcategories(items)
-      })
-      .catch(() => {
-        if (isActive) setSubcategories([])
-      })
-
-    return () => {
-      isActive = false
-    }
-  }, [])
-
   const cards = useMemo(
-    () => FavoriteCards({ favoriteIds, skills, users, subcategories }),
-    [favoriteIds, skills, users, subcategories],
+    () => FavoriteCards({ favoriteIds, skills, users, subcategoriesById }),
+    [favoriteIds, skills, users, subcategoriesById],
   )
 
   const renderContent = () => {
@@ -82,13 +78,13 @@ export default function FavoritesPage() {
   }
 
   return (
-    <>
+    <div className={styles.layout}>
       <main className={styles.page}>
         <Headline as="h1" title="Избранное" />
         {renderContent()}
       </main>
 
       <Footer />
-    </>
+    </div>
   )
 }
