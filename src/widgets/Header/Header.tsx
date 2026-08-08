@@ -1,7 +1,7 @@
 import { HeaderProps } from './types'
 import { useState } from 'react'
 import styles from './Header.module.css'
-import { Button, Dropdown, HeaderUser, Logo, SearchInput } from '@/shared/ui'
+import { AccountMenu, Button, Dropdown, HeaderUser, Logo, SearchInput } from '@/shared/ui'
 import { BellIcon, HeartIcon, MoonIcon, CloseIcon, ChevronDownIcon } from '@/shared/ui/icons'
 import clsx from 'clsx'
 import { Link } from 'react-router-dom'
@@ -21,11 +21,12 @@ export const Header = ({
   onRegisterClick,
   onThemeClick,
   onFavoritesClick,
-  onUserClick,
+  onLogout,
   onCloseClick,
 }: HeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false)
+  const [isAccountOpen, setIsAccountOpen] = useState(false)
   return (
     <header className={clsx(styles.header, variant === 'pure' && styles.headerPure)}>
       <div className={styles.left}>
@@ -89,34 +90,47 @@ export const Header = ({
                 <MoonIcon />
               </button>
 
-              <button
-                className={styles.iconButton}
-                onClick={() => setIsNotificationsOpen((prev) => !prev)}
+              <Dropdown
+                trigger={
+                  <button
+                    className={styles.iconButton}
+                    onClick={() => setIsNotificationsOpen((prev) => !prev)}
+                  >
+                    <BellIcon />
+                  </button>
+                }
+                isOpen={isNotificationsOpen}
+                onClose={() => setIsNotificationsOpen(false)}
+                contentClassName={styles.notificationWidget}
+                align="end"
               >
-                <BellIcon />
-              </button>
-
-              <button className={styles.iconButton} onClick={onFavoritesClick}>
-                <HeartIcon />
-              </button>
-            </div>
-
-            <HeaderUser
-              name={user.name}
-              avatarSrc={user.avatarUrl ?? undefined}
-              onClick={onUserClick}
-            />
-
-            {isNotificationsOpen && (
-              <div className={styles.notificationWidget}>
                 <Notifications
                   notifications={notifications}
                   readAll={readAll}
                   clearAll={clearAll}
                   onClick={onNotificationClick}
                 />
-              </div>
-            )}
+              </Dropdown>
+
+              <button className={styles.iconButton} onClick={onFavoritesClick}>
+                <HeartIcon />
+              </button>
+            </div>
+
+            <Dropdown
+              trigger={
+                <HeaderUser
+                  name={user.name}
+                  avatarSrc={user.avatarUrl ?? undefined}
+                  onClick={() => setIsAccountOpen((prev) => !prev)}
+                />
+              }
+              isOpen={isAccountOpen}
+              onClose={() => setIsAccountOpen(false)}
+              contentClassName={styles.dropdownAccount}
+            >
+              <AccountMenu onLogout={onLogout} />
+            </Dropdown>
           </div>
         )}
 
