@@ -1,2 +1,2 @@
 export {CategorySection} from "./CategorySection";
-export type { Props } from './types'
+export type { CategorySectionProps } from './types'

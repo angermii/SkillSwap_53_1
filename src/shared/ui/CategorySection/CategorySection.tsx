@@ -1,12 +1,16 @@
 import Styles from './CategorySection.module.css'
-import { Props } from './types'
+import { CategorySectionProps } from './types'
 
-export const CategorySection = ({icon, iconColor, category, subCategories, onClick }: Props) => {
+export const CategorySection = ({
+  icon,
+  iconColor,
+  category,
+  subCategories,
+  onClick,
+}: CategorySectionProps) => {
   return (
     <div className={Styles.CategoryWrapper}>
-      <div className={`${Styles.IconWrapper} ${Styles[iconColor]}`}>
-        {icon}
-      </div>
+      <div className={`${Styles.IconWrapper} ${Styles[iconColor]}`}>{icon}</div>
       <div className={Styles.Section}>
         <h2 className={Styles.Category}>{category}</h2>
         <ul className={Styles.SubList}>

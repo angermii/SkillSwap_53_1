@@ -1,0 +1,11 @@
+.Wrapper {
+  padding: 60px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 488px);
+
+  /* Заполняем сетку по столбцам, чтобы порядок соответствовал макету */
+  grid-template-rows: repeat(3, auto);
+  grid-auto-flow: column;
+  gap: 40px;
+}

@@ -1,0 +1,60 @@
+.form {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 196px;
+  width: 100%;
+  max-width: 1020px;
+  padding: 60px;
+  background-color: var(--color-card-input);
+  border-radius: var(--radius-lg);
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 460px;
+  min-width: 218px;
+}
+
+.emailBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.passwordButton {
+  align-self: flex-start;
+  padding: 0;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-h4);
+  line-height: var(--line-height-h4);
+  color: var(--color-link-button);
+}
+
+.passwordButton:hover {
+  color: var(--color-accent);
+}
+
+.fieldsRow {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: var(--space-lg);
+}
+
+.datePicker {
+  position: relative;
+  z-index: 1;
+}
+
+.saveButton {
+  width: 100%;
+  margin-top: var(--space-md);
+}
+
+.photo {
+  flex-shrink: 0;
+}
