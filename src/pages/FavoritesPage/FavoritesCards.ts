@@ -1,4 +1,5 @@
-import type { Skill, SkillSubcategory, User } from '@/shared/types'
+import type { Skill, SkillSubcategory } from '@/entities/skill/model/types'
+import type { User } from '@/entities/user/model/types'
 import type { CardTagsProps } from '@/shared/ui'
 import type { UserCardData } from '@/widgets'
 
@@ -6,7 +7,6 @@ import type { UserCardData } from '@/widgets'
 type SkillTag = CardTagsProps['teachTags'][number]
 
 export type FavoriteCard = {
-  // id навыка, который лежит в избранном
   skillId: string
   user: UserCardData
   likeCount: number
@@ -16,7 +16,7 @@ type BuildFavoriteCardsParams = {
   favoriteIds: string[]
   skills: Skill[]
   users: User[]
-  subcategories: SkillSubcategory[]
+  subcategoriesById: Map<string, SkillSubcategory>
 }
 
 // id категорий из моков совпадают с цветовыми категориями тегов
@@ -36,15 +36,15 @@ const toTagCategory = (categoryId?: string): SkillTag['category'] =>
  * Собирает карточки избранного: для каждого лайкнутого навыка находим автора
  * Показываем все его навыки в виде тегов «может научить» / «хочет научиться».
  */
+
 export function FavoriteCards({
   favoriteIds,
   skills,
   users,
-  subcategories,
+  subcategoriesById,
 }: BuildFavoriteCardsParams): FavoriteCard[] {
   const usersById = new Map(users.map((user) => [user.id, user]))
   const skillsById = new Map(skills.map((skill) => [skill.id, skill]))
-  const subcategoriesById = new Map(subcategories.map((item) => [item.id, item]))
 
   // группируем навыки по автору, чтобы не фильтровать массив в цикле
   const skillsByAuthor = new Map<string, Skill[]>()

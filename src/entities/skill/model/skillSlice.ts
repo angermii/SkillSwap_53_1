@@ -1,25 +1,59 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, type SerializedError } from '@reduxjs/toolkit'
 import {
   fetchSkillById as fetchSkillByIdApi,
   fetchSkillByUserId as fetchSkillByUserIdApi,
+  fetchSkillCategories as fetchSkillCategoriesApi,
+  fetchSkillSubcategories as fetchSkillSubcategoriesApi,
   fetchSkills,
 } from '@/api/skills'
-import type { Skill } from './types'
+import type { Skill, SkillCategory, SkillSubcategory } from './types'
+
+export type SkillRequestKey = 'skills' | 'selectedSkill' | 'categories' | 'subcategories'
 
 // храним списочные результаты и отдельно выбранный навык
 export interface SkillState {
   skills: Skill[]
   selectedSkill: Skill | null
-  loading: boolean
-  error: string | null
+  categories: SkillCategory[]
+  subcategories: SkillSubcategory[]
+  loading: Record<SkillRequestKey, boolean>
+  error: Record<SkillRequestKey, string | null>
 }
 
 // состояние slice до выполнения первого запроса
 const initialState: SkillState = {
   skills: [],
   selectedSkill: null,
-  loading: false,
-  error: null,
+  categories: [],
+  subcategories: [],
+  loading: {
+    skills: false,
+    selectedSkill: false,
+    categories: false,
+    subcategories: false,
+  },
+  error: {
+    skills: null,
+    selectedSkill: null,
+    categories: null,
+    subcategories: null,
+  },
+}
+
+// хелперы, чтобы не дублировать одни и те же строки в каждом case
+const startRequest = (state: SkillState, key: SkillRequestKey) => {
+  state.loading[key] = true
+  state.error[key] = null
+}
+
+const failRequest = (
+  state: SkillState,
+  key: SkillRequestKey,
+  error: SerializedError,
+  fallbackMessage: string,
+) => {
+  state.loading[key] = false
+  state.error[key] = error.message ?? fallbackMessage
 }
 
 // загружает полный список навыков через существующий api
@@ -37,56 +71,88 @@ export const fetchSkillByUserId = createAsyncThunk<Skill[], string>(
   async (userId) => fetchSkillByUserIdApi(userId),
 )
 
+// загружает справочник категорий навыков
+export const fetchSkillCategories = createAsyncThunk<SkillCategory[]>(
+  'skill/fetchSkillCategories',
+  async () => fetchSkillCategoriesApi(),
+)
+
+// загружает справочник подкатегорий навыков
+export const fetchSkillSubcategories = createAsyncThunk<SkillSubcategory[]>(
+  'skill/fetchSkillSubcategories',
+  async () => fetchSkillSubcategoriesApi(),
+)
+
 // объединяем состояние и обработчики навыков в Redux slice
 const skillSlice = createSlice({
   name: 'skill',
   initialState,
   reducers: {},
 
-  // обрабатываем загрузку полного списка навыков
   extraReducers: (builder) => {
+    // обрабатываем загрузку полного списка навыков
     builder
       .addCase(fetchSkill.pending, (state) => {
-        state.loading = true
-        state.error = null
+        startRequest(state, 'skills')
       })
       .addCase(fetchSkill.fulfilled, (state, action) => {
-        state.loading = false
+        state.loading.skills = false
         state.skills = action.payload
       })
       .addCase(fetchSkill.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.error.message ?? null
+        failRequest(state, 'skills', action.error, 'Не удалось загрузить навыки')
       })
 
     // обрабатываем загрузку отдельного навыка
     builder
       .addCase(fetchSkillById.pending, (state) => {
-        state.loading = true
-        state.error = null
+        startRequest(state, 'selectedSkill')
       })
       .addCase(fetchSkillById.fulfilled, (state, action) => {
-        state.loading = false
+        state.loading.selectedSkill = false
         state.selectedSkill = action.payload ?? null
       })
       .addCase(fetchSkillById.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.error.message ?? null
+        failRequest(state, 'selectedSkill', action.error, 'Не удалось загрузить навык')
       })
 
     // обрабатываем загрузку навыков конкретного пользователя
     builder
       .addCase(fetchSkillByUserId.pending, (state) => {
-        state.loading = true
-        state.error = null
+        startRequest(state, 'skills')
       })
       .addCase(fetchSkillByUserId.fulfilled, (state, action) => {
-        state.loading = false
+        state.loading.skills = false
         state.skills = action.payload
       })
       .addCase(fetchSkillByUserId.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.error.message ?? null
+        failRequest(state, 'skills', action.error, 'Не удалось загрузить навыки пользователя')
+      })
+
+    // обрабатываем загрузку категорий
+    builder
+      .addCase(fetchSkillCategories.pending, (state) => {
+        startRequest(state, 'categories')
+      })
+      .addCase(fetchSkillCategories.fulfilled, (state, action) => {
+        state.loading.categories = false
+        state.categories = action.payload
+      })
+      .addCase(fetchSkillCategories.rejected, (state, action) => {
+        failRequest(state, 'categories', action.error, 'Не удалось загрузить категории')
+      })
+
+    // обрабатываем загрузку подкатегорий
+    builder
+      .addCase(fetchSkillSubcategories.pending, (state) => {
+        startRequest(state, 'subcategories')
+      })
+      .addCase(fetchSkillSubcategories.fulfilled, (state, action) => {
+        state.loading.subcategories = false
+        state.subcategories = action.payload
+      })
+      .addCase(fetchSkillSubcategories.rejected, (state, action) => {
+        failRequest(state, 'subcategories', action.error, 'Не удалось загрузить подкатегории')
       })
   },
 })
