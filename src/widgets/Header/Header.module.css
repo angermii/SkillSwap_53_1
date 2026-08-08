@@ -56,6 +56,7 @@
 }
 
 .loggedInActions {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 24px;
@@ -98,4 +99,11 @@
 
 .dropdownHeader {
   transform: translateX(-293px) translateY(22px);
+}
+
+.notificationWidget {
+  position: absolute;
+  top: calc(100% + 20px);
+  right: 0;
+  z-index: 100;
 }
