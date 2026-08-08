@@ -101,10 +101,9 @@
   transform: translateX(-293px) translateY(22px);
 }
 
-
 .notificationWidget {
   position: absolute;
-  top: calc(100% + 12px);
+  top: calc(100% + 20px);
   right: 0;
   z-index: 100;
 }
