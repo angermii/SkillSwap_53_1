@@ -19,7 +19,7 @@ export interface Skill {
   description: string;
   type: SkillType;
   subcategoryId: string;
-  imageUrl: string | null;
+  imageUrl: string[] | null;
   authorId: string;
   createdAt: string;
   likeCount: number;

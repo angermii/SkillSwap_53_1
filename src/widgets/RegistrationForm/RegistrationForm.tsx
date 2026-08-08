@@ -1,9 +1,8 @@
 import type { ChangeEvent, DragEvent, FormEvent } from 'react'
-
+import { DatePicker } from '@/widgets/DatePicker'
 import {
   Avatar,
   Button,
-  CalendarIcon,
   GalleryAddIcon,
   Input,
   PlusIcon,
@@ -28,6 +27,7 @@ export const RegistrationForm = ({
   onFieldChange,
   onAvatarChange,
   onImagesChange,
+  onBirthDateChange,
   onBack,
   onNext,
 }: RegistrationFormProps) => {
@@ -110,15 +110,12 @@ export const RegistrationForm = ({
           />
 
           <div className={styles.fieldsRow}>
-            {/* временное поле до появления полноценного компонента DatePicker */}
-            <Input
-              inputClassName={styles.textField}
-              error={errors.birthDate}
+            
+            <DatePicker
               label="Дата рождения"
-              placeholder="дд.мм.гггг"
               value={data.birthDate}
-              rightIcon={<CalendarIcon />}
-              onChange={handleTextChange('birthDate')}
+              onChange={onBirthDateChange}
+              inputClassName={styles.textField}
             />
 
             <div className={styles.fieldGroup}>
