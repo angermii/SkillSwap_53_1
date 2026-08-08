@@ -5,9 +5,10 @@ export { GalleryCarousel } from './GalleryCarousel'
 export type { GalleryCarouselProps, GalleryImage } from './GalleryCarousel'
 export { Notifications } from './Notifications'
 export type { NotificationsProps } from './Notifications'
-
 export { Header } from './Header'
 export * from './UserCard'
+export { UserCatalog } from './UserCatalog/UserCatalog'; 
+export type { UserCatalogProps, CatalogSection } from './UserCatalog/UserCatalog';
 export * from './FiltersBar';
 export { UserSkillWidget } from './UserSkillWidget'
 export * from './SimilarOffers'
