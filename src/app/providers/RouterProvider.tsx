@@ -1,14 +1,8 @@
-import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom'
-import { useEffect, useState, lazy, Suspense } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { lazy, Suspense } from 'react'
 import { ROUTES } from '@/shared/lib/constants'
-import { Header } from '@/widgets'
 import { PrivateRoute } from '@/features/auth/ui/PrivateRoute'
-import {
-  fetchSkillCategories,
-  fetchSkillSubcategories,
-} from '@/api/skills'
-import { mapCategoriesToSections } from '@/shared/lib/categorySectionsMapper'
-import type { CategorySectionProps } from '@/shared/ui'
+import { MainLayout, PureLayout } from '../layouts/Layouts'
 
 // Lazy-загрузка страниц — каждая страница грузится только при переходе на неё
 const CatalogPage = lazy(() => import('@/pages/CatalogPage'))
@@ -18,49 +12,6 @@ const FavoritesPage = lazy(() => import('@/pages/FavoritesPage'))
 const CreateSkillPage = lazy(() => import('@/pages/CreateSkillPage'))
 const LoginPage = lazy(() => import('@/pages/LoginPage'))
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'))
-
-const MainLayout = () => {
-  // const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated)
-  const [categorySections, setCategorySections] = useState<CategorySectionProps[]>([])
-// Загружаем категории для меню Header при инициализации приложения
-  useEffect(() => {
-    const loadCategories = async () => {
-      try {
-        const [categories, subCategories] = await Promise.all([
-          fetchSkillCategories(),
-          fetchSkillSubcategories(),
-        ])
-
-        setCategorySections(
-          mapCategoriesToSections(categories, subCategories),
-        )
-      } catch (error) {
-        console.error('Failed to load categories', error)
-      }
-    }
-
-    loadCategories()
-  }, [])
-
-  return (
-    <>
-      <Header
-        variant="loggedOut"
-        categorySections={categorySections}
-      />
-       {/* далее исправим на  <Header variant={isAuthenticated ? 'loggedIn' : 'loggedOut'} />  */}
-      <Outlet />
-    </>
-  )
-}
-
-
-const PureLayout = () => (
-  <>
-    <Header variant="pure" />
-    <Outlet />
-  </>
-)
 
 export function AppRouter() {
   return (

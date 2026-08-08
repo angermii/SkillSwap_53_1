@@ -101,9 +101,10 @@
   transform: translateX(-293px) translateY(22px);
 }
 
+.dropdownAccount {
+  transform: translateX(-100px) translateY(20px);
+}
+
 .notificationWidget {
-  position: absolute;
-  top: calc(100% + 20px);
-  right: 0;
-  z-index: 100;
+  transform: translateX(175px) translateY(32px);
 }
