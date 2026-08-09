@@ -7,6 +7,8 @@ export type HeaderProps = {
   variant?: HeaderVariant
   user?: User
   categorySections?: CategorySectionProps[]
+  searchValue?: string
+  onSearchChange?: (value: string) => void
 
   // LoggedOut
   onLoginClick?: () => void
