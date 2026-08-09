@@ -1,0 +1,34 @@
+.page {
+  display: grid;
+  grid-template-columns: 332px minmax(0, 1fr);
+  align-items: start;
+  gap: 24px;
+  width: 100%;
+  padding: 32px 36px 60px;
+}
+
+.catalog {
+  width: 100%;
+  min-width: 0;
+}
+
+.status {
+  display: flex;
+  min-height: 60vh;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 36px;
+  color: var(--color-caption);
+  text-align: center;
+}
+
+.error {
+  color: var(--color-error);
+}
+
+.activeFilters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 40px;
+}
