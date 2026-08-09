@@ -7,6 +7,8 @@ export type HeaderProps = {
   variant?: HeaderVariant
   user?: AuthUser
   categorySections?: CategorySectionProps[]
+  searchValue?: string
+  onSearchChange?: (value: string) => void
   notifications?: Notification[]
 
   // Уведомления

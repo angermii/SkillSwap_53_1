@@ -13,6 +13,8 @@ export const Header = ({
   variant = 'loggedOut',
   user,
   categorySections = [],
+  searchValue,
+  onSearchChange,
   notifications = [],
   readAll,
   clearAll,
@@ -57,7 +59,11 @@ export const Header = ({
             </Dropdown>
 
             <div className={styles.search}>
-              <SearchInput />
+              <SearchInput
+                value={searchValue}
+                onChange={(event) => onSearchChange?.(event.target.value)}
+                onClear={() => onSearchChange?.('')}
+              />
             </div>
           </nav>
         )}

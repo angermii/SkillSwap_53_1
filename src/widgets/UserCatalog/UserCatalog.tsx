@@ -1,7 +1,7 @@
 import { useState, ReactNode } from 'react';
 import clsx from 'clsx';
 
-import { Headline, Button } from '@/shared/ui'; 
+import { Headline, Button, ChevronRightIcon, ChevronUpIcon } from '@/shared/ui';
 import { UserCard } from '@/widgets/UserCard'; 
 import type { UserCardData } from '@/widgets/UserCard'; 
 
@@ -106,6 +106,9 @@ export default CatalogPage;
 const MAX_VISIBLE_CARDS = 6; 
 const INITIAL_VISIBLE_CARDS = 3;
 
+// возвращает ID teach навыка для перехода на его страницу и работы с избранным
+const getCardId = (user: UserCardData) => user.teachTags[0]?.id;
+
 const CatalogSectionItem = ({ 
   section, 
   onDetailsClick, 
@@ -137,8 +140,12 @@ const CatalogSectionItem = ({
   const actionContent = section.action ? (
     section.action
   ) : needsToggleButton ? (
-    <Button variant="ghost" onClick={handleToggle}>
-      {isExpanded ? 'Свернуть' : 'Смотреть все >'}
+    <Button
+      variant="ghost"
+      endIcon={isExpanded ? <ChevronUpIcon /> : <ChevronRightIcon />}
+      onClick={handleToggle}
+    >
+      {isExpanded ? 'Свернуть' : 'Смотреть все'}
     </Button>
   ) : null;
 
@@ -154,17 +161,21 @@ const CatalogSectionItem = ({
 
       {visibleUsers.length > 0 ? (
         <div className={styles.grid}>
-          {visibleUsers.map((user) => (
-            <UserCard 
-              key={user.id} 
-              user={user} 
-              variant="compact" 
-              isLiked={likedState?.[user.id] || false}
-              likeCount={likeCounts?.[user.id] || 0} // Передаем динамическое значение
-              onDetailsClick={onDetailsClick}
-              onLikeChange={onLikeChange}
-            />
-          ))}
+          {visibleUsers.map((user) => {
+            const cardId = getCardId(user);
+            if (cardId === undefined) return null
+            return (
+              <UserCard
+                key={user.id}
+                user={user}
+                variant="compact"
+                isLiked={likedState?.[cardId] ?? false}
+                likeCount={likeCounts?.[cardId] ?? 0}
+                onDetailsClick={() => onDetailsClick?.(cardId)}
+                onLikeChange={(count, isLiked) => onLikeChange?.(cardId, count, isLiked)}
+              />
+            )
+          })}
         </div>
       ) : (
         <div className={styles.empty}>
@@ -200,17 +211,21 @@ export const UserCatalog = ({
           )}
           {users.length > 0 ? (
             <div className={styles.grid}>
-              {users.map((user) => (
-                <UserCard 
-                  key={user.id} 
-                  user={user} 
-                  variant="compact" 
-                  isLiked={likedState?.[user.id] || false}
-                  likeCount={likeCounts?.[user.id] || 0} // Передаем динамическое значение
-                  onDetailsClick={onDetailsClick}
-                  onLikeChange={onLikeChange}
-                />
-              ))}
+              {users.map((user) => {
+                const cardId = getCardId(user)
+                if (cardId === undefined) return null
+                return (
+                  <UserCard
+                    key={user.id}
+                    user={user}
+                    variant="compact"
+                    isLiked={likedState?.[cardId] ?? false}
+                    likeCount={likeCounts?.[cardId] ?? 0}
+                    onDetailsClick={() => onDetailsClick?.(cardId)}
+                    onLikeChange={(count, isLiked) => onLikeChange?.(cardId, count, isLiked)}
+                  />
+                )
+              })}
             </div>
           ) : (
             <div className={styles.empty}>

@@ -10,7 +10,7 @@ import { mapCategoriesToSections } from '@/shared/lib/categorySectionsMapper'
 import { ROUTES } from '@/shared/lib/constants'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { Header } from '@/widgets'
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 
 export const MainLayout = () => {
@@ -31,6 +31,9 @@ export const MainLayout = () => {
   const subcategories = useAppSelector(selectSkillSubcategories)
   const categoriesLoading = useAppSelector(selectSkillCategoriesLoading)
   const subcategoriesLoading = useAppSelector(selectSkillSubcategoriesLoading)
+
+  // Поиск
+  const [searchQuery, setSearchQuery] = useState('')
 
   // Загружаем категории для меню Header при инициализации приложения
   useEffect(() => {
@@ -54,6 +57,8 @@ export const MainLayout = () => {
         variant={isAuthenticated ? 'loggedIn' : 'loggedOut'}
         user={user ?? undefined}
         categorySections={categorySections}
+        searchValue={searchQuery}
+        onSearchChange={setSearchQuery}
         notifications={[]}
         readAll={() => {}}
         clearAll={() => {}}
@@ -64,7 +69,7 @@ export const MainLayout = () => {
         onFavoritesClick={() => navigate(ROUTES.FAVORITES)}
         onLogout={handleLogout}
       />
-      <Outlet />
+      <Outlet  context={{ searchQuery }}/>
     </>
   )
 }

@@ -1,0 +1,15 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: var(--radius-lg);
+  color: var(--color-text);
+  background-color: var(--color-card-input);
+}
+
+.label {
+  letter-spacing: 0.02em;
+  line-height: 24px;
+  white-space: nowrap;
+}
