@@ -1,14 +1,20 @@
-import type { User } from '@/shared/types'
-import type { CategorySectionProps } from '@/shared/ui'
+import type { AuthUser } from '@/shared/types'
+import type { CategorySectionProps, Notification } from '@/shared/ui'
 
 export type HeaderVariant = 'loggedOut' | 'loggedIn' | 'pure'
 
 export type HeaderProps = {
   variant?: HeaderVariant
-  user?: User
+  user?: AuthUser
   categorySections?: CategorySectionProps[]
   searchValue?: string
   onSearchChange?: (value: string) => void
+  notifications?: Notification[]
+
+  // Уведомления
+  readAll?: () => void
+  clearAll?: () => void
+  onNotificationClick?: () => void
 
   // LoggedOut
   onLoginClick?: () => void
@@ -18,9 +24,8 @@ export type HeaderProps = {
   onThemeClick?: () => void
 
   // LoggedIn
-  onNotificationsClick?: () => void
   onFavoritesClick?: () => void
-  onUserClick?: () => void
+  onLogout?: () => void
 
   // Pure
   onCloseClick?: () => void
