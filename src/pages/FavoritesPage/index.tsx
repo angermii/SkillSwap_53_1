@@ -12,10 +12,10 @@ import { fetchSkill, fetchSkillSubcategories } from '@/entities/skill/model/skil
 import { fetchUsers } from '@/entities/user/model/userSlice'
 import { toggleFavorite } from '@/features/favorites'
 import { ROUTES } from '@/shared/lib/constants'
-import { Headline } from '@/shared/ui'
+import { Button, Headline } from '@/shared/ui'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { Footer, UserCard } from '@/widgets'
-import { FavoriteCards } from './FavoritesCards'
+import { Footer, UserCard, groupSkillsByAuthor, mapUserToCardData } from '@/widgets'
+import { FavoriteCard } from './FavoritesCards'
 import styles from './FavoritesPage.module.css'
 
 export default function FavoritesPage() {
@@ -43,21 +43,57 @@ export default function FavoritesPage() {
     void dispatch(fetchSkillSubcategories())
   }, [dispatch])
 
-  const cards = useMemo(
-    () => FavoriteCards({ favoriteIds, skills, users, subcategoriesById }),
-    [favoriteIds, skills, users, subcategoriesById],
-  )
+  const cards = useMemo<FavoriteCard[]>(() => {
+    const usersById = new Map(users.map((user) => [user.id, user]))
+    const skillsById = new Map(skills.map((skill) => [skill.id, skill]))
+    const skillsByAuthorId = groupSkillsByAuthor(skills)
+
+    return favoriteIds.reduce<FavoriteCard[]>((favoriteCards, skillId) => {
+      const skill = skillsById.get(skillId)
+
+      if (!skill) {
+        return favoriteCards
+      }
+
+      const author = usersById.get(skill.authorId)
+
+      if (!author) {
+        return favoriteCards
+      }
+
+      favoriteCards.push({
+        skillId: skill.id,
+        likeCount: skill.likeCount,
+        user: mapUserToCardData({
+          user: author,
+          skills: skillsByAuthorId.get(author.id) ?? [],
+          subcategoriesById,
+        }),
+      })
+
+      return favoriteCards
+    }, [])
+  }, [favoriteIds, skills, users, subcategoriesById])
+
+  const handleBackToCatalog = () => {
+    navigate(ROUTES.HOME)
+  }
 
   const renderContent = () => {
-    if (favoriteIds.length === 0) {
-      return <p className={styles.status}>Вы пока ничего не добавили в избранное</p>
-    }
+    const isEmpty = favoriteIds.length === 0 || cards.length === 0
+    if (isEmpty) {
+      const message =
+        favoriteIds.length === 0
+          ? 'Вы пока ничего не добавили в избранное'
+          : isLoading
+            ? 'Загружаем избранное…'
+            : (error ?? 'Не удалось найти избранные навыки')
 
-    if (cards.length === 0) {
       return (
-        <p className={styles.status}>
-          {isLoading ? 'Загружаем избранное…' : (error ?? 'Не удалось найти избранные навыки')}
-        </p>
+        <div className={styles.empty}>
+          <p className={styles.status}>{message}</p>
+          <Button onClick={handleBackToCatalog}>Вернуться в каталог</Button>
+        </div>
       )
     }
 
