@@ -25,7 +25,7 @@ export type RegistrationFormData = {
 // текстовые поля, которые можно изменять через общий обработчик onFieldChange
 export type RegistrationTextField = Exclude<
   keyof RegistrationFormData,
-  'avatarUrl' | 'skillImages'
+  'avatarUrl' | 'skillImages' | 'birthDate'
 >
 
 // сообщения об ошибках для текстовых полей и списков формы

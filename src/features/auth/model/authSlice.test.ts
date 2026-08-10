@@ -9,6 +9,17 @@ const createTestStore = async () => {
   return configureStore({ reducer: { auth: authReducer } })
 }
 
+const mockLoginPayload = {
+  id: '1',
+  name: 'Иван',
+  email: 'a@a.ru',
+  avatarUrl: null,
+  gender: 'male' as const,
+  birthDate: '',
+  city: '',
+  description: '',
+}
+
 describe('authSlice', () => {
   beforeEach(() => {
     localStorage.clear()
@@ -35,11 +46,11 @@ describe('authSlice', () => {
     const { login } = await import('./authSlice')
     const store = await createTestStore()
 
-    store.dispatch(login({ id: '1', name: 'Иван', email: 'a@a.ru' }))
+    store.dispatch(login(mockLoginPayload))
 
     const state = store.getState().auth
     expect(state.isAuthenticated).toBe(true)
-    expect(state.user).toEqual({ id: '1', name: 'Иван', email: 'a@a.ru', token: 'mock_token_1' })
+    expect(state.user).toEqual({ ...mockLoginPayload, token: 'mock_token_1' })
 
     const stored = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_USER)!)
     expect(stored).toEqual(state.user)
@@ -49,7 +60,7 @@ describe('authSlice', () => {
     const { login, logout } = await import('./authSlice')
     const store = await createTestStore()
 
-    store.dispatch(login({ id: '1', name: 'Иван', email: 'a@a.ru' }))
+    store.dispatch(login(mockLoginPayload))
     store.dispatch(logout())
 
     expect(store.getState().auth).toEqual({ user: null, isAuthenticated: false })

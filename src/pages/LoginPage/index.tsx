@@ -15,7 +15,7 @@ type RegistrationStep = 1 | 2 | 3
 
 const initialRegistrationData: RegistrationFormData = {
   name: '',
-  birthDate: '',
+  birthDate: undefined,
   gender: '',
   city: '',
   learningCategory: '',
@@ -32,6 +32,9 @@ const categoryOptions = SKILL_CATEGORIES.map((category) => ({
   name: category,
   value: category,
 }))
+
+const isValidGender = (value: string): value is 'male' | 'female' =>
+  value === 'male' || value === 'female'
 
 export default function LoginPage() {
   const dispatch = useAppDispatch()
@@ -59,6 +62,11 @@ export default function LoginPage() {
         id: '1',
         name: 'Пользователь',
         email: data.email,
+        avatarUrl: null,
+        gender: 'male',
+        birthDate: '',
+        city: '',
+        description: '',
       }),
     )
 
@@ -88,7 +96,7 @@ export default function LoginPage() {
   }
 
   const handleFieldChange = (
-    field: keyof Omit<RegistrationFormData, 'avatarUrl' | 'skillImages'>,
+    field: keyof Omit<RegistrationFormData, 'avatarUrl' | 'skillImages' | 'birthDate'>,
     value: string,
   ) => {
     setRegistrationData((prev) => ({
@@ -99,6 +107,18 @@ export default function LoginPage() {
     setRegistrationErrors((prev) => ({
       ...prev,
       [field]: undefined,
+    }))
+  }
+
+  const handleBirthDateChange = (date: Date | undefined) => {
+    setRegistrationData((prev) => ({
+      ...prev,
+      birthDate: date,
+    }))
+
+    setRegistrationErrors((prev) => ({
+      ...prev,
+      birthDate: undefined,
     }))
   }
 
@@ -160,6 +180,11 @@ export default function LoginPage() {
         id: '1',
         name: registrationData.name || 'Пользователь',
         email: registrationCredentials.email,
+        avatarUrl: registrationData.avatarUrl || null,
+        gender: isValidGender(registrationData.gender) ? registrationData.gender : 'male',
+        birthDate: registrationData.birthDate ? registrationData.birthDate.toISOString() : '',
+        city: registrationData.city,
+        description: '',
       }),
     )
 
@@ -208,6 +233,7 @@ export default function LoginPage() {
             learningSubcategoryOptions={[]}
             skillSubcategoryOptions={[]}
             onFieldChange={handleFieldChange}
+            onBirthDateChange={handleBirthDateChange}
             onAvatarChange={handleAvatarChange}
             onImagesChange={handleImagesChange}
             onBack={handleRegistrationBack}
