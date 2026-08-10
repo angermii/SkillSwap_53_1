@@ -1,16 +1,17 @@
-import type { HTMLAttributes, MouseEventHandler, ReactNode } from 'react'
-import type { To } from 'react-router-dom'
+import type { HTMLAttributes, ReactNode } from 'react'
 
-export interface SidebarItem {
-  id: string
+export interface SidebarItem<Id extends string = string> {
+  id: Id
   label: string
   icon: ReactNode
-  to: To
-  end?: boolean
-  onClick?: MouseEventHandler<HTMLAnchorElement>
 }
 
-export interface SidebarProps extends HTMLAttributes<HTMLElement> {
-  items: SidebarItem[]
+export interface SidebarProps<Id extends string = string> extends Omit<
+  HTMLAttributes<HTMLElement>,
+  'onSelect'
+> {
+  items: SidebarItem<Id>[]
+  activeId: Id
+  onSelect: (id: Id) => void
   ariaLabel?: string
 }
