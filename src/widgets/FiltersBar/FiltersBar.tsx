@@ -3,50 +3,6 @@ import clsx from 'clsx';
 import { Checkbox, RadioButton, ChevronDownIcon, CloseIcon } from '@/shared/ui';
 import styles from './FiltersBar.module.css';
 
-//Код для проверки
-// import { useState } from 'react';
-// // Импортируем и сам компонент, и данные из одного файла!
-// import { FiltersBar, FULL_SKILLS_DATA, FULL_CITIES_DATA } from '@/widgets/FiltersBar/FiltersBar';
-
-// export default function CatalogPage() {
-//   const [exchangeType, setExchangeType] = useState('all');
-//   const [authorGender, setAuthorGender] = useState('any');
-//   const [selectedSubcategories, setSelectedSubcategories] = useState<string[]>([]);
-//   const [selectedCities, setSelectedCities] = useState<string[]>([]);
-
-//   const handleReset = () => {
-//     setExchangeType('all');
-//     setAuthorGender('any');
-//     setSelectedSubcategories([]);
-//     setSelectedCities([]);
-//   };
-
-//   return (
-//     <main style={{ padding: '40px', display: 'flex', gap: '20px' }}>
-//       <FiltersBar 
-//         skillsData={FULL_SKILLS_DATA} // <-- Передаем данные через пропсы
-//         cities={FULL_CITIES_DATA}     // <-- Передаем данные через пропсы
-//         
-//         exchangeType={exchangeType}
-//         authorGender={authorGender}
-//         selectedSubcategories={selectedSubcategories}
-//         selectedCities={selectedCities}
-//         
-//         onExchangeTypeChange={setExchangeType}
-//         onGenderChange={setAuthorGender}
-//         onSubcategoriesChange={setSelectedSubcategories}
-//         onCitiesChange={setSelectedCities}
-//         onReset={handleReset}
-//       />
-//       <div>Тут будут карточки...</div>
-//     </main>
-//   );
-// }
-
-
-
-
-
 // =========================================================================
 // 1. Данные и тип
 // =========================================================================
@@ -56,7 +12,6 @@ export interface SkillCategory {
   subcategories: string[];
 }
 
-// Полный список навыков по макету
 export const FULL_SKILLS_DATA: SkillCategory[] = [
   {
     name: 'Бизнес и карьера',
@@ -102,16 +57,18 @@ export const FULL_CITIES_DATA = [
   'Нижний Новгород',
 ];
 
-// Пропсы 
+// Пропсы
 export interface FiltersBarProps {
   skillsData: SkillCategory[];
   cities: string[];
   exchangeType: string;
   authorGender: string;
+  selectedCategories?: string[]; // Опционально для обратной совместимости
   selectedSubcategories: string[];
   selectedCities: string[];
   onExchangeTypeChange: (value: string) => void;
   onGenderChange: (value: string) => void;
+  onCategoriesChange?: (categories: string[]) => void;
   onSubcategoriesChange: (subcategories: string[]) => void;
   onCitiesChange: (cities: string[]) => void;
   onReset: () => void;
@@ -126,10 +83,12 @@ export const FiltersBar = ({
   cities,
   exchangeType,
   authorGender,
+  selectedCategories = [],
   selectedSubcategories,
   selectedCities,
   onExchangeTypeChange,
   onGenderChange,
+  onCategoriesChange,
   onSubcategoriesChange,
   onCitiesChange,
   onReset,
@@ -143,10 +102,33 @@ export const FiltersBar = ({
   const activeFiltersCount = 
     (exchangeType !== 'all' ? 1 : 0) + 
     (authorGender !== 'any' ? 1 : 0) + 
+    selectedCategories.length + 
     selectedSubcategories.length + 
     selectedCities.length;
 
-  // --- Хэндлеры чекбоксов ---
+  // --- Хэндлер для клика по главной категории (чекбоксу) ---
+  const toggleCategory = (categoryName: string) => {
+    if (selectedCategories.includes(categoryName)) {
+      // 1. Убираем галочку с самой категории
+      onCategoriesChange?.(selectedCategories.filter((c) => c !== categoryName));
+
+      // 2. Ищем все подкатегории внутри этой категории
+      const categoryData = skillsData.find(c => c.name === categoryName);
+      if (categoryData) {
+        const subsToRemove = categoryData.subcategories;
+        
+        // 3. Сбрасываем выбранные подкатегории, которые к ней относятся
+        onSubcategoriesChange(
+          selectedSubcategories.filter((sub) => !subsToRemove.includes(sub))
+        );
+      }
+    } else {
+      // Включаем категорию
+      onCategoriesChange?.([...selectedCategories, categoryName]);
+    }
+  };
+
+  // --- Хэндлеры для подкатегорий и городов ---
   const toggleSubcategory = (sub: string) => {
     if (selectedSubcategories.includes(sub)) {
       onSubcategoriesChange(selectedSubcategories.filter((s) => s !== sub));
@@ -163,6 +145,7 @@ export const FiltersBar = ({
     }
   };
 
+  // --- Хэндлер для клика по стрелочке (шеврону) ---
   const toggleCategoryExpand = (categoryName: string) => {
     setExpandedCategories((prev) =>
       prev.includes(categoryName) 
@@ -223,17 +206,18 @@ export const FiltersBar = ({
           <div className={styles.list}>
             {visibleSkills.map((category) => {
               const isExpanded = expandedCategories.includes(category.name);
-              const hasSelectedSubs = category.subcategories.some(sub => selectedSubcategories.includes(sub));
 
               return (
                 <div key={category.name} className={styles.categoryBlock}>
                   <div className={styles.categoryHeader}>
+                    {/* Клик по чекбоксу переключает фильтр */}
                     <Checkbox
                       label={category.name}
                       variant="category"
-                      checked={hasSelectedSubs}
-                      onChange={() => toggleCategoryExpand(category.name)}
+                      checked={selectedCategories.includes(category.name)}
+                      onChange={() => toggleCategory(category.name)}
                     />
+                    {/* Клик по кнопке раскрывает список */}
                     <button 
                       type="button"
                       className={styles.chevronBtn} 
@@ -243,7 +227,13 @@ export const FiltersBar = ({
                     </button>
                   </div>
                   
-                  {isExpanded && (
+                  {/* Плавная анимация раскрытия через CSS Grid */}
+                  <div 
+                    className={clsx(
+                      styles.subListWrapper, 
+                      isExpanded && styles.subListExpanded
+                    )}
+                  >
                     <div className={styles.subList}>
                       {category.subcategories.map(sub => (
                         <Checkbox
@@ -255,7 +245,7 @@ export const FiltersBar = ({
                         />
                       ))}
                     </div>
-                  )}
+                  </div>
                 </div>
               );
             })}
