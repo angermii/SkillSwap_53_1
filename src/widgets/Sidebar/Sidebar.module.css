@@ -41,7 +41,6 @@
   background-color: var(--color-disabled);
 }
 
-/* active во время нажатия и выбранный пункт */
 .item:active,
 .item.active {
   background-color: var(--color-button-hover);
