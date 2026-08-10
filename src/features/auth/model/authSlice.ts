@@ -1,6 +1,7 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import type { AuthUser } from '@/shared/types'
 import { clearAuthUser, getAuthUser, saveAuthUser } from './authUtils'
+
 export interface AuthState {
   user: AuthUser | null
   isAuthenticated: boolean
@@ -27,8 +28,19 @@ const authSlice = createSlice({
       state.user = null
       state.isAuthenticated = false
     },
+    updateUser: (
+      state,
+      action: PayloadAction<Partial<Omit<AuthUser, 'id' | 'token'>>>,
+    ) => {
+      if (!state.user) return
+
+      const { token, ...rest } = state.user
+      const updatedUser = saveAuthUser({ ...rest, ...action.payload })
+
+      state.user = updatedUser
+    },
   },
 })
 
-export const { login, logout } = authSlice.actions
+export const { login, logout, updateUser } = authSlice.actions
 export default authSlice.reducer
