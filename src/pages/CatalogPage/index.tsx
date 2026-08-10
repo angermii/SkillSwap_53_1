@@ -120,6 +120,36 @@ export default function CatalogPage() {
     [categories, subcategories],
   )
 
+  // 1. Формируем массив выбранных категорий
+  const selectedCategories = useMemo(() => {
+    const selectedIds = new Set(filters.categoryIds)
+    return categories.filter((category) => selectedIds.has(category.id))
+  }, [filters.categoryIds, categories])
+
+  const selectedCategoryNames = useMemo(
+    () => selectedCategories.map((category) => category.title),
+    [selectedCategories],
+  )
+
+  // 2. Хэндлер для клика по категории в виджете
+  const handleCategoriesChange = (selectedNames: string[]) => {
+    const selectedNameSet = new Set(selectedNames)
+    setFilters((currentFilters) => ({
+      ...currentFilters,
+      categoryIds: categories
+        .filter((category) => selectedNameSet.has(category.title))
+        .map((category) => category.id),
+    }))
+  }
+
+  // 3. Хэндлер для удаления чипса категории крестиком
+  const handleRemoveCategoryFilter = (categoryId: string) => {
+    setFilters((currentFilters) => ({
+      ...currentFilters,
+      categoryIds: currentFilters.categoryIds.filter((id) => id !== categoryId),
+    }))
+  }
+
   const cities = useMemo(() => Array.from(new Set(users.map((user) => user.city))), [users])
 
   const selectedSubcategories = useMemo(() => {
@@ -330,10 +360,12 @@ export default function CatalogPage() {
           cities={cities}
           exchangeType={filters.skillType}
           authorGender={filters.gender === 'all' ? 'any' : filters.gender}
+          selectedCategories={selectedCategoryNames} // <-- Добавили
           selectedSubcategories={selectedSubcategoryNames}
           selectedCities={filters.cities}
           onExchangeTypeChange={handleExchangeTypeChange}
           onGenderChange={handleGenderChange}
+          onCategoriesChange={handleCategoriesChange} // <-- Добавили
           onSubcategoriesChange={handleSubcategoriesChange}
           onCitiesChange={handleCitiesChange}
           onReset={handleReset}
@@ -358,6 +390,14 @@ export default function CatalogPage() {
                       onRemove={handleRemoveSkillTypeFilter}
                     />
                   )}
+
+                  {selectedCategories.map((category) => (
+                    <FilterChip
+                      key={`category-${category.id}`}
+                      label={category.title}
+                      onRemove={() => handleRemoveCategoryFilter(category.id)}
+                    />
+                  ))}
 
                   {selectedSubcategories.map((subcategory) => (
                     <FilterChip
