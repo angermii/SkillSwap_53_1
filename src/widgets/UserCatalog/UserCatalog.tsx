@@ -1,9 +1,12 @@
 import { useState, ReactNode } from 'react';
 import clsx from 'clsx';
 
-import { Headline, Button, ChevronRightIcon, ChevronUpIcon } from '@/shared/ui';
+import { Headline, Button, ChevronRightIcon, ChevronUpIcon, Spinner } from '@/shared/ui';
 import { UserCard } from '@/widgets/UserCard'; 
 import type { UserCardData } from '@/widgets/UserCard'; 
+// 1. Импортируем наш новый хук
+import { useInfiniteScroll } from '@/shared/lib/useInfiniteScroll';
+
 
 import styles from './UserCatalog.module.css';
 
@@ -24,84 +27,15 @@ export interface UserCatalogProps {
   onDetailsClick?: (id: string | number) => void;
   onLikeChange?: (id: string | number, count: number, isLiked: boolean) => void;
   likedState?: Record<string | number, boolean>;
-  likeCounts?: Record<string | number, number>; // Добавилf пропс для количества лайков
+  likeCounts?: Record<string | number, number>;
 }
 
-
-/* Кодочек для проверки компонента
-import { useState } from 'react';
-import { UserCatalog } from '@/widgets/UserCatalog'; 
-import dbUsers from '../../../public/db/users.json';
-
-const CatalogPage = () => {
-  // Локальные стейты для хранения статуса лайка и количества лайков
-  const [likedState, setLikedState] = useState<Record<string | number, boolean>>({});
-  const [likeCounts, setLikeCounts] = useState<Record<string | number, number>>({});
-
-  // Обработчик клика по кнопке "Подробнее"
-  const handleDetailsClick = (id: string | number) => {
-    console.log('Переход на профиль пользователя с ID:', id);
-  };
-
-  // Обработчик изменения лайка (принимает id, новое количество и статус)
-  const handleLikeChange = (id: string | number, count: number, isLiked: boolean) => {
-    setLikedState((prev) => ({
-      ...prev,
-      [id]: isLiked,
-    }));
-    
-    // Сохраняем обновленное количество лайков
-    setLikeCounts((prev) => ({
-      ...prev,
-      [id]: count,
-    }));
-  };
-
-  const mappedUsers = dbUsers.map((user: any) => ({
-    ...user,
-    city: 'Не указан', 
-    age: 25,           
-    teachTags: [],     
-    learnTags: []      
-  }));
-
-  const sections = [
-    {
-      id: 'popular',
-      title: 'Популярное',
-      isExpandable: true,
-      users: mappedUsers,
-    },
-    {
-      id: 'new',
-      title: 'Новое',
-      isExpandable: true,
-      users: mappedUsers,
-    },
-    {
-      id: 'recommend',
-      title: 'Рекомендуем',
-      isExpandable: false,
-      users: mappedUsers,
-    }
-  ];
-
-  return (
-    <main style={{ padding: '40px' }}>
-      <UserCatalog 
-        sections={sections} 
-        onDetailsClick={handleDetailsClick}
-        onLikeChange={handleLikeChange}
-        likedState={likedState}
-        likeCounts={likeCounts} // Передаем стейт с цифрами в виджет
-      />
-    </main>
-  );
-};
-
-export default CatalogPage;
-
-*/
+// 2. Спиннер
+const TemporarySpinner = () => (
+  <div style={{ display: 'flex', justifyContent: 'center', padding: '32px 0' }}>
+    <Spinner />
+  </div>
+);
 
 const MAX_VISIBLE_CARDS = 6; 
 const INITIAL_VISIBLE_CARDS = 3;
@@ -198,6 +132,10 @@ export const UserCatalog = ({
   likeCounts
 }: UserCatalogProps) => {
   
+  // 3. Вызываем хук на ВЕРХНЕМ уровне компонента.
+  // Если users нет (например, передан массив sections), передаем пустой массив.
+  const { visibleItems, isFetching, hasMore, loaderRef } = useInfiniteScroll(users || [], 6);
+  
   if (users) {
     return (
       <div className={clsx(styles.catalog, className)}>
@@ -210,23 +148,31 @@ export const UserCatalog = ({
             />
           )}
           {users.length > 0 ? (
-            <div className={styles.grid}>
-              {users.map((user) => {
-                const cardId = getCardId(user)
-                if (cardId === undefined) return null
-                return (
-                  <UserCard
-                    key={user.id}
-                    user={user}
-                    variant="compact"
-                    isLiked={likedState?.[cardId] ?? false}
-                    likeCount={likeCounts?.[cardId] ?? 0}
-                    onDetailsClick={() => onDetailsClick?.(cardId)}
-                    onLikeChange={(count, isLiked) => onLikeChange?.(cardId, count, isLiked)}
-                  />
-                )
-              })}
-            </div>
+            // 4. Оборачиваем сетку и спиннер во фрагмент
+            <>
+              <div className={styles.grid}>
+                {/* 5. Рендерим visibleItems вместо исходного users */}
+                {visibleItems.map((user) => {
+                  const cardId = getCardId(user)
+                  if (cardId === undefined) return null
+                  return (
+                    <UserCard
+                      key={user.id}
+                      user={user}
+                      variant="compact"
+                      isLiked={likedState?.[cardId] ?? false}
+                      likeCount={likeCounts?.[cardId] ?? 0}
+                      onDetailsClick={() => onDetailsClick?.(cardId)}
+                      onLikeChange={(count, isLiked) => onLikeChange?.(cardId, count, isLiked)}
+                    />
+                  )
+                })}
+              </div>
+              
+              {/* 6. Показываем лоадер и триггер, если нужно */}
+              {isFetching && <TemporarySpinner />}
+              {hasMore && <div ref={loaderRef} style={{ height: '24px' }} />}
+            </>
           ) : (
             <div className={styles.empty}>
               <p>По вашему запросу ничего не найдено.</p>
@@ -247,7 +193,7 @@ export const UserCatalog = ({
             onDetailsClick={onDetailsClick}
             onLikeChange={onLikeChange}
             likedState={likedState}
-            likeCounts={likeCounts} // Прокидываем пропс вниз
+            likeCounts={likeCounts} 
           />
         ))}
       </div>
