@@ -14,22 +14,3 @@
   margin: 0 auto;
   gap: var(--space-xl);
 }
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--space-lg);
-  justify-items: stretch;
-}
-
-.status {
-  padding: var(--space-2xl) 0;
-  color: var(--color-caption);
-  text-align: center;
-}
-
-.empty {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
