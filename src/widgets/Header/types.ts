@@ -14,7 +14,7 @@ export type HeaderProps = {
   // Уведомления
   readAll?: () => void
   clearAll?: () => void
-  onNotificationClick?: () => void
+  onNotificationClick?: (id: string) => void
 
   // LoggedOut
   onLoginClick?: () => void

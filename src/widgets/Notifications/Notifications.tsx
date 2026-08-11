@@ -6,7 +6,7 @@ export interface NotificationsProps {
   notifications?: Notification[];
   readAll?: () => void;
   clearAll?: () => void;
-  onClick?: () => void;
+  onClick?: (id: string) => void;
 }
 
 export const Notifications = ({notifications = [], readAll, clearAll, onClick} : NotificationsProps) => {
