@@ -32,3 +32,15 @@
   gap: 12px;
   margin-bottom: 40px;
 }
+
+/* для модалки кнопка лайка без авторизации */
+.registrationButton {
+  display: flex;
+  justify-content: center;
+}
+
+.registrationModal {
+  height: auto;
+  min-height: 0;
+  padding: 60px;
+}

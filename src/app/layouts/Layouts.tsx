@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { Header } from '@/widgets'
 import { useEffect, useMemo, useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
+import { loadFavorites, clearCurrentFavorites } from '@/features/favorites'
 
 export const MainLayout = () => {
   const dispatch = useAppDispatch()
@@ -20,6 +21,14 @@ export const MainLayout = () => {
   // проверяем залогинен ли юзер и вытаскиваем его
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated)
   const user = useAppSelector((state) => state.auth.user)
+
+  useEffect(() => {
+    if (user) {
+      dispatch(loadFavorites(user.id))
+    } else {
+      dispatch(clearCurrentFavorites())
+    }
+  }, [user, dispatch])
 
   //выход
   const handleLogout = () => {
@@ -69,7 +78,7 @@ export const MainLayout = () => {
         onFavoritesClick={() => navigate(ROUTES.FAVORITES)}
         onLogout={handleLogout}
       />
-      <Outlet  context={{ searchQuery }}/>
+      <Outlet context={{ searchQuery }} />
     </>
   )
 }

@@ -3,13 +3,13 @@ import { generatePath, useNavigate, useOutletContext } from 'react-router-dom'
 
 import { fetchSkill } from '@/entities/skill/model/skillSlice'
 import { fetchUsers } from '@/entities/user/model/userSlice'
-import { toggleFavorite } from '@/features/favorites'
+import { useLike } from '@/features/favorites/model/useLike'
 import { createInitialFilters, filterUsers } from '@/features/filters'
 import { searchUsers } from '@/features/search'
 import { sortUsers, type DateOrder, type SortType } from '@/features/sort'
 import { useDebounce } from '@/shared/hooks/useDebounce'
 import { ROUTES } from '@/shared/lib/constants'
-import { Button, FilterChip, SortIcon } from '@/shared/ui'
+import { Button, FilterChip, ModalUI, SortIcon } from '@/shared/ui'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import {
   FiltersBar,
@@ -74,7 +74,9 @@ export default function CatalogPage() {
     error: skillError,
   } = useAppSelector((state) => state.skill)
 
-  const favoriteIds = useAppSelector((state) => state.favorites.ids)
+  // Логика лайков вынесена в useLike, чтобы её можно было использовать на других страницах
+  const { likedState, likeCounts, handleLike, isRegistrationModalOpen, closeRegistrationModal } =
+    useLike({ skills })
 
   useEffect(() => {
     dispatch(fetchUsers())
@@ -87,27 +89,6 @@ export default function CatalogPage() {
 
   const isLoading = usersLoading || skillsLoading
   const error = usersError ?? skillsError
-
-  // состояния лайков индексируются по skillId
-  const likedState = useMemo(() => {
-    const result: Record<string | number, boolean> = {}
-
-    favoriteIds.forEach((skillId) => {
-      result[skillId] = true
-    })
-
-    return result
-  }, [favoriteIds])
-
-  const likeCounts = useMemo(() => {
-    const result: Record<string | number, number> = {}
-
-    skills.forEach((skill) => {
-      result[skill.id] = skill.likeCount
-    })
-
-    return result
-  }, [skills])
 
   const skillsData = useMemo(
     () =>
@@ -340,10 +321,6 @@ export default function CatalogPage() {
     setSortOptionIndex((currentIndex) => (currentIndex + 1) % SORT_OPTIONS.length)
   }
 
-  const handleLikeChange = (skillId: string | number) => {
-    dispatch(toggleFavorite(String(skillId)))
-  }
-
   const handleDetailsClick = (skillId: string | number) => {
     navigate(
       generatePath(ROUTES.SKILL, {
@@ -428,7 +405,7 @@ export default function CatalogPage() {
                   users={[]}
                   title="Все предложения: 0"
                   onDetailsClick={handleDetailsClick}
-                  onLikeChange={handleLikeChange}
+                  onLikeChange={handleLike}
                   likedState={likedState}
                   likeCounts={likeCounts}
                 />
@@ -444,7 +421,7 @@ export default function CatalogPage() {
                     ) : undefined
                   }
                   onDetailsClick={handleDetailsClick}
-                  onLikeChange={handleLikeChange}
+                  onLikeChange={handleLike}
                   likedState={likedState}
                   likeCounts={likeCounts}
                 />
@@ -452,7 +429,7 @@ export default function CatalogPage() {
                 <UserCatalog
                   sections={catalogSections}
                   onDetailsClick={handleDetailsClick}
-                  onLikeChange={handleLikeChange}
+                  onLikeChange={handleLike}
                   likedState={likedState}
                   likeCounts={likeCounts}
                 />
@@ -462,6 +439,18 @@ export default function CatalogPage() {
         </div>
       </main>
 
+      {isRegistrationModalOpen && (
+        <ModalUI
+          title="Хотите поставить лайк?"
+          description="Зарегистрируйтесь, чтобы добавлять навыки в избранное"
+          onClose={closeRegistrationModal}
+          className={styles.registrationModal}
+        >
+          <div className={styles.registrationButton}>
+            <Button onClick={() => navigate(ROUTES.REGISTER)}>Зарегистрироваться</Button>
+          </div>
+        </ModalUI>
+      )}
       <Footer />
     </>
   )
