@@ -2,11 +2,9 @@ import { useState, ReactNode } from 'react';
 import clsx from 'clsx';
 
 import { Headline, Button, ChevronRightIcon, ChevronUpIcon, Spinner } from '@/shared/ui';
+import { useInfiniteScroll } from '@/shared/lib/useInfiniteScroll'; 
 import { UserCard } from '@/widgets/UserCard'; 
 import type { UserCardData } from '@/widgets/UserCard'; 
-// 1. Импортируем наш новый хук
-import { useInfiniteScroll } from '@/shared/lib/useInfiniteScroll';
-
 
 import styles from './UserCatalog.module.css';
 
@@ -29,13 +27,6 @@ export interface UserCatalogProps {
   likedState?: Record<string | number, boolean>;
   likeCounts?: Record<string | number, number>;
 }
-
-// 2. Спиннер
-const TemporarySpinner = () => (
-  <div style={{ display: 'flex', justifyContent: 'center', padding: '32px 0' }}>
-    <Spinner />
-  </div>
-);
 
 const MAX_VISIBLE_CARDS = 6; 
 const INITIAL_VISIBLE_CARDS = 3;
@@ -60,6 +51,9 @@ const CatalogSectionItem = ({
     section.isExpandable ? INITIAL_VISIBLE_CARDS : section.users.length
   );
 
+  // Подключаем бесконечный скролл
+  const { visibleItems: infiniteItems, isFetching, loaderRef } = useInfiniteScroll(section.users, 6);
+
   const handleToggle = () => {
     if (visibleCount > INITIAL_VISIBLE_CARDS) {
       setVisibleCount(INITIAL_VISIBLE_CARDS);
@@ -83,7 +77,10 @@ const CatalogSectionItem = ({
     </Button>
   ) : null;
 
-  const visibleUsers = section.users.slice(0, visibleCount);
+  // Если секция Expandable - обрезаем вручную. Если нет - отдаем управление хуку скролла
+  const visibleUsers = section.isExpandable 
+    ? section.users.slice(0, visibleCount) 
+    : infiniteItems;
 
   return (
     <section className={styles.section}>
@@ -94,23 +91,29 @@ const CatalogSectionItem = ({
       />
 
       {visibleUsers.length > 0 ? (
-        <div className={styles.grid}>
-          {visibleUsers.map((user) => {
-            const cardId = getCardId(user);
-            if (cardId === undefined) return null
-            return (
-              <UserCard
-                key={user.id}
-                user={user}
-                variant="compact"
-                isLiked={likedState?.[cardId] ?? false}
-                likeCount={likeCounts?.[cardId] ?? 0}
-                onDetailsClick={() => onDetailsClick?.(cardId)}
-                onLikeChange={(count, isLiked) => onLikeChange?.(cardId, count, isLiked)}
-              />
-            )
-          })}
-        </div>
+        <>
+          <div className={styles.grid}>
+            {visibleUsers.map((user) => {
+              const cardId = getCardId(user);
+              if (cardId === undefined) return null;
+              return (
+                <UserCard
+                  key={user.id}
+                  user={user}
+                  variant="compact"
+                  isLiked={likedState?.[cardId] ?? false}
+                  likeCount={likeCounts?.[cardId] ?? 0}
+                  onDetailsClick={() => onDetailsClick?.(cardId)}
+                  onLikeChange={(count, isLiked) => onLikeChange?.(cardId, count, isLiked)}
+                />
+              )
+            })}
+          </div>
+          
+          {/* Спиннер и лоадер теперь показываются всегда, без лишних проверок */}
+          {isFetching && <Spinner />}
+          <div ref={loaderRef} style={{ height: '20px' }} />
+        </>
       ) : (
         <div className={styles.empty}>
           <p>В этой секции пока нет пользователей.</p>
@@ -132,9 +135,8 @@ export const UserCatalog = ({
   likeCounts
 }: UserCatalogProps) => {
   
-  // 3. Вызываем хук на ВЕРХНЕМ уровне компонента.
-  // Если users нет (например, передан массив sections), передаем пустой массив.
-  const { visibleItems, isFetching, hasMore, loaderRef } = useInfiniteScroll(users || [], 6);
+  // Хук для состояния с фильтрами (когда передан плоский массив users)
+  const { visibleItems: infiniteUsers, isFetching, loaderRef } = useInfiniteScroll(users || [], 6);
   
   if (users) {
     return (
@@ -147,12 +149,10 @@ export const UserCatalog = ({
               className={styles.header} 
             />
           )}
-          {users.length > 0 ? (
-            // 4. Оборачиваем сетку и спиннер во фрагмент
+          {infiniteUsers.length > 0 ? (
             <>
               <div className={styles.grid}>
-                {/* 5. Рендерим visibleItems вместо исходного users */}
-                {visibleItems.map((user) => {
+                {infiniteUsers.map((user) => {
                   const cardId = getCardId(user)
                   if (cardId === undefined) return null
                   return (
@@ -169,9 +169,9 @@ export const UserCatalog = ({
                 })}
               </div>
               
-              {/* 6. Показываем лоадер и триггер, если нужно */}
-              {isFetching && <TemporarySpinner />}
-              {hasMore && <div ref={loaderRef} style={{ height: '24px' }} />}
+              {/* Спиннер и лоадер для плоского списка */}
+              {isFetching && <Spinner />}
+              <div ref={loaderRef} style={{ height: '20px' }} />
             </>
           ) : (
             <div className={styles.empty}>
@@ -193,7 +193,7 @@ export const UserCatalog = ({
             onDetailsClick={onDetailsClick}
             onLikeChange={onLikeChange}
             likedState={likedState}
-            likeCounts={likeCounts} 
+            likeCounts={likeCounts}
           />
         ))}
       </div>
