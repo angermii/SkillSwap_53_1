@@ -56,5 +56,17 @@
 }
 
 .photo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   flex-shrink: 0;
+}
+
+.avatarError {
+  max-width: 244px;
+  margin-top: 4px;
+  color: var(--color-error);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  text-align: center;
 }
