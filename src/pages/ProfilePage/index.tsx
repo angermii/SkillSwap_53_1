@@ -1,14 +1,29 @@
 import { useMemo, useState } from 'react'
 
 import { updateUser } from '@/features/auth'
-import { BulbIcon, HeartIcon, MessageTextIcon, RequestIcon, UserIcon } from '@/shared/ui/icons'
+import {
+  BulbIcon,
+  HeartIcon,
+  MessageTextIcon,
+  RequestIcon,
+  UserIcon,
+} from '@/shared/ui/icons'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { Footer, UserDashboard, FavoritesWidget } from '@/widgets'
+
+import {
+  Footer,
+  UserDashboard,
+  FavoritesWidget,
+  ProfileSkills,
+} from '@/widgets'
+
 import type { UserData, UserEditableField } from '@/widgets'
+
 import { Sidebar } from '@/widgets/Sidebar'
 import type { SidebarItem } from '@/widgets/Sidebar'
-import styles from './ProfilePage.module.css'
+
 import type { ProfileTab } from './type'
+import styles from './ProfilePage.module.css'
 
 const GENDER_OPTIONS = [
   { name: 'Мужской', value: 'male' },
@@ -28,26 +43,39 @@ export default function ProfilePage() {
   const dispatch = useAppDispatch()
   const authUser = useAppSelector((state) => state.auth.user)
 
-  // активная вкладка сайдбара: меняется только правая часть страницы
+  // Активная вкладка сайдбара.
+  // При переключении меняется только содержимое правой части /profile.
   const [activeTab, setActiveTab] = useState<ProfileTab>('profile')
 
-  // форма локальная, в стор уходит только по кнопке "Сохранить"
+  // Локальное состояние формы.
+  // В Redux данные отправляются только после нажатия "Сохранить".
   const [formData, setFormData] = useState<UserData>({
     email: authUser?.email ?? '',
     name: authUser?.name ?? '',
-    birthDate: authUser?.birthDate ? new Date(authUser.birthDate) : undefined,
+    birthDate: authUser?.birthDate
+      ? new Date(authUser.birthDate)
+      : undefined,
     gender: authUser?.gender ?? '',
     city: authUser?.city ?? '',
     about: authUser?.description ?? '',
     avatarUrl: authUser?.avatarUrl ?? '',
   })
 
-  const handleFieldChange = (field: UserEditableField, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }))
+  const handleFieldChange = (
+    field: UserEditableField,
+    value: string,
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }))
   }
 
   const handleBirthDateChange = (date: Date | undefined) => {
-    setFormData((prev) => ({ ...prev, birthDate: date }))
+    setFormData((prev) => ({
+      ...prev,
+      birthDate: date,
+    }))
   }
 
   const handleSave = () => {
@@ -59,18 +87,40 @@ export default function ProfilePage() {
         gender: formData.gender as 'male' | 'female',
         description: formData.about,
         avatarUrl: formData.avatarUrl || null,
-        birthDate: formData.birthDate ? formData.birthDate.toISOString() : '',
+        birthDate: formData.birthDate
+          ? formData.birthDate.toISOString()
+          : '',
       }),
     )
   }
 
   const sidebarItems: SidebarItem<ProfileTab>[] = useMemo(
     () => [
-      { id: 'requests', label: 'Заявки', icon: <RequestIcon /> },
-      { id: 'exchanges', label: 'Мои обмены', icon: <MessageTextIcon /> },
-      { id: 'favorites', label: 'Избранное', icon: <HeartIcon /> },
-      { id: 'skills', label: 'Мои навыки', icon: <BulbIcon /> },
-      { id: 'profile', label: 'Личные данные', icon: <UserIcon /> },
+      {
+        id: 'requests',
+        label: 'Заявки',
+        icon: <RequestIcon />,
+      },
+      {
+        id: 'exchanges',
+        label: 'Мои обмены',
+        icon: <MessageTextIcon />,
+      },
+      {
+        id: 'favorites',
+        label: 'Избранное',
+        icon: <HeartIcon />,
+      },
+      {
+        id: 'skills',
+        label: 'Мои навыки',
+        icon: <BulbIcon />,
+      },
+      {
+        id: 'profile',
+        label: 'Личные данные',
+        icon: <UserIcon />,
+      },
     ],
     [],
   )
@@ -86,17 +136,21 @@ export default function ProfilePage() {
             onFieldChange={handleFieldChange}
             onBirthDateChange={handleBirthDateChange}
             onNewAvatarClick={() => {
-              // TODO: подключить реальную загрузку файла, пока заглушка
+              // TODO: подключить реальную загрузку файла
             }}
             onChangePassword={() => {
-              // TODO: модалка смены пароля, отдельная задача
+              // TODO: модалка смены пароля
             }}
             onSave={handleSave}
           />
         )
+
       case 'favorites':
         return <FavoritesWidget />
-      // TODO: заменить заглушки на виджеты вкладок, когда они будут готовы
+
+      case 'skills':
+        return <ProfileSkills />
+
       default:
         return <p>Раздел в разработке</p>
     }
@@ -105,9 +159,15 @@ export default function ProfilePage() {
   return (
     <div className={styles.layout}>
       <main className={styles.page}>
-        <Sidebar items={sidebarItems} activeId={activeTab} onSelect={setActiveTab} />
+        <Sidebar
+          items={sidebarItems}
+          activeId={activeTab}
+          onSelect={setActiveTab}
+        />
 
-        <div className={styles.content}>{renderTabContent()}</div>
+        <div className={styles.content}>
+          {renderTabContent()}
+        </div>
       </main>
 
       <Footer />
