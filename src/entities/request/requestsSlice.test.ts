@@ -89,6 +89,8 @@ describe('requestsSlice', () => {
       fromUserId: 'user-1',
       toUserId: 'user-2',
       status: 'pending',
+      isNotificationRead: false,
+      isNotificationDismissed: false,
     })
 
 
@@ -100,6 +102,119 @@ describe('requestsSlice', () => {
     expect(stored).toEqual(requests)
   })
 
+  it('readAllNotifications marks only received notifications as read', async () => {
+    const {
+      createRequest,
+      readAllNotifications,
+    } = await import('./requestsSlice')
+
+    const store = await createTestStore()
+
+    // входящий request для user-2
+    store.dispatch(
+      createRequest({
+        skillId: 'skill-1',
+        fromUserId: 'user-1',
+        toUserId: 'user-2',
+      }),
+    )
+
+    // исходящий request от user-2
+    store.dispatch(
+      createRequest({
+        skillId: 'skill-2',
+        fromUserId: 'user-2',
+        toUserId: 'user-3',
+      }),
+    )
+
+    store.dispatch(readAllNotifications('user-2'))
+
+    const [receivedRequest, sentRequest] = store.getState().requests.requests
+
+    expect(receivedRequest.isNotificationRead).toBe(true)
+    expect(sentRequest.isNotificationRead).toBe(false)
+  })
+
+  it('readNotification marks only selected notification as read', async () => {
+    const {
+      createRequest,
+      readNotification,
+    } = await import('./requestsSlice')
+
+    const store = await createTestStore()
+
+    store.dispatch(
+      createRequest({
+        skillId: 'skill-1',
+        fromUserId: 'user-1',
+        toUserId: 'user-3',
+      }),
+    )
+
+    store.dispatch(
+      createRequest({
+        skillId: 'skill-2',
+        fromUserId: 'user-2',
+        toUserId: 'user-3',
+      }),
+    )
+
+    const [selectedRequest, otherRequest] = store.getState().requests.requests
+
+    store.dispatch(readNotification(selectedRequest.id))
+
+    const requests = store.getState().requests.requests
+
+    expect(requests[0].isNotificationRead).toBe(true)
+    expect(requests[1].isNotificationRead).toBe(false)
+    expect(otherRequest.isNotificationRead).toBe(false)
+  })
+
+  it('clearReadNotifications hides only read notifications', async () => {
+    const {
+      createRequest,
+      readNotification,
+      clearReadNotifications,
+      selectNotificationRequests,
+    } = await import('./requestsSlice')
+
+    const store = await createTestStore()
+
+    store.dispatch(
+      createRequest({
+        skillId: 'skill-1',
+        fromUserId: 'user-1',
+        toUserId: 'user-3',
+      }),
+    )
+
+    store.dispatch(
+      createRequest({
+        skillId: 'skill-2',
+        fromUserId: 'user-2',
+        toUserId: 'user-3',
+      }),
+    )
+
+    const [readRequest] = store.getState().requests.requests
+
+    store.dispatch(readNotification(readRequest.id))
+    store.dispatch(clearReadNotifications('user-3'))
+
+    const state = store.getState()
+    const requests = state.requests.requests
+    const visibleNotifications = selectNotificationRequests(state, 'user-3')
+
+    // оба запроса остаются в store
+    expect(requests).toHaveLength(2)
+
+    expect(requests[0].isNotificationDismissed).toBe(true)
+    expect(requests[1].isNotificationDismissed).toBe(false)
+
+    // в виджете остается только непрочитанное уведомление
+    expect(visibleNotifications).toEqual([requests[1]])
+  })
 
   it('acceptRequest changes request status to accepted', async () => {
     const {

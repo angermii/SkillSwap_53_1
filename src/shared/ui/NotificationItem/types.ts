@@ -4,5 +4,5 @@ export type Notification = {
   description?: string;
   date?: string;
   status?: 'read' | 'unread';
-  onClick?: () => void;
+  onClick?: (id: string) => void;
 }
