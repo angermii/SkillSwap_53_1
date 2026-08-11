@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react'
 import { updateUser } from '@/features/auth'
 import { BulbIcon, HeartIcon, MessageTextIcon, RequestIcon, UserIcon } from '@/shared/ui/icons'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { Footer, UserDashboard } from '@/widgets'
+import { Footer, UserDashboard, FavoritesWidget } from '@/widgets'
 import type { UserData, UserEditableField } from '@/widgets'
 import { Sidebar } from '@/widgets/Sidebar'
 import type { SidebarItem } from '@/widgets/Sidebar'
@@ -94,7 +94,8 @@ export default function ProfilePage() {
             onSave={handleSave}
           />
         )
-
+      case 'favorites':
+        return <FavoritesWidget />
       // TODO: заменить заглушки на виджеты вкладок, когда они будут готовы
       default:
         return <p>Раздел в разработке</p>
