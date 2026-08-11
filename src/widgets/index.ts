@@ -7,9 +7,9 @@ export { Notifications } from './Notifications'
 export type { NotificationsProps } from './Notifications'
 export { Header } from './Header'
 export * from './UserCard'
-export { UserCatalog } from './UserCatalog/UserCatalog'; 
-export type { UserCatalogProps, CatalogSection } from './UserCatalog/UserCatalog';
-export * from './FiltersBar';
+export { UserCatalog } from './UserCatalog/UserCatalog'
+export type { UserCatalogProps, CatalogSection } from './UserCatalog/UserCatalog'
+export * from './FiltersBar'
 export { UserSkillWidget } from './UserSkillWidget'
 export * from './SimilarOffers'
 export * from './DatePicker'
@@ -17,3 +17,4 @@ export * from './RegistrationForm'
 export * from './CategoryMenu'
 export * from './UserDashboard'
 export * from './Sidebar'
+export * from './FavoritesWidget'

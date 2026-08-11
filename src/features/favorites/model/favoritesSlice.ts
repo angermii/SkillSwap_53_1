@@ -1,32 +1,51 @@
-import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
-import { getFavorites, saveFavorites } from "./favoritesUtils"
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
+import { getFavorites, saveFavorites } from './favoritesUtils'
 
 export interface FavoritesState {
-    ids: string[]
-};
+  ids: string[]
+}
 
 const initialState: FavoritesState = {
-    ids: getFavorites(),
-};
+  ids: [],
+}
 
 const favoritesSlice = createSlice({
-    name: 'favorites',
-    initialState,
-    reducers: {
-        toggleFavorite: (state, action: PayloadAction<string>) => {
-            const id = action.payload
+  name: 'favorites',
+  initialState,
+  reducers: {
+    // Загружаем избранное конкретного пользователя
+    loadFavorites: (state, action: PayloadAction<string>) => {
+      state.ids = getFavorites(action.payload)
+    },
 
-            if (state.ids.includes(id)) {
-                state.ids = state.ids.filter((item) => item !== id)
-            } else {
-                state.ids.push(id)
-            }
+    // Добавляем или убираем навык из избранного
+    // сохраняем обновлённый список пользователя
+    toggleFavorite: (
+      state,
+      action: PayloadAction<{
+        userId: string
+        skillId: string
+      }>,
+    ) => {
+      const { userId, skillId } = action.payload
 
-            saveFavorites(state.ids)
-        }
-    }
-});
+      if (state.ids.includes(skillId)) {
+        state.ids = state.ids.filter((item) => item !== skillId)
+      } else {
+        state.ids.push(skillId)
+      }
 
-export const { toggleFavorite } = favoritesSlice.actions;
+      saveFavorites(userId, state.ids)
+    },
+
+    // Очищаем только текущее Redux-состояние
+    // Данные пользователя в localStorage при этом сохраняются
+    clearCurrentFavorites: (state) => {
+      state.ids = []
+    },
+  },
+})
+
+export const { loadFavorites, toggleFavorite, clearCurrentFavorites } = favoritesSlice.actions
 
 export default favoritesSlice.reducer

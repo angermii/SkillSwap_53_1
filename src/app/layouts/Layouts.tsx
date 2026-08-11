@@ -19,6 +19,7 @@ import {
   selectNotificationRequests,
 } from '@/entities/request/requestsSlice'
 import { mapRequestsToNotifications } from '@/widgets/Notifications'
+import { loadFavorites, clearCurrentFavorites } from '@/features/favorites'
 
 export const MainLayout = () => {
   const dispatch = useAppDispatch()
@@ -34,6 +35,14 @@ export const MainLayout = () => {
   )
 
   const notifications = mapRequestsToNotifications(notificationRequests)
+ 
+  useEffect(() => {
+    if (user) {
+      dispatch(loadFavorites(user.id))
+    } else {
+      dispatch(clearCurrentFavorites())
+    }
+  }, [user, dispatch])
 
   //выход
   const handleLogout = () => {
@@ -102,7 +111,7 @@ export const MainLayout = () => {
         onFavoritesClick={() => navigate(ROUTES.FAVORITES)}
         onLogout={handleLogout}
       />
-      <Outlet  context={{ searchQuery }}/>
+      <Outlet context={{ searchQuery }} />
     </>
   )
 }
