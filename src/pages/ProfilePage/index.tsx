@@ -1,4 +1,5 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useRef } from 'react'
+import type { ChangeEvent } from 'react'
 
 import { updateUser } from '@/features/auth'
 import {
@@ -24,6 +25,7 @@ import type { SidebarItem } from '@/widgets/Sidebar'
 
 import type { ProfileTab } from './type'
 import styles from './ProfilePage.module.css'
+import { validateAvatarFile } from '@/shared/lib/validators'
 
 const GENDER_OPTIONS = [
   { name: 'Мужской', value: 'male' },
@@ -43,8 +45,13 @@ export default function ProfilePage() {
   const dispatch = useAppDispatch()
   const authUser = useAppSelector((state) => state.auth.user)
 
-  // Активная вкладка сайдбара.
-  // При переключении меняется только содержимое правой части /profile.
+  // cсылка позволяет открыть системное окно выбора файла по кнопке редактирования
+  const avatarInputRef = useRef<HTMLInputElement>(null)
+
+  // ошибка валидации выбранного автара
+  const [avatarError, setAvatarError] = useState('')
+
+  // активная вкладка сайдбара: меняется только правая часть страницы
   const [activeTab, setActiveTab] = useState<ProfileTab>('profile')
 
   // Локальное состояние формы.
@@ -76,6 +83,43 @@ export default function ProfilePage() {
       ...prev,
       birthDate: date,
     }))
+  }
+
+  const handleNewAvatarClick = () => {
+    setAvatarError('')
+    avatarInputRef.current?.click()
+  }
+
+  // Передаем выбранный файл в локальное состояние формы
+  const handleAvatarChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0] ?? null
+
+    // При отмене выбора сохраняем текущий аватар
+    if (!file) {
+      return
+    }
+
+    // проверяем формат и размер файла до замены аватара
+    const error = validateAvatarFile(file)
+
+    if (error) {
+      setAvatarError(error)
+      event.target.value = ''
+      return
+    }
+
+    setAvatarError('')
+
+    // Создаем временный url для предпросмотра выбранного файла
+    const avatarUrl = URL.createObjectURL(file)
+
+    setFormData((prev) => ({
+      ...prev,
+     avatarUrl,
+    }))
+
+    // Позволяет повторно выбрать тот же файл
+    event.target.value = ''
   }
 
   const handleSave = () => {
@@ -129,20 +173,29 @@ export default function ProfilePage() {
     switch (activeTab) {
       case 'profile':
         return (
+        <>
           <UserDashboard
             data={formData}
+            avatarError={avatarError}
             genderOptions={GENDER_OPTIONS}
             cityOptions={CITY_OPTIONS}
             onFieldChange={handleFieldChange}
             onBirthDateChange={handleBirthDateChange}
-            onNewAvatarClick={() => {
-              // TODO: подключить реальную загрузку файла
-            }}
+            onNewAvatarClick={handleNewAvatarClick}
             onChangePassword={() => {
               // TODO: модалка смены пароля
             }}
             onSave={handleSave}
           />
+
+          <input
+          ref={avatarInputRef}
+          type="file"
+          accept="image/jpeg,image/png"
+          hidden
+          onChange={handleAvatarChange}
+          />
+        </>
         )
 
       case 'favorites':

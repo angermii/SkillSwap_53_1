@@ -28,14 +28,13 @@ const authSlice = createSlice({
       state.user = null
       state.isAuthenticated = false
     },
-    updateUser: (
-      state,
-      action: PayloadAction<Partial<Omit<AuthUser, 'id' | 'token'>>>,
-    ) => {
+    updateUser: (state, action: PayloadAction<Partial<Omit<AuthUser, 'id' | 'token'>>>) => {
       if (!state.user) return
 
-      const { token, ...rest } = state.user
-      const updatedUser = saveAuthUser({ ...rest, ...action.payload })
+      const updatedUser = saveAuthUser({
+        ...state.user,
+        ...action.payload,
+      })
 
       state.user = updatedUser
     },

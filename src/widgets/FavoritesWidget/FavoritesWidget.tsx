@@ -12,7 +12,7 @@ import {
 } from '@/entities/skill/model/selectors'
 import { fetchSkill, fetchSkillSubcategories } from '@/entities/skill/model/skillSlice'
 import { fetchUsers } from '@/entities/user/model/userSlice'
-import { toggleFavorite } from '@/features/favorites'
+import { useLike } from '@/features/favorites/model/useLike'
 import { ROUTES } from '@/shared/lib/constants'
 import { Button, Headline } from '@/shared/ui'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
@@ -34,6 +34,9 @@ export const FavoritesWidget = ({
   const users = useAppSelector((state) => state.user.items)
   // подкатегории нужны для тегов карточки — берём их из слайса skill
   const subcategoriesById = useAppSelector(selectSkillSubcategoriesById)
+
+  // Используем общую логику лайков для страницы избранного
+  const { likedState, likeCounts, handleLike } = useLike({ skills })
 
   // у каждого запроса свой флаг, поэтому объединяем их явно
   const isLoading = useAppSelector(
@@ -70,7 +73,7 @@ export const FavoritesWidget = ({
 
       favoriteCards.push({
         skillId: skill.id,
-        likeCount: skill.likeCount,
+        likeCount: likeCounts[skill.id] ?? skill.likeCount,
         user: mapUserToCardData({
           user: author,
           skills: skillsByAuthorId.get(author.id) ?? [],
@@ -80,7 +83,7 @@ export const FavoritesWidget = ({
 
       return favoriteCards
     }, [])
-  }, [favoriteIds, skills, users, subcategoriesById])
+  }, [favoriteIds, skills, users, subcategoriesById, likeCounts])
 
   const handleBackToCatalog = () => {
     navigate(ROUTES.HOME)
@@ -111,10 +114,10 @@ export const FavoritesWidget = ({
           <UserCard
             key={skillId}
             user={user}
-            isLiked
+            isLiked={likedState[skillId] ?? false}
             likeCount={likeCount}
             onDetailsClick={() => navigate(generatePath(ROUTES.SKILL, { id: skillId }))}
-            onLikeChange={() => dispatch(toggleFavorite(skillId))}
+            onLikeChange={() => handleLike(skillId)}
           />
         ))}
       </div>
