@@ -110,9 +110,13 @@ const CatalogSectionItem = ({
             })}
           </div>
           
-          {/* Спиннер и лоадер теперь показываются всегда, без лишних проверок */}
-          {isFetching && <Spinner />}
-          <div ref={loaderRef} style={{ height: '20px' }} />
+          {/* Вернули проверку: спиннер и лоадер только для секции "Рекомендуем" */}
+          {!section.isExpandable && (
+            <>
+              {isFetching && <Spinner />}
+              <div ref={loaderRef} style={{ height: '20px' }} />
+            </>
+          )}
         </>
       ) : (
         <div className={styles.empty}>
@@ -169,7 +173,7 @@ export const UserCatalog = ({
                 })}
               </div>
               
-              {/* Спиннер и лоадер для плоского списка */}
+              {/* Спиннер и лоадер для плоского списка (состояние с фильтрами) */}
               {isFetching && <Spinner />}
               <div ref={loaderRef} style={{ height: '20px' }} />
             </>
