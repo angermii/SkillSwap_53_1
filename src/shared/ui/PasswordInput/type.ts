@@ -19,4 +19,5 @@ export interface PasswordInputProps extends NativeInputProps {
   onVisibilityChange?: (isVisible: boolean) => void
   showLabel?: string
   hideLabel?: string
+  invalid?: boolean
 }

@@ -13,11 +13,13 @@ export const Input = React.forwardRef<InputRef, InputProps>(
       wrapperClassName,
       inputClassName,
       multiline,
+      invalid,
       ...props
     },
     ref,
   ) => {
     const fieldClassName = [styles.input, inputClassName].filter(Boolean).join(' ')
+    const hasError = Boolean(error) || invalid
 
     return (
       <div className={[styles.container, className].filter(Boolean).join(' ')}>
@@ -27,7 +29,7 @@ export const Input = React.forwardRef<InputRef, InputProps>(
           className={[
             styles.wrapper,
             multiline && styles.wrapperMultiline,
-            error && styles.error,
+            hasError && error && styles.error,
             wrapperClassName,
           ]
             .filter(Boolean)
