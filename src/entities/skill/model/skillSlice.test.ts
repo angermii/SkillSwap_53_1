@@ -24,6 +24,20 @@ const testSkill: Skill = {
   likeCount: 0,
 }
 
+const emptyLoading = {
+  skills: false,
+  selectedSkill: false,
+  categories: false,
+  subcategories: false,
+}
+
+const emptyError = {
+  skills: null,
+  selectedSkill: null,
+  categories: null,
+  subcategories: null,
+}
+
 describe('skillSlice', () => {
   it('has empty initial state', () => {
     const store = createTestStore()
@@ -33,18 +47,8 @@ describe('skillSlice', () => {
       selectedSkill: null,
       categories: [],
       subcategories: [],
-      loading: {
-        skills: false,
-        selectedSkill: false,
-        categories: false,
-        subcategories: false,
-      },
-      error: {
-        skills: null,
-        selectedSkill: null,
-        categories: null,
-        subcategories: null,
-      },
+      loading: emptyLoading,
+      error: emptyError,
     })
   })
 
@@ -60,18 +64,8 @@ describe('skillSlice', () => {
       selectedSkill: null,
       categories: [],
       subcategories: [],
-      loading: {
-        skills: false,
-        selectedSkill: false,
-        categories: false,
-        subcategories: false,
-      },
-      error: {
-        skills: null,
-        selectedSkill: null,
-        categories: null,
-        subcategories: null,
-      },
+      loading: emptyLoading,
+      error: emptyError,
     })
   })
 
@@ -88,18 +82,8 @@ describe('skillSlice', () => {
       selectedSkill: testSkill,
       categories: [],
       subcategories: [],
-      loading: {
-        skills: false,
-        selectedSkill: false,
-        categories: false,
-        subcategories: false,
-      },
-      error: {
-        skills: null,
-        selectedSkill: null,
-        categories: null,
-        subcategories: null,
-      },
+      loading: emptyLoading,
+      error: emptyError,
     })
   })
 
@@ -116,18 +100,8 @@ describe('skillSlice', () => {
       selectedSkill: null,
       categories: [],
       subcategories: [],
-      loading: {
-        skills: false,
-        selectedSkill: false,
-        categories: false,
-        subcategories: false,
-      },
-      error: {
-        skills: null,
-        selectedSkill: null,
-        categories: null,
-        subcategories: null,
-      },
+      loading: emptyLoading,
+      error: emptyError,
     })
   })
 
@@ -144,17 +118,10 @@ describe('skillSlice', () => {
       selectedSkill: null,
       categories: [],
       subcategories: [],
-      loading: {
-        skills: false,
-        selectedSkill: false,
-        categories: false,
-        subcategories: false,
-      },
+      loading: emptyLoading,
       error: {
+        ...emptyError,
         skills: 'Failed to fetch skills',
-        selectedSkill: null,
-        categories: null,
-        subcategories: null,
       },
     })
   })

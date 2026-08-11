@@ -103,6 +103,7 @@
 }
 
 .subList {
+  min-height: 0;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -130,7 +131,7 @@
   align-items: center;
   gap: 4px;
   width: fit-content;
-  margin-top: 12px; /* По комментарию ревьюера: от Казани до кнопки 12px */
+  margin-top: 12px;
   padding: 0;
   color: var(--color-link-button);
   font-family: var(--font-family-body);
@@ -150,4 +151,15 @@
 
 .chevronUp {
   transform: rotate(180deg);
+}
+
+.subListWrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+.subListExpanded {
+  grid-template-rows: 1fr;
 }

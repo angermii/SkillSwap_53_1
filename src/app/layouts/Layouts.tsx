@@ -12,6 +12,14 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { Header } from '@/widgets'
 import { useEffect, useMemo, useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
+import {
+  clearReadNotifications,
+  readAllNotifications,
+  readNotification,
+  selectNotificationRequests,
+} from '@/entities/request/requestsSlice'
+import { mapRequestsToNotifications } from '@/widgets/Notifications'
+import { loadFavorites, clearCurrentFavorites } from '@/features/favorites'
 
 export const MainLayout = () => {
   const dispatch = useAppDispatch()
@@ -21,9 +29,43 @@ export const MainLayout = () => {
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated)
   const user = useAppSelector((state) => state.auth.user)
 
+  // полученные предложения обмена для виджета уведомлений
+  const notificationRequests = useAppSelector((state) =>
+    user ? selectNotificationRequests(state, user.id) : [],
+  )
+
+  const notifications = mapRequestsToNotifications(notificationRequests)
+ 
+  useEffect(() => {
+    if (user) {
+      dispatch(loadFavorites(user.id))
+    } else {
+      dispatch(clearCurrentFavorites())
+    }
+  }, [user, dispatch])
+
   //выход
   const handleLogout = () => {
     dispatch(logout())
+  }
+
+  // отметить все входящие уведомления как прочитанные
+  const handleReadAll = () => {
+    if (user) {
+      dispatch(readAllNotifications(user.id))
+    }
+  }
+
+  // убрать прочитанные уведомления из виджета
+  const handleClearAll = () => {
+    if (user) {
+      dispatch(clearReadNotifications(user.id))
+    }
+  }
+
+  // отметить выбранное уведомление как прочитанное
+  const handleNotificationClick = (requestId: string) => {
+    dispatch(readNotification(requestId))
   }
 
   // Данные из стора
@@ -59,17 +101,17 @@ export const MainLayout = () => {
         categorySections={categorySections}
         searchValue={searchQuery}
         onSearchChange={setSearchQuery}
-        notifications={[]}
-        readAll={() => {}}
-        clearAll={() => {}}
-        onNotificationClick={() => {}}
+        notifications={notifications}
+        readAll={handleReadAll}
+        clearAll={handleClearAll}
+        onNotificationClick={handleNotificationClick}
         onLoginClick={() => navigate(ROUTES.LOGIN)}
         onRegisterClick={() => navigate(ROUTES.REGISTER)}
         onThemeClick={() => {}}
         onFavoritesClick={() => navigate(ROUTES.FAVORITES)}
         onLogout={handleLogout}
       />
-      <Outlet  context={{ searchQuery }}/>
+      <Outlet context={{ searchQuery }} />
     </>
   )
 }

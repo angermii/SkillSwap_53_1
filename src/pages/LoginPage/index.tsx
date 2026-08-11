@@ -61,6 +61,9 @@ const formatDate = (value: Date | undefined): string => {
   return `${day}.${month}.${year}`
 }
 
+const isValidGender = (value: string): value is 'male' | 'female' =>
+  value === 'male' || value === 'female'
+
 export default function LoginPage() {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
@@ -149,11 +152,11 @@ export default function LoginPage() {
         id: data.email,
         name: data.email.split('@')[0],
         email: data.email,
-        avatarUrl: '',
+        avatarUrl: null,
         gender: 'male',
         birthDate: '',
         city: '',
-        description: ''
+        description: '',
       }),
     )
 
@@ -194,6 +197,18 @@ export default function LoginPage() {
     setRegistrationErrors((prev) => ({
       ...prev,
       [field]: undefined,
+    }))
+  }
+
+  const handleBirthDateChange = (date: Date | undefined) => {
+    setRegistrationData((prev) => ({
+      ...prev,
+      birthDate: date,
+    }))
+
+    setRegistrationErrors((prev) => ({
+      ...prev,
+      birthDate: undefined,
     }))
   }
 

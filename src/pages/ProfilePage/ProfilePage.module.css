@@ -6,11 +6,16 @@
 
 .page {
   display: flex;
+  align-items: flex-start;
+  gap: var(--space-lg);
   width: 100%;
   max-width: 1440px;
   flex: 1;
-  flex-direction: column;
   padding: var(--space-xl) 36px 60px;
   margin: 0 auto;
-  gap: var(--space-xl);
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
 }
