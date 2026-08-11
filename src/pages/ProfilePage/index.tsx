@@ -1,5 +1,6 @@
 import { useMemo, useState, useRef } from 'react'
 import type { ChangeEvent } from 'react'
+import { parseSafeDate } from '@/shared/lib/helpers'
 
 import { updateUser } from '@/features/auth'
 import {
@@ -59,9 +60,7 @@ export default function ProfilePage() {
   const [formData, setFormData] = useState<UserData>({
     email: authUser?.email ?? '',
     name: authUser?.name ?? '',
-    birthDate: authUser?.birthDate
-      ? new Date(authUser.birthDate)
-      : undefined,
+    birthDate: parseSafeDate(authUser?.birthDate),
     gender: authUser?.gender ?? '',
     city: authUser?.city ?? '',
     about: authUser?.description ?? '',

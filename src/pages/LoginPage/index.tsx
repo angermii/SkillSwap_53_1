@@ -49,20 +49,6 @@ const genderOptions = [
   }
 ]
 
-const formatDate = (value: Date | undefined): string => {
-  if (!value) {
-    return ''
-  }
-
-  const day = String(value.getDate()).padStart(2, '0')
-  const month = String(value.getMonth() + 1).padStart(2, '0')
-  const year = value.getFullYear()
-
-  return `${day}.${month}.${year}`
-}
-
-const isValidGender = (value: string): value is 'male' | 'female' =>
-  value === 'male' || value === 'female'
 
 export default function LoginPage() {
   const dispatch = useAppDispatch()
@@ -197,18 +183,6 @@ export default function LoginPage() {
     setRegistrationErrors((prev) => ({
       ...prev,
       [field]: undefined,
-    }))
-  }
-
-  const handleBirthDateChange = (date: Date | undefined) => {
-    setRegistrationData((prev) => ({
-      ...prev,
-      birthDate: date,
-    }))
-
-    setRegistrationErrors((prev) => ({
-      ...prev,
-      birthDate: undefined,
     }))
   }
 
@@ -349,7 +323,9 @@ export default function LoginPage() {
         email: registrationCredentials.email,
         avatarUrl: registrationData.avatarUrl,
         gender: getGender(registrationData.gender),
-        birthDate: formatDate(registrationData.birthDate),
+        birthDate: registrationData.birthDate
+        ? registrationData.birthDate.toISOString()
+        : '',
         city: registrationData.city,
         description: registrationData.skillDescription
       }),
