@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import { describe, expect, it } from 'vitest'
 import skillReducer, { fetchSkill, fetchSkillById, fetchSkillByUserId } from './skillSlice'
 import type { Skill } from './types'
-
+console.log('NEW TEST FILE');
 // создаем изолированный store только со skill reducer
 const createTestStore = () =>
   configureStore({
@@ -31,8 +31,20 @@ describe('skillSlice', () => {
     expect(store.getState().skill).toEqual({
       skills: [],
       selectedSkill: null,
-      loading: false,
-      error: null,
+      categories: [],
+      subcategories: [],
+      loading: {
+        skills: false,
+        selectedSkill: false,
+        categories: false,
+        subcategories: false,
+      },
+      error: {
+        skills: null,
+        selectedSkill: null,
+        categories: null,
+        subcategories: null,
+      },
     })
   })
 
@@ -40,14 +52,26 @@ describe('skillSlice', () => {
     const store = createTestStore()
 
     store.dispatch(fetchSkill.pending('request-id', undefined))
-    expect(store.getState().skill.loading).toBe(true)
+    expect(store.getState().skill.loading.skills).toBe(true)
 
     store.dispatch(fetchSkill.fulfilled([testSkill], 'request-id', undefined))
     expect(store.getState().skill).toEqual({
       skills: [testSkill],
       selectedSkill: null,
-      loading: false,
-      error: null,
+      categories: [],
+      subcategories: [],
+      loading: {
+        skills: false,
+        selectedSkill: false,
+        categories: false,
+        subcategories: false,
+      },
+      error: {
+        skills: null,
+        selectedSkill: null,
+        categories: null,
+        subcategories: null,
+      },
     })
   })
 
@@ -55,15 +79,27 @@ describe('skillSlice', () => {
     const store = createTestStore()
 
     store.dispatch(fetchSkillById.pending('request-id', testSkill.id))
-    expect(store.getState().skill.loading).toBe(true)
+    expect(store.getState().skill.loading.selectedSkill).toBe(true)
 
     store.dispatch(fetchSkillById.fulfilled(testSkill, 'request-id', testSkill.id))
 
     expect(store.getState().skill).toEqual({
       skills: [],
       selectedSkill: testSkill,
-      loading: false,
-      error: null,
+      categories: [],
+      subcategories: [],
+      loading: {
+        skills: false,
+        selectedSkill: false,
+        categories: false,
+        subcategories: false,
+      },
+      error: {
+        skills: null,
+        selectedSkill: null,
+        categories: null,
+        subcategories: null,
+      },
     })
   })
 
@@ -71,15 +107,27 @@ describe('skillSlice', () => {
     const store = createTestStore()
 
     store.dispatch(fetchSkillByUserId.pending('request-id', testSkill.authorId))
-    expect(store.getState().skill.loading).toBe(true)
+    expect(store.getState().skill.loading.skills).toBe(true)
 
     store.dispatch(fetchSkillByUserId.fulfilled([testSkill], 'request-id', testSkill.authorId))
 
     expect(store.getState().skill).toEqual({
       skills: [testSkill],
       selectedSkill: null,
-      loading: false,
-      error: null,
+      categories: [],
+      subcategories: [],
+      loading: {
+        skills: false,
+        selectedSkill: false,
+        categories: false,
+        subcategories: false,
+      },
+      error: {
+        skills: null,
+        selectedSkill: null,
+        categories: null,
+        subcategories: null,
+      },
     })
   })
 
@@ -94,8 +142,20 @@ describe('skillSlice', () => {
     expect(store.getState().skill).toEqual({
       skills: [],
       selectedSkill: null,
-      loading: false,
-      error: 'Failed to fetch skills',
+      categories: [],
+      subcategories: [],
+      loading: {
+        skills: false,
+        selectedSkill: false,
+        categories: false,
+        subcategories: false,
+      },
+      error: {
+        skills: 'Failed to fetch skills',
+        selectedSkill: null,
+        categories: null,
+        subcategories: null,
+      },
     })
   })
 })
