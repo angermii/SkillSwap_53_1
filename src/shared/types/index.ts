@@ -50,6 +50,11 @@ export interface SwapRequest {
   fromUserId: string
   toUserId: string
   status: RequestStatus
+
+  // состояние request внутри виджета уведомлений
+  isNotificationRead?: boolean
+  isNotificationDismissed?: boolean
+
   createdAt: string
   updatedAt: string
 }

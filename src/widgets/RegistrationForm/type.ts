@@ -9,7 +9,7 @@ export type RegistrationOption = {
 // данные, которые пользователь заполняет на втором и третьем шаге
 export type RegistrationFormData = {
   name: string
-  birthDate?: Date
+  birthDate: Date | undefined
   gender: string
   city: string
   learningCategory: string
@@ -30,7 +30,9 @@ export type RegistrationTextField = Exclude<
 
 // сообщения об ошибках для текстовых полей и списков формы
 export type RegistrationFormErrors = Partial<
-  Record<RegistrationTextField, string>
+  Record<
+    | RegistrationTextField 
+    | 'birthDate', string>
 >
 
 // данные и обработчики, которые RegistrationForm получает от родительского компонента

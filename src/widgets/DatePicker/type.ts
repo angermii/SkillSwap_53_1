@@ -11,6 +11,7 @@ export type DatePickerProps = Omit<
   name?: string
   fromYear?: number
   toYear?: number
+  error?: string
   confirmText?: string
   cancelText?: string
   inputClassName?: string
