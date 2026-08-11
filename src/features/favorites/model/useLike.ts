@@ -10,14 +10,16 @@ type UseLikeParams = {
 export const useLike = ({ skills }: UseLikeParams) => {
   const dispatch = useAppDispatch()
 
-  // Проверяем авторизацию перед изменением лайка
-  // Неавторизованному пользователю вместо лайка показываем модалку регистрации
+  // Проверяем авторизацию текущего пользователя
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated)
 
-  // Состояние лайка уже хранится в favoritesSlice, поэтому не дублируем isLiked в локальном state
+  // Получаем ID текущего пользователя для привязки лайков к его аккаунту
+  const userId = useAppSelector((state) => state.auth.user?.id)
+
+  // Состояние лайка хранится в favoritesSlice
   const favoriteIds = useAppSelector((state) => state.favorites.ids)
 
-  // Преобразуем массив ID в объект для быстрого определения состояния лайка навыка по ID
+  // Преобразуем массив ID в объект для быстрого определения состояния лайка
   const likedState = useMemo(() => {
     const result: Record<string | number, boolean> = {}
 
@@ -31,9 +33,8 @@ export const useLike = ({ skills }: UseLikeParams) => {
   // Храним текущие значения счётчиков лайков для навыков
   const [likeCounts, setLikeCounts] = useState<Record<string | number, number>>({})
 
-  // Обновляем счётчики после загрузки навыков
-  // Если для навыка уже есть значение в sessionStorage, используем его
-  //  Иначе берём исходный likeCount из данных навыка
+  // После загрузки навыков восстанавливаем счётчики из текущей сессии
+  // или используем исходное значение likeCount
   useEffect(() => {
     const result: Record<string | number, number> = {}
 
@@ -50,26 +51,37 @@ export const useLike = ({ skills }: UseLikeParams) => {
   // Состояние модалки регистрации для неавторизованного пользователя
   const [isRegistrationModalOpen, setIsRegistrationModalOpen] = useState(false)
 
-  // Обрабатываем изменение лайка конкретного навыка
-  // LikeButton рассчитывает новый count
-  // Для авторизованного пользователя применяем изменение, для неавторизованного показываем модалку регистрации
-  const handleLike = (skillId: string | number, newCount: number) => {
-    if (!isAuthenticated) {
+  const handleLike = (skillId: string | number) => {
+    // Если пользователь не авторизован, показываем модалку регистрации
+    if (!isAuthenticated || !userId) {
       setIsRegistrationModalOpen(true)
       return
     }
 
-    // Обновляем счётчик только для конкретного навыка
+    // Определяем новое состояние лайка
+    const newIsLiked = !likedState[skillId]
+
+    // Увеличиваем или уменьшаем счётчик лайков
+    const newCount = newIsLiked
+      ? (likeCounts[skillId] ?? 0) + 1
+      : Math.max(0, (likeCounts[skillId] ?? 0) - 1)
+
+    // Обновляем счётчик в текущем состоянии
     setLikeCounts((prev) => ({
       ...prev,
       [skillId]: newCount,
     }))
 
-    // Сохраняем счётчик в текущей браузерной сессии
+    // Сохраняем изменённый счётчик в сессии
     sessionStorage.setItem(`skill-like-count-${skillId}`, String(newCount))
 
-    // favoritesSlice добавляет навык в список или удаляет его из списка.
-    dispatch(toggleFavorite(String(skillId)))
+    // Сохраняем лайк для конкретного пользователя
+    dispatch(
+      toggleFavorite({
+        userId,
+        skillId: String(skillId),
+      }),
+    )
   }
 
   // Закрывает модалку регистрации
