@@ -32,7 +32,7 @@ export const maxLength = (max: number) => {
 };
 
 export const email = (value: string): string | null => {
-  if (!value) return null; 
+  if (!value) return null;
   // Стандартная проверка на @ и домен
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(value)) {
@@ -70,9 +70,9 @@ export const date = (value: string): string | null => {
   // В JS месяцы начинаются с 0, поэтому вычитаем 1
   const d = new Date(year, month - 1, day);
 
-  const isValidCalendarDate = 
-    d.getFullYear() === year && 
-    d.getMonth() === month - 1 && 
+  const isValidCalendarDate =
+    d.getFullYear() === year &&
+    d.getMonth() === month - 1 &&
     d.getDate() === day;
 
   if (!isValidCalendarDate) {
@@ -93,3 +93,21 @@ export const selectRequired = (value: string | string[] | null | undefined): str
   }
   return null;
 };
+
+// проверка формата и размера загружаемого аватара
+
+// максимальный размер аватара 2 мб в байтах
+const maxAvatarSize = 2 * 1024 * 1024
+const allowedAvatarTypes = ['image/jpeg', 'image/png']
+
+export const validateAvatarFile = (file: File): string | null => {
+  if (!allowedAvatarTypes.includes(file.type)) {
+    return 'Выберите изображение в формате JPEG или PNG'
+  }
+
+  if (file.size > maxAvatarSize) {
+    return 'Размер изображения не должен превышать 2 МБ'
+  }
+
+  return null
+}
