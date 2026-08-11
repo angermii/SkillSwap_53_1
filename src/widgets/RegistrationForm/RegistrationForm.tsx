@@ -110,14 +110,19 @@ export const RegistrationForm = ({
           />
 
           <div className={styles.fieldsRow}>
-            
-            <DatePicker
-              label="Дата рождения"
-              value={data.birthDate}
-              onChange={onBirthDateChange}
-              inputClassName={styles.textField}
-            />
+            <div className={styles.fieldGroup}>
+              <DatePicker
+                label="Дата рождения"
+                value={data.birthDate}
+                onChange={onBirthDateChange}
+                inputClassName={styles.textField}
+                error={errors.birthDate}
+              />
 
+              {errors.birthDate && (
+                <span className={styles.errorText} role='alert'>{errors.birthDate}</span>
+              )}
+            </div>
             <div className={styles.fieldGroup}>
               <Select
                 label="Пол"

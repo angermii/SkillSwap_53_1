@@ -1,8 +1,7 @@
-import { SocialLoginButtons } from '@/shared/ui'
-import { Input } from '@/shared/ui'
-import { PasswordInput } from '@/shared/ui'
-import { Button } from '@/shared/ui'
+import { Button, PasswordInput, Input, SocialLoginButtons } from '@/shared/ui'
 import React, { useState } from 'react'
+import { email as validateEmail, password as validatePassword, required, minLength } from '@/shared/lib/validators'
+
 import styles from './AuthForm.module.css'
 
 // форма имеет 2 варианта: для входа и регистрации
@@ -10,27 +9,87 @@ export type AuthFormProps = {
   variant: 'login' | 'register'
   onSubmit: (data: { email: string; password: string }) => void
   onLinkClick?: () => void
-  error?: string
 }
 
-export const AuthForm = ({ variant, onSubmit, onLinkClick, error }: AuthFormProps) => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+type AuthFormErrors = {
+  email?: string,
+  password?: string
+}
+
+export const AuthForm = ({ variant, onSubmit, onLinkClick }: AuthFormProps) => {
+  const [emailValue, setEmailValue] = useState('')
+  const [passwordValue, setPasswordValue] = useState('')
+
+  const [errors, setErrors] = useState<AuthFormErrors>({})
+
+  // определяем режим формы
+  const isRegister = variant === 'register'
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value)
+    const value = e.target.value
+    setEmailValue(value)
+
+    const requiredError = required(value)
+    const emailError = validateEmail(value)
+
+    setErrors((prev) => ({
+      ...prev,
+      email: requiredError ?? emailError ?? undefined,
+    }))
   }
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value)
+    const value = e.target.value
+    setPasswordValue(value)
+
+    const requiredError = required(value)
+    const passwordError = validatePassword(value)
+
+    setErrors((prev) => ({
+      ...prev,
+      password: requiredError ?? passwordError ?? undefined,
+    }))
+  }
+
+  const validateForm = (): AuthFormErrors => {
+    const validationErrors: AuthFormErrors = {}
+
+    const emailRequiredError = required(emailValue)
+    const emailFormatError = validateEmail(emailValue)
+
+    if (emailRequiredError) {
+      validationErrors.email = emailRequiredError
+    } else if (emailFormatError) {
+      validationErrors.email = emailFormatError
+    }
+
+    const passwordRequiredError = required(passwordValue)
+    const passwordLengthError = minLength(8)(passwordValue)
+    const passwordFormatError = validatePassword(passwordValue)
+
+    if (passwordRequiredError) {
+      validationErrors.password = passwordRequiredError
+    } else if (passwordLengthError) {
+      validationErrors.password = passwordLengthError
+    } else if (passwordFormatError) {
+      validationErrors.password = passwordFormatError
+    }
+    
+    return validationErrors
   }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    onSubmit({ email, password })
-  }
 
-  // определяем режим формы
-  const isRegister = variant === 'register'
+    const validationErrors = validateForm()
+    setErrors(validationErrors)
+    const hasErrors = Object.values(validationErrors).some(Boolean)
+
+    if (hasErrors) {
+      return
+    }
+
+    onSubmit({ email: emailValue, password: passwordValue })
+  }
 
   // для режима регистрации передали undefined, чтобы использовать значение по умолчанию из PasswordInput
   // для входа передаем текст
@@ -56,17 +115,17 @@ export const AuthForm = ({ variant, onSubmit, onLinkClick, error }: AuthFormProp
           <Input
             label="Email"
             placeholder="Введите email"
-            value={email}
+            value={emailValue}
             onChange={handleEmailChange}
-            error={error}
+            error={errors.email}
           />
           <PasswordInput
             label="Пароль"
             placeholder={passwordPlaceholder}
             hint={passwordHint}
-            value={password}
+            value={passwordValue}
             onChange={handlePasswordChange}
-            error={error}
+            error={errors.password}
           />
         </div>
       </div>

@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import { describe, expect, it } from 'vitest'
 import skillReducer, { fetchSkill, fetchSkillById, fetchSkillByUserId } from './skillSlice'
 import type { Skill } from './types'
-
+console.log('NEW TEST FILE');
 // создаем изолированный store только со skill reducer
 const createTestStore = () =>
   configureStore({
