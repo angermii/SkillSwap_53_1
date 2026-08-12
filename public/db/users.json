@@ -72,7 +72,7 @@
     "avatarUrl": "/images/users/user-7.jpg",
     "gender": "female",
     "age": 30,
-    "city": "Самара",
+    "city": "Москва",
     "description": "Изучаю личные финансы и помогаю другим планировать бюджет.",
     "createdAt": "2026-01-16T11:10:00Z"
   },
@@ -83,7 +83,7 @@
     "avatarUrl": "/images/users/user-8.jpg",
     "gender": "male",
     "age": 28,
-    "city": "Ростов-на-Дону",
+    "city": "Санкт-Петербург",
     "description": "Интересуюсь спортом, йогой и здоровым образом жизни.",
     "createdAt": "2026-01-17T08:40:00Z"
   },
@@ -94,7 +94,7 @@
     "avatarUrl": "/images/users/user-9.jpg",
     "gender": "female",
     "age": 32,
-    "city": "Краснодар",
+    "city": "Казань",
     "description": "Развиваю личный бренд и люблю делиться опытом.",
     "createdAt": "2026-01-18T13:25:00Z"
   },
@@ -105,7 +105,7 @@
     "avatarUrl": "/images/users/user-10.jpg",
     "gender": "male",
     "age": 25,
-    "city": "Воронеж",
+    "city": "Новосибирск",
     "description": "Увлекаюсь рисованием и изучаю современные техники иллюстрации.",
     "createdAt": "2026-01-19T15:50:00Z"
   },
@@ -116,7 +116,7 @@
     "avatarUrl": "/images/users/user-11.jpg",
     "gender": "female",
     "age": 29,
-    "city": "Тюмень",
+    "city": "Екатеринбург",
     "description": "Люблю делиться знаниями и изучать современные методы обучения.",
     "createdAt": "2026-01-20T10:00:00Z"
   },
@@ -127,7 +127,7 @@
     "avatarUrl": "/images/users/user-12.jpg",
     "gender": "male",
     "age": 33,
-    "city": "Пермь",
+    "city": "Нижний Новгород",
     "description": "Интересуюсь предпринимательством и развитием собственного дела.",
     "createdAt": "2026-01-21T12:30:00Z"
   },
@@ -138,7 +138,7 @@
     "avatarUrl": "/images/users/user-13.jpg",
     "gender": "female",
     "age": 26,
-    "city": "Уфа",
+    "city": "Москва",
     "description": "Изучаю продажи и люблю общаться с людьми.",
     "createdAt": "2026-01-22T09:15:00Z"
   },
@@ -149,7 +149,7 @@
     "avatarUrl": "/images/users/user-14.jpg",
     "gender": "male",
     "age": 30,
-    "city": "Красноярск",
+    "city": "Санкт-Петербург",
     "description": "Работаю с проектами и постоянно совершенствую управленческие навыки.",
     "createdAt": "2026-01-23T17:00:00Z"
   },
@@ -160,7 +160,7 @@
     "avatarUrl": "/images/users/user-15.jpg",
     "gender": "female",
     "age": 24,
-    "city": "Ярославль",
+    "city": "Казань",
     "description": "Увлекаюсь иностранными языками и путешествиями.",
     "createdAt": "2026-01-24T11:45:00Z"
   },
@@ -171,7 +171,7 @@
     "avatarUrl": "/images/users/user-16.jpg",
     "gender": "male",
     "age": 36,
-    "city": "Омск",
+    "city": "Новосибирск",
     "description": "Люблю делиться опытом в управлении проектами и работе с людьми.",
     "createdAt": "2026-01-25T13:20:00Z"
   },
@@ -182,7 +182,7 @@
     "avatarUrl": "/images/users/user-17.jpg",
     "gender": "female",
     "age": 27,
-    "city": "Тула",
+    "city": "Екатеринбург",
     "description": "Интересуюсь испанским языком и культурой разных стран.",
     "createdAt": "2026-01-26T08:30:00Z"
   },
@@ -193,7 +193,7 @@
     "avatarUrl": "/images/users/user-18.jpg",
     "gender": "male",
     "age": 23,
-    "city": "Иркутск",
+    "city": "Нижний Новгород",
     "description": "Хочу выучить немецкий язык и применять его в путешествиях.",
     "createdAt": "2026-01-27T14:10:00Z"
   },
@@ -204,7 +204,7 @@
     "avatarUrl": "/images/users/user-19.jpg",
     "gender": "female",
     "age": 35,
-    "city": "Калининград",
+    "city": "Москва",
     "description": "Люблю готовить и постоянно экспериментирую с новыми блюдами.",
     "createdAt": "2026-01-28T10:40:00Z"
   },
@@ -215,7 +215,7 @@
     "avatarUrl": "/images/users/user-20.jpg",
     "gender": "male",
     "age": 28,
-    "city": "Сочи",
+    "city": "Санкт-Петербург",
     "description": "Увлекаюсь комнатными растениями и благоустройством дома.",
     "createdAt": "2026-01-29T16:25:00Z"
   },
@@ -226,7 +226,7 @@
     "avatarUrl": "/images/users/user-21.jpg",
     "gender": "female",
     "age": 25,
-    "city": "Владивосток",
+    "city": "Казань",
     "description": "Люблю организовывать пространство и изучаю способы сделать дом удобнее.",
     "createdAt": "2026-01-30T09:50:00Z"
   },
@@ -237,7 +237,7 @@
     "avatarUrl": "/images/users/user-22.jpg",
     "gender": "male",
     "age": 32,
-    "city": "Саратов",
+    "city": "Новосибирск",
     "description": "Интересуюсь ремонтом, инструментами и практическими навыками.",
     "createdAt": "2026-01-31T12:00:00Z"
   },
@@ -248,7 +248,7 @@
     "avatarUrl": "/images/users/user-23.jpg",
     "gender": "female",
     "age": 28,
-    "city": "Барнаул",
+    "city": "Екатеринбург",
     "description": "Развиваюсь в рисовании и люблю создавать визуальные проекты.",
     "createdAt": "2026-02-01T15:15:00Z"
   },
@@ -259,7 +259,7 @@
     "avatarUrl": "/images/users/user-24.jpg",
     "gender": "male",
     "age": 35,
-    "city": "Хабаровск",
+    "city": "Нижний Новгород",
     "description": "Изучаю музыку, звук и создание собственных проектов.",
     "createdAt": "2026-02-02T11:35:00Z"
   },
@@ -270,7 +270,7 @@
     "avatarUrl": "/images/users/user-25.jpg",
     "gender": "female",
     "age": 26,
-    "city": "Липецк",
+    "city": "Москва",
     "description": "Развиваю навыки актёрского мастерства и публичных выступлений.",
     "createdAt": "2026-02-03T14:45:00Z"
   },
@@ -281,7 +281,7 @@
     "avatarUrl": "/images/users/user-26.jpg",
     "gender": "male",
     "age": 31,
-    "city": "Рязань",
+    "city": "Санкт-Петербург",
     "description": "Люблю писать истории и развивать творческое мышление.",
     "createdAt": "2026-02-04T10:20:00Z"
   },
@@ -292,7 +292,7 @@
     "avatarUrl": "/images/users/user-27.jpg",
     "gender": "female",
     "age": 23,
-    "city": "Белгород",
+    "city": "Казань",
     "description": "Интересуюсь DIY, декором и созданием вещей своими руками.",
     "createdAt": "2026-02-05T13:40:00Z"
   },
@@ -303,7 +303,7 @@
     "avatarUrl": "/images/users/user-28.jpg",
     "gender": "male",
     "age": 29,
-    "city": "Волгоград",
+    "city": "Новосибирск",
     "description": "Работаю над саморазвитием и формированием полезных привычек.",
     "createdAt": "2026-02-06T16:00:00Z"
   },
@@ -314,7 +314,7 @@
     "avatarUrl": "/images/users/user-29.jpg",
     "gender": "female",
     "age": 27,
-    "city": "Воронеж",
+    "city": "Екатеринбург",
     "description": "Изучаю эффективные методы обучения и запоминания информации.",
     "createdAt": "2026-02-07T09:25:00Z"
   },
@@ -325,7 +325,7 @@
     "avatarUrl": "/images/users/user-30.jpg",
     "gender": "male",
     "age": 34,
-    "city": "Тверь",
+    "city": "Нижний Новгород",
     "description": "Интересуюсь скорочтением и улучшением личной эффективности.",
     "createdAt": "2026-02-08T12:55:00Z"
   },
@@ -336,7 +336,7 @@
     "avatarUrl": "/images/users/user-31.jpg",
     "gender": "female",
     "age": 24,
-    "city": "Курск",
+    "city": "Москва",
     "description": "Люблю обучать других и развивать навыки преподавания.",
     "createdAt": "2026-02-09T15:30:00Z"
   },
@@ -369,7 +369,7 @@
     "avatarUrl": "/images/users/user-34.jpg",
     "gender": "male",
     "age": 36,
-    "city": "Ростов-на-Дону",
+    "city": "Санкт-Петербург",
     "description": "Разбираюсь в питании и помогаю формировать полезные привычки.",
     "createdAt": "2026-02-12T14:20:00Z"
   },
@@ -380,7 +380,7 @@
     "avatarUrl": "/images/users/user-35.jpg",
     "gender": "female",
     "age": 33,
-    "city": "Самара",
+    "city": "Казань",
     "description": "Интересуюсь психологией и эмоциональным развитием.",
     "createdAt": "2026-02-13T10:35:00Z"
   },
@@ -391,7 +391,7 @@
     "avatarUrl": "/images/users/user-36.jpg",
     "gender": "male",
     "age": 27,
-    "city": "Челябинск",
+    "city": "Новосибирск",
     "description": "Практикую осознанность и изучаю техники концентрации.",
     "createdAt": "2026-02-14T16:15:00Z"
   },
@@ -402,7 +402,7 @@
     "avatarUrl": "/images/users/user-37.jpg",
     "gender": "female",
     "age": 29,
-    "city": "Краснодар",
+    "city": "Екатеринбург",
     "description": "Занимаюсь тренировками и интересуюсь физическим развитием.",
     "createdAt": "2026-02-15T09:40:00Z"
   },
