@@ -15,6 +15,7 @@ import { login, register, findRegisteredUser } from '@/features/auth'
 import { fetchSkillCategories, fetchSkillSubcategories } from '@/entities/skill/model/skillSlice'
 import { selectSkillCategories, selectSkillSubcategories } from '@/entities/skill/model/selectors'
 import { fetchUsers } from '@/entities/user/model/userSlice'
+import { selectCityOptions } from '@/entities/user/model/selectors'
 
 import { required, selectRequired } from '@/shared/lib/validators'
 
@@ -49,7 +50,6 @@ const genderOptions = [
   },
 ]
 
-
 export default function LoginPage() {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
@@ -59,7 +59,9 @@ export default function LoginPage() {
 
   const skillCategories = useAppSelector(selectSkillCategories)
   const skillSubCategories = useAppSelector(selectSkillSubcategories)
-  const users = useAppSelector((state) => state.user.items)
+  
+  // города для выпадающего списка приходят из общего селектора (маппинг + "Другое")
+  const cityOptions = useAppSelector(selectCityOptions)
 
   const [registrationStep, setRegistrationStep] = useState<RegistrationStep>(1)
   const [registrationData, setRegistrationData] =
@@ -103,17 +105,6 @@ export default function LoginPage() {
           value: subcategory.id,
         })),
     [skillSubCategories, registrationData.skillCategory],
-  )
-
-  const cityOptions = useMemo(
-    () =>
-      Array.from(new Set(users.map((user) => user.city)))
-        .filter(Boolean)
-        .map((city) => ({
-          name: city,
-          value: city,
-        })),
-    [users],
   )
 
   useEffect(() => {
@@ -315,9 +306,7 @@ export default function LoginPage() {
           email: registrationCredentials.email,
           avatarUrl: registrationData.avatarUrl,
           gender: getGender(registrationData.gender),
-          birthDate: registrationData.birthDate
-          ? registrationData.birthDate.toISOString()
-          : '',
+          birthDate: registrationData.birthDate ? registrationData.birthDate.toISOString() : '',
           city: registrationData.city,
           description: registrationData.skillDescription,
         },

@@ -1,23 +1,14 @@
-import { useMemo, useState, useRef } from 'react'
+import { useEffect, useMemo, useState, useRef } from 'react'
 import type { ChangeEvent } from 'react'
 import { parseSafeDate } from '@/shared/lib/helpers'
 
 import { updateUser } from '@/features/auth'
-import {
-  BulbIcon,
-  HeartIcon,
-  MessageTextIcon,
-  RequestIcon,
-  UserIcon,
-} from '@/shared/ui/icons'
+import { fetchUsers } from '@/entities/user/model/userSlice'
+import { selectCityOptions } from '@/entities/user/model/selectors'
+import { BulbIcon, HeartIcon, MessageTextIcon, RequestIcon, UserIcon } from '@/shared/ui/icons'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 
-import {
-  Footer,
-  UserDashboard,
-  FavoritesWidget,
-  ProfileSkills,
-} from '@/widgets'
+import { Footer, UserDashboard, FavoritesWidget, ProfileSkills } from '@/widgets'
 
 import type { UserData, UserEditableField } from '@/widgets'
 
@@ -33,18 +24,12 @@ const GENDER_OPTIONS = [
   { name: 'Женский', value: 'female' },
 ]
 
-const CITY_OPTIONS = [
-  { name: 'Москва', value: 'Москва' },
-  { name: 'Санкт-Петербург', value: 'Санкт-Петербург' },
-  { name: 'Новосибирск', value: 'Новосибирск' },
-  { name: 'Екатеринбург', value: 'Екатеринбург' },
-  { name: 'Казань', value: 'Казань' },
-  { name: 'Нижний Новгород', value: 'Нижний Новгород' },
-]
-
 export default function ProfilePage() {
   const dispatch = useAppDispatch()
   const authUser = useAppSelector((state) => state.auth.user)
+
+  // города для выпадающего списка приходят из общего селектора (маппинг + "Другое")
+  const cityOptions = useAppSelector(selectCityOptions)
 
   // cсылка позволяет открыть системное окно выбора файла по кнопке редактирования
   const avatarInputRef = useRef<HTMLInputElement>(null)
@@ -67,10 +52,23 @@ export default function ProfilePage() {
     avatarUrl: authUser?.avatarUrl ?? '',
   })
 
-  const handleFieldChange = (
-    field: UserEditableField,
-    value: string,
-  ) => {
+  // список городов строится из пользователей, поэтому их нужно загрузить
+  useEffect(() => {
+    void dispatch(fetchUsers())
+  }, [dispatch])
+
+  // города пользователя может не быть в списке (он сохранён как "Другое")
+  const cityOptionsWithCurrent = useMemo(() => {
+    const currentCity = formData.city
+
+    if (!currentCity || cityOptions.some((option) => option.value === currentCity)) {
+      return cityOptions
+    }
+
+    return [{ name: currentCity, value: currentCity }, ...cityOptions]
+  }, [cityOptions, formData.city])
+
+  const handleFieldChange = (field: UserEditableField, value: string) => {
     setFormData((prev) => ({
       ...prev,
       [field]: value,
@@ -114,7 +112,7 @@ export default function ProfilePage() {
 
     setFormData((prev) => ({
       ...prev,
-     avatarUrl,
+      avatarUrl,
     }))
 
     // Позволяет повторно выбрать тот же файл
@@ -130,9 +128,7 @@ export default function ProfilePage() {
         gender: formData.gender as 'male' | 'female',
         description: formData.about,
         avatarUrl: formData.avatarUrl || null,
-        birthDate: formData.birthDate
-          ? formData.birthDate.toISOString()
-          : '',
+        birthDate: formData.birthDate ? formData.birthDate.toISOString() : '',
       }),
     )
   }
@@ -172,29 +168,29 @@ export default function ProfilePage() {
     switch (activeTab) {
       case 'profile':
         return (
-        <>
-          <UserDashboard
-            data={formData}
-            avatarError={avatarError}
-            genderOptions={GENDER_OPTIONS}
-            cityOptions={CITY_OPTIONS}
-            onFieldChange={handleFieldChange}
-            onBirthDateChange={handleBirthDateChange}
-            onNewAvatarClick={handleNewAvatarClick}
-            onChangePassword={() => {
-              // TODO: модалка смены пароля
-            }}
-            onSave={handleSave}
-          />
+          <>
+            <UserDashboard
+              data={formData}
+              avatarError={avatarError}
+              genderOptions={GENDER_OPTIONS}
+              cityOptions={cityOptionsWithCurrent}
+              onFieldChange={handleFieldChange}
+              onBirthDateChange={handleBirthDateChange}
+              onNewAvatarClick={handleNewAvatarClick}
+              onChangePassword={() => {
+                // TODO: модалка смены пароля
+              }}
+              onSave={handleSave}
+            />
 
-          <input
-          ref={avatarInputRef}
-          type="file"
-          accept="image/jpeg,image/png"
-          hidden
-          onChange={handleAvatarChange}
-          />
-        </>
+            <input
+              ref={avatarInputRef}
+              type="file"
+              accept="image/jpeg,image/png"
+              hidden
+              onChange={handleAvatarChange}
+            />
+          </>
         )
 
       case 'favorites':
@@ -211,15 +207,9 @@ export default function ProfilePage() {
   return (
     <div className={styles.layout}>
       <main className={styles.page}>
-        <Sidebar
-          items={sidebarItems}
-          activeId={activeTab}
-          onSelect={setActiveTab}
-        />
+        <Sidebar items={sidebarItems} activeId={activeTab} onSelect={setActiveTab} />
 
-        <div className={styles.content}>
-          {renderTabContent()}
-        </div>
+        <div className={styles.content}>{renderTabContent()}</div>
       </main>
 
       <Footer />
