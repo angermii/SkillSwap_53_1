@@ -70,5 +70,6 @@ export interface AuthUser {
   birthDate: string
   city: string
   description: string
+  skill?: Skill
   token: string
 }

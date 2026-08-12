@@ -59,7 +59,7 @@ export default function LoginPage() {
 
   const skillCategories = useAppSelector(selectSkillCategories)
   const skillSubCategories = useAppSelector(selectSkillSubcategories)
-  
+
   // города для выпадающего списка приходят из общего селектора (маппинг + "Другое")
   const cityOptions = useAppSelector(selectCityOptions)
 
@@ -309,6 +309,17 @@ export default function LoginPage() {
           birthDate: registrationData.birthDate ? registrationData.birthDate.toISOString() : '',
           city: registrationData.city,
           description: registrationData.skillDescription,
+          skill: {
+            id: crypto.randomUUID(),
+            title: registrationData.skillName,
+            description: registrationData.skillDescription,
+            type: 'teach',
+            subcategoryId: registrationData.skillSubcategory,
+            imageUrl: galleryImages.map((image) => image.src),
+            authorId: registrationCredentials.email,
+            createdAt: new Date().toISOString(),
+            likeCount: 0,
+          },
         },
       }),
     )
