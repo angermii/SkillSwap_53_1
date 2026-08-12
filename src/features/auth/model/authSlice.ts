@@ -34,7 +34,7 @@ const authSlice = createSlice({
     ) => {
       if (!state.user) return
 
-      const { token, ...rest } = state.user
+      const { ...rest } = state.user
       const updatedUser = saveAuthUser({ ...rest, ...action.payload })
 
       state.user = updatedUser

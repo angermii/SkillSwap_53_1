@@ -1,0 +1,57 @@
+.Wrapper {
+  width: 100%;
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.Notification {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.Item {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-sm);
+}
+
+.Date {
+  color: var(--color-caption);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+}
+
+.Text {
+  width: 306px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+
+  > h4 {
+    font-family: Roboto, sans-serif;
+    font-size: var(--font-size-h4);
+    line-height: var(--line-height-h4);
+    font-weight: var(--font-weight-regular);
+    letter-spacing: 0.02rem;
+  }
+
+  > p {
+    font-size: var(--font-size-caption);
+    line-height: var(--line-height-caption);
+    letter-spacing: 0.02rem;
+  }
+}
+
+.Buttons {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-sm);
+}
+
+.ButtonAccept,
+.ButtonReject {
+  width: 114px;
+}

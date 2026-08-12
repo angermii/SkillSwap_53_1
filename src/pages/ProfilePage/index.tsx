@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react'
 import { updateUser } from '@/features/auth'
 import { BulbIcon, HeartIcon, MessageTextIcon, RequestIcon, UserIcon } from '@/shared/ui/icons'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { Footer, UserDashboard, FavoritesWidget } from '@/widgets'
+import { Footer, UserDashboard, FavoritesWidget, Requests } from '@/widgets'
 import type { UserData, UserEditableField } from '@/widgets'
 import { Sidebar } from '@/widgets/Sidebar'
 import type { SidebarItem } from '@/widgets/Sidebar'
@@ -77,6 +77,9 @@ export default function ProfilePage() {
 
   const renderTabContent = () => {
     switch (activeTab) {
+      case 'requests':
+        return <Requests />
+
       case 'profile':
         return (
           <UserDashboard
