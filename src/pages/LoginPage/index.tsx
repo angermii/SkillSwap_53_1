@@ -401,21 +401,15 @@ export default function LoginPage() {
 
       {isModalOpen && (
         <ModalUI
-          title="Ваше предложение"
-          description="Пожалуйста, проверьте и подтвердите правильность данных"
           onClose={() => setIsModalOpen(false)}
           size="large"
         >
           <UserSkillWidget
             className={styles.registrationSkill}
-            // header={{
-            //   title: registrationData.name || 'Пользователь',
-            //   subtitle: registrationData.city || 'Город не указан',
-            // }}
-            // like={{
-            //   count: 0,
-            //   isLiked: false,
-            // }}
+            header={{
+              title: "Ваше предложение",
+              subtitle: "Пожалуйста, проверьте и подтвердите правильность данных",
+            }}
             skill={userSkill}
             gallery={{
               images: galleryImages,
