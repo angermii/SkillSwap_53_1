@@ -29,3 +29,8 @@ export const LOCAL_STORAGE_KEYS = {
   REQUESTS: 'skillswap_requests',
   THEME: 'skillswap_theme',
 } as const
+
+export const OTHER_CITY_OPTION = {
+  name: 'Другое',
+  value: 'Другое',
+}
