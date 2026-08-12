@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 export type ModalSize = 'compact' | 'small' | 'large'
 
 export type ModalUIProps = {
-  title: string
+  title?: string
   description?: string
   onClose: () => void
   children: ReactNode

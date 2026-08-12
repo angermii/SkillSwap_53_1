@@ -6,7 +6,14 @@ import { fetchUsers } from '@/entities/user/model/userSlice'
 import { selectCityOptions } from '@/entities/user/model/selectors'
 import { BulbIcon, HeartIcon, MessageTextIcon, RequestIcon, UserIcon } from '@/shared/ui/icons'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { Footer, UserDashboard, FavoritesWidget, Requests, ProfileSkills, ExchangesWidget } from '@/widgets'
+import {
+  Footer,
+  UserDashboard,
+  FavoritesWidget,
+  Requests,
+  ProfileSkills,
+  ExchangesWidget,
+} from '@/widgets'
 
 import type { UserData, UserEditableField } from '@/widgets'
 
@@ -165,7 +172,11 @@ export default function ProfilePage() {
   const renderTabContent = () => {
     switch (activeTab) {
       case 'requests':
-        return <Requests />
+        return (
+          <div className={styles.widget}>
+            <Requests />
+          </div>
+        )
 
       case 'profile':
         return (
@@ -193,15 +204,27 @@ export default function ProfilePage() {
             />
           </>
         )
-      
+
       case 'exchanges':
-        return <ExchangesWidget />
+        return (
+          <div className={styles.widget}>
+            <ExchangesWidget />
+          </div>
+        )
 
       case 'favorites':
-        return <FavoritesWidget />
+        return (
+          <div className={styles.widget}>
+            <FavoritesWidget />
+          </div>
+        )
 
       case 'skills':
-        return <ProfileSkills />
+        return (
+          <div className={styles.widget}>
+            <ProfileSkills />
+          </div>
+        )
 
       default:
         return <p>Раздел в разработке</p>
