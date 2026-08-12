@@ -8,6 +8,7 @@ interface BaseInputProps {
   className?: string
   wrapperClassName?: string
   inputClassName?: string
+  invalid?: boolean
 }
 
 type InputLineProps = BaseInputProps & {
