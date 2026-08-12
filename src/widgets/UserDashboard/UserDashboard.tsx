@@ -12,6 +12,7 @@ export const UserDashboard = ({
   cityOptions,
   isSaveDisabled = false,
   avatarError,
+  errors,
   onFieldChange,
   onBirthDateChange,
   onNewAvatarClick,
@@ -34,6 +35,11 @@ export const UserDashboard = ({
             onSave={(value) => onFieldChange('email', value)}
             editLabel="Изменить почту"
           />
+          {errors?.email && (
+            <span className={styles.fieldError} role="alert">
+              {errors.email}
+            </span>
+          )}
 
           <button type="button" className={styles.passwordButton} onClick={onChangePassword}>
             Изменить пароль
@@ -46,24 +52,43 @@ export const UserDashboard = ({
           onSave={(value) => onFieldChange('name', value)}
           editLabel="Изменить имя"
         />
+        {errors?.name && (
+          <span className={styles.fieldError} role="alert">
+            {errors.name}
+          </span>
+        )}
 
         <div className={styles.fieldsRow}>
-          <DatePicker
-            label="Дата рождения"
-            value={data.birthDate}
-            onChange={onBirthDateChange}
-            className={styles.datePicker}
-          />
+          <div className={styles.fieldGroup}>
+            <DatePicker
+              label="Дата рождения"
+              value={data.birthDate}
+              onChange={onBirthDateChange}
+              className={styles.datePicker}
+            />
+            {errors?.birthDate && (
+              <span className={styles.fieldError} role="alert">
+                {errors.birthDate}
+              </span>
+            )}
+          </div>
 
-          <EditableSelect
-            label="Пол"
-            editable={false}
-            value={data.gender}
-            placeholder="Не указан"
-            options={genderOptions}
-            onChange={(value) => onFieldChange('gender', value)}
-            editLabel="Изменить пол, недоступно"
-          />
+          <div className={styles.fieldGroup}>
+            <EditableSelect
+              label="Пол"
+              editable={false}
+              value={data.gender}
+              placeholder="Не указан"
+              options={genderOptions}
+              onChange={(value) => onFieldChange('gender', value)}
+              editLabel="Изменить пол, недоступно"
+            />
+            {errors?.gender && (
+              <span className={styles.fieldError} role="alert">
+                {errors.gender}
+              </span>
+            )}
+          </div>
         </div>
 
         <EditableSelect
@@ -74,6 +99,11 @@ export const UserDashboard = ({
           onChange={(value) => onFieldChange('city', value)}
           editLabel="Изменить город"
         />
+        {errors?.city && (
+          <span className={styles.fieldError} role="alert">
+            {errors.city}
+          </span>
+        )}
 
         <EditableField
           multiline
@@ -84,6 +114,11 @@ export const UserDashboard = ({
           editLabel="Изменить описание"
           wrapperClassName={styles.about}
         />
+        {errors?.about && (
+          <span className={styles.fieldError} role="alert">
+            {errors.about}
+          </span>
+        )}
 
         <Button
           type="submit"

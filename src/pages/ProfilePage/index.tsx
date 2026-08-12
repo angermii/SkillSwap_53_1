@@ -10,7 +10,14 @@ import { Sidebar } from '@/widgets/Sidebar'
 import type { SidebarItem } from '@/widgets/Sidebar'
 import styles from './ProfilePage.module.css'
 import type { ProfileTab } from './type'
-import { validateAvatarFile } from '@/shared/lib/validators'
+import {
+  validateAvatarFile,
+  required,
+  minLength,
+  maxLength,
+  email,
+  selectRequired,
+} from '@/shared/lib/validators'
 
 const GENDER_OPTIONS = [
   { name: 'Мужской', value: 'male' },
@@ -39,6 +46,9 @@ export default function ProfilePage() {
   // активная вкладка сайдбара: меняется только правая часть страницы
   const [activeTab, setActiveTab] = useState<ProfileTab>('profile')
 
+  // состояние для ошибок валидации
+  const [formErrors, setFormErrors] = useState<Record<string, string | undefined>>({})
+
   // форма локальная, в стор уходит только по кнопке "Сохранить"
   const [formData, setFormData] = useState<UserData>({
     email: authUser?.email ?? '',
@@ -52,10 +62,12 @@ export default function ProfilePage() {
 
   const handleFieldChange = (field: UserEditableField, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }))
+    setFormErrors((prev) => ({ ...prev, [field]: undefined }))
   }
 
   const handleBirthDateChange = (date: Date | undefined) => {
     setFormData((prev) => ({ ...prev, birthDate: date }))
+    setFormErrors((prev) => ({ ...prev, birthDate: undefined }))
   }
 
   const handleNewAvatarClick = () => {
@@ -88,7 +100,7 @@ export default function ProfilePage() {
 
     setFormData((prev) => ({
       ...prev,
-     avatarUrl,
+      avatarUrl,
     }))
 
     // Позволяет повторно выбрать тот же файл
@@ -96,6 +108,39 @@ export default function ProfilePage() {
   }
 
   const handleSave = () => {
+    const errors: Record<string, string | undefined> = {}
+
+    // проверяем почту, поле обязательное, корректный формат
+    const emailError = required(formData.email) || email(formData.email)
+    if (emailError) errors.email = emailError
+
+    // проверяем, что имя содержит не менее 2-х и не более 50-ти символом, поле обязательное
+    const nameError =
+      required(formData.name) || minLength(2)(formData.name) || maxLength(50)(formData.name)
+    if (nameError) errors.name = nameError
+
+    // Дата рождения: обязательное поле
+    if (!formData.birthDate) {
+      errors.birthDate = 'Поле обязательно для заполнения'
+    }
+
+    // Пол: обязательное поле, выбор из списка
+    const genderError = selectRequired(formData.gender)
+    if (genderError) errors.gender = genderError
+
+    // Город: обязательное поле, выбор из списка
+    const cityErrors = selectRequired(formData.city)
+    if (cityErrors) errors.city = cityErrors
+
+    // О себе: необязательное поле, содержит не более 1000 символов
+    const aboutError = maxLength(1000)(formData.about)
+    if (aboutError) errors.about = aboutError
+
+    setFormErrors(errors)
+    if (Object.values(errors).some(Boolean)) {
+      return
+    }
+
     dispatch(
       updateUser({
         name: formData.name,
@@ -124,29 +169,30 @@ export default function ProfilePage() {
     switch (activeTab) {
       case 'profile':
         return (
-        <>
-          <UserDashboard
-            data={formData}
-            avatarError={avatarError}
-            genderOptions={GENDER_OPTIONS}
-            cityOptions={CITY_OPTIONS}
-            onFieldChange={handleFieldChange}
-            onBirthDateChange={handleBirthDateChange}
-            onNewAvatarClick={handleNewAvatarClick}
-            onChangePassword={() => {
-              // TODO: модалка смены пароля, отдельная задача
-            }}
-            onSave={handleSave}
-          />
+          <>
+            <UserDashboard
+              data={formData}
+              errors={formErrors}
+              avatarError={avatarError}
+              genderOptions={GENDER_OPTIONS}
+              cityOptions={CITY_OPTIONS}
+              onFieldChange={handleFieldChange}
+              onBirthDateChange={handleBirthDateChange}
+              onNewAvatarClick={handleNewAvatarClick}
+              onChangePassword={() => {
+                // TODO: модалка смены пароля, отдельная задача
+              }}
+              onSave={handleSave}
+            />
 
-          <input
-          ref={avatarInputRef}
-          type="file"
-          accept="image/jpeg,image/png"
-          hidden
-          onChange={handleAvatarChange}
-          />
-        </>
+            <input
+              ref={avatarInputRef}
+              type="file"
+              accept="image/jpeg,image/png"
+              hidden
+              onChange={handleAvatarChange}
+            />
+          </>
         )
       case 'favorites':
         return <FavoritesWidget />
