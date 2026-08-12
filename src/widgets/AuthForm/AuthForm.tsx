@@ -1,6 +1,11 @@
 import { Button, PasswordInput, Input, SocialLoginButtons } from '@/shared/ui'
 import React, { useState } from 'react'
-import { email as validateEmail, password as validatePassword, required, minLength } from '@/shared/lib/validators'
+import {
+  email as validateEmail,
+  password as validatePassword,
+  required,
+  minLength,
+} from '@/shared/lib/validators'
 
 import styles from './AuthForm.module.css'
 
@@ -9,14 +14,15 @@ export type AuthFormProps = {
   variant: 'login' | 'register'
   onSubmit: (data: { email: string; password: string }) => void
   onLinkClick?: () => void
+  submitError?: string | null
 }
 
 type AuthFormErrors = {
-  email?: string,
+  email?: string
   password?: string
 }
 
-export const AuthForm = ({ variant, onSubmit, onLinkClick }: AuthFormProps) => {
+export const AuthForm = ({ variant, onSubmit, onLinkClick, submitError }: AuthFormProps) => {
   const [emailValue, setEmailValue] = useState('')
   const [passwordValue, setPasswordValue] = useState('')
 
@@ -73,7 +79,7 @@ export const AuthForm = ({ variant, onSubmit, onLinkClick }: AuthFormProps) => {
     } else if (passwordFormatError) {
       validationErrors.password = passwordFormatError
     }
-    
+
     return validationErrors
   }
 
@@ -118,6 +124,7 @@ export const AuthForm = ({ variant, onSubmit, onLinkClick }: AuthFormProps) => {
             value={emailValue}
             onChange={handleEmailChange}
             error={errors.email}
+            invalid={Boolean(submitError)}
           />
           <PasswordInput
             label="Пароль"
@@ -125,7 +132,8 @@ export const AuthForm = ({ variant, onSubmit, onLinkClick }: AuthFormProps) => {
             hint={passwordHint}
             value={passwordValue}
             onChange={handlePasswordChange}
-            error={errors.password}
+            error={errors.password || submitError || undefined}
+            invalid={Boolean(submitError)}
           />
         </div>
       </div>
