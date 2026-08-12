@@ -7,7 +7,7 @@ import type { DatePickerProps } from './type'
 import styles from './DatePicker.module.css'
 
 const formatDate = (date?: Date): string => {
-  if (!date) return ''
+  if (!date || Number.isNaN(date.getTime())) return ''
 
   const day = String(date.getDate()).padStart(2, '0')
   const month = String(date.getMonth() + 1).padStart(2, '0')
