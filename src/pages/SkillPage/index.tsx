@@ -1,6 +1,12 @@
 // TODO: реализовать страницу SkillPage
 
-import { Footer, groupSkillsByAuthor, mapUserToCardData, UserCard, UserSkillWidget } from '@/widgets'
+import {
+  Footer,
+  groupSkillsByAuthor,
+  mapUserToCardData,
+  UserCard,
+  UserSkillWidget,
+} from '@/widgets'
 import { generatePath, useNavigate, useParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '@/store/hooks.ts'
 import { ReactNode, useEffect, useMemo, useState } from 'react'
@@ -23,32 +29,36 @@ import {
 import { ROUTES } from '@/shared/lib/constants.ts'
 import { toggleFavorite } from '@/features/favorites'
 import { createRequest } from '@/entities/request/requestsSlice.ts'
+import { toGalleryImages } from '@/widgets/GalleryCarousel'
 
 export default function SkillPage() {
   //находим навык по url
-  const { id } = useParams();
+  const { id } = useParams()
   const navigate = useNavigate()
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
   const skill = useAppSelector(selectSelectedSkill)
   //Нужно найти id пользователя залогиненного, либо редирект(недоделано)
-  const currentUser = '';
+  const currentUser = ''
   //находим пользователя, которому принадлежит навык
-  const userId = skill?.authorId;
-  const selectedUser = useAppSelector((state) => state.user.user);
+  const userId = skill?.authorId
+  const selectedUser = useAppSelector((state) => state.user.user)
   //все навыки, связанные с пользователем
-  const userSkills = useAppSelector((state) => state.skill.userSkills);
+  const userSkills = useAppSelector((state) => state.skill.userSkills)
   const subcategory = useAppSelector((state) =>
-      skill?.subcategoryId ? selectSkillSubcategoryById(state, skill.subcategoryId) : null);
-  const category = useAppSelector((state) =>  subcategory?.categoryId ? selectSkillCategoryById(state, subcategory.categoryId) : null);
-  const users = useAppSelector((state) => state.user.items);
-  const skills = useAppSelector(selectSkills);
-  const subcategoriesById = useAppSelector(selectSkillSubcategoriesById);
-  const isLoading = useAppSelector(selectSelectedSkillLoading);
-  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
-  const [isRequested, setIsRequested] = useState<boolean>(false);
+    skill?.subcategoryId ? selectSkillSubcategoryById(state, skill.subcategoryId) : null,
+  )
+  const category = useAppSelector((state) =>
+    subcategory?.categoryId ? selectSkillCategoryById(state, subcategory.categoryId) : null,
+  )
+  const users = useAppSelector((state) => state.user.items)
+  const skills = useAppSelector(selectSkills)
+  const subcategoriesById = useAppSelector(selectSkillSubcategoriesById)
+  const isLoading = useAppSelector(selectSelectedSkillLoading)
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
+  const [isRequested, setIsRequested] = useState<boolean>(false)
 
   useEffect(() => {
-    if (id){
+    if (id) {
       void dispatch(fetchSkillById(id))
         .unwrap()
         .catch((error) => {
@@ -62,14 +72,12 @@ export default function SkillPage() {
     void dispatch(fetchSkill())
   }, [dispatch])
 
-
-
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [id])
 
   useEffect(() => {
-    if (userId){
+    if (userId) {
       void dispatch(fetchUserById(userId))
       void dispatch(fetchSkillByUserId(userId))
     }
@@ -101,6 +109,11 @@ export default function SkillPage() {
       })
       .filter((userCard): userCard is NonNullable<typeof userCard> => userCard !== null)
   }, [skills, subcategory?.id, users, subcategoriesById, userId])
+
+  const galleryImages = useMemo(
+    () => toGalleryImages(skill?.imageUrl, { idPrefix: skill?.id, altPrefix: skill?.title }),
+    [skill?.id, skill?.imageUrl, skill?.title],
+  )
 
   const handleRequest = () => {
     if (!skill?.id || !userId) return
@@ -156,16 +169,13 @@ export default function SkillPage() {
             description: skill.description,
           }}
           className={Styles.SkillWidget}
-          gallery={{
-            images: skill.imageUrl,
-            maxThumbnails: 3,
-          }}
+          gallery={{ images: galleryImages, maxThumbnails: 3 }}
           actions={
             <Button
               variant={isRequested ? 'secondary' : 'primary'}
               startIcon={isRequested ? <ClockIcon /> : undefined}
               type="button"
-              onClick={isRequested ? ()=>{} : handleRequest}
+              onClick={isRequested ? () => {} : handleRequest}
             >
               <span>{isRequested ? 'Обмен предложен' : 'Предложить обмен'}</span>
             </Button>
