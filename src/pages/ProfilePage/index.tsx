@@ -1,14 +1,13 @@
 import { useEffect, useMemo, useState, useRef } from 'react'
 import type { ChangeEvent } from 'react'
 import { parseSafeDate } from '@/shared/lib/helpers'
-
 import { updateUser } from '@/features/auth'
 import { fetchUsers } from '@/entities/user/model/userSlice'
 import { selectCityOptions } from '@/entities/user/model/selectors'
 import { BulbIcon, HeartIcon, MessageTextIcon, RequestIcon, UserIcon } from '@/shared/ui/icons'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 
-import { Footer, UserDashboard, FavoritesWidget, ProfileSkills } from '@/widgets'
+import { Footer, UserDashboard, FavoritesWidget, ProfileSkills, ExchangesWidget } from '@/widgets'
 
 import type { UserData, UserEditableField } from '@/widgets'
 
@@ -192,6 +191,9 @@ export default function ProfilePage() {
             />
           </>
         )
+      
+      case 'exchanges':
+        return <ExchangesWidget />
 
       case 'favorites':
         return <FavoritesWidget />
