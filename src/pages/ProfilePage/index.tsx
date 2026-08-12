@@ -6,8 +6,7 @@ import { fetchUsers } from '@/entities/user/model/userSlice'
 import { selectCityOptions } from '@/entities/user/model/selectors'
 import { BulbIcon, HeartIcon, MessageTextIcon, RequestIcon, UserIcon } from '@/shared/ui/icons'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
-
-import { Footer, UserDashboard, FavoritesWidget, ProfileSkills, ExchangesWidget } from '@/widgets'
+import { Footer, UserDashboard, FavoritesWidget, Requests, ProfileSkills, ExchangesWidget } from '@/widgets'
 
 import type { UserData, UserEditableField } from '@/widgets'
 
@@ -165,6 +164,9 @@ export default function ProfilePage() {
 
   const renderTabContent = () => {
     switch (activeTab) {
+      case 'requests':
+        return <Requests />
+
       case 'profile':
         return (
           <>

@@ -20,6 +20,18 @@ const mockLoginPayload = {
   description: '',
 }
 
+const mockSkill = {
+  id: 'skill-1',
+  title: 'TypeScript',
+  description: 'Основы TypeScript',
+  type: 'teach' as const,
+  subcategoryId: 'programming',
+  imageUrl: null,
+  authorId: '1',
+  createdAt: '2026-08-12T00:00:00.000Z',
+  likeCount: 0,
+}
+
 describe('authSlice', () => {
   beforeEach(() => {
     localStorage.clear()
@@ -54,6 +66,32 @@ describe('authSlice', () => {
 
     const stored = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_USER)!)
     expect(stored).toEqual(state.user)
+  })
+
+  it('register persists user with skill and restores it from localStorage', async () => {
+    const { register } = await import('./authSlice')
+    const store = await createTestStore()
+    const profile = { ...mockLoginPayload, skill: mockSkill }
+
+    store.dispatch(register({ profile, password: 'password' }))
+
+    expect(store.getState().auth.user).toEqual({
+      ...profile,
+      token: 'mock_token_1',
+    })
+
+    const storedAuthUser = JSON.parse(
+      localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_USER)!,
+    )
+    expect(storedAuthUser.skill).toEqual(mockSkill)
+
+    const registeredUsers = JSON.parse(
+      localStorage.getItem(LOCAL_STORAGE_KEYS.USERS)!,
+    )
+    expect(registeredUsers).toEqual([{ profile, password: 'password' }])
+
+    const restoredStore = await createTestStore()
+    expect(restoredStore.getState().auth.user?.skill).toEqual(mockSkill)
   })
 
   it('logout clears user, isAuthenticated and localStorage', async () => {
