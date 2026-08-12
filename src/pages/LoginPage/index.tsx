@@ -1,17 +1,28 @@
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { LightBulbIllustration } from '@/shared/illustrations'
-import { Onboarding, StepIndicator, ModalUI, Button } from '@/shared/ui'
+import { Onboarding, ModalUI, Button, StepIndicator } from '@/shared/ui'
 import { RegistrationForm, UserSkillWidget, AuthForm } from '@/widgets'
 import type { RegistrationFormData, RegistrationFormErrors } from '@/widgets'
+import { RegistrationTextField } from '@/widgets/RegistrationForm/type'
 
 import styles from './LoginPage.module.css'
-import { ROUTES, SKILL_CATEGORIES } from '@/shared/lib/constants'
-import { useAppDispatch } from '@/store/hooks'
-import { login } from '@/features/auth'
+import { ROUTES } from '@/shared/lib/constants'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import { login, register, findRegisteredUser } from '@/features/auth'
+
+import { fetchSkillCategories, fetchSkillSubcategories } from '@/entities/skill/model/skillSlice'
+import { selectSkillCategories, selectSkillSubcategories } from '@/entities/skill/model/selectors'
+import { fetchUsers } from '@/entities/user/model/userSlice'
+import { selectCityOptions } from '@/entities/user/model/selectors'
+
+import { required, selectRequired } from '@/shared/lib/validators'
 
 type RegistrationStep = 1 | 2 | 3
+
+const LOGIN_ERROR_MESSAGE =
+  'Email или пароль введён неверно. Пожалуйста проверьте правильность введённых данных'
 
 const initialRegistrationData: RegistrationFormData = {
   name: '',
@@ -28,13 +39,16 @@ const initialRegistrationData: RegistrationFormData = {
   skillImages: [],
 }
 
-const categoryOptions = SKILL_CATEGORIES.map((category) => ({
-  name: category,
-  value: category,
-}))
-
-const isValidGender = (value: string): value is 'male' | 'female' =>
-  value === 'male' || value === 'female'
+const genderOptions = [
+  {
+    name: 'Мужской',
+    value: 'male',
+  },
+  {
+    name: 'Женский',
+    value: 'female',
+  },
+]
 
 export default function LoginPage() {
   const dispatch = useAppDispatch()
@@ -42,6 +56,12 @@ export default function LoginPage() {
   const location = useLocation()
 
   const isRegister = location.pathname === ROUTES.REGISTER
+
+  const skillCategories = useAppSelector(selectSkillCategories)
+  const skillSubCategories = useAppSelector(selectSkillSubcategories)
+
+  // города для выпадающего списка приходят из общего селектора (маппинг + "Другое")
+  const cityOptions = useAppSelector(selectCityOptions)
 
   const [registrationStep, setRegistrationStep] = useState<RegistrationStep>(1)
   const [registrationData, setRegistrationData] =
@@ -56,24 +76,64 @@ export default function LoginPage() {
   })
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const handleLogin = (data: { email: string; password: string }) => {
-    dispatch(
-      login({
-        id: '1',
-        name: 'Пользователь',
-        email: data.email,
-        avatarUrl: null,
-        gender: 'male',
-        birthDate: '',
-        city: '',
-        description: '',
-      }),
-    )
+  const categoryOptions = useMemo(
+    () =>
+      skillCategories.map((category) => ({
+        name: category.title,
+        value: category.id,
+      })),
+    [skillCategories],
+  )
 
+  const learningSubcategoryOptions = useMemo(
+    () =>
+      skillSubCategories
+        .filter((subcategory) => subcategory.categoryId === registrationData.learningCategory)
+        .map((subcategory) => ({
+          name: subcategory.title,
+          value: subcategory.id,
+        })),
+    [skillSubCategories, registrationData.learningCategory],
+  )
+
+  const skillSubcategoryOptions = useMemo(
+    () =>
+      skillSubCategories
+        .filter((subcategory) => subcategory.categoryId === registrationData.skillCategory)
+        .map((subcategory) => ({
+          name: subcategory.title,
+          value: subcategory.id,
+        })),
+    [skillSubCategories, registrationData.skillCategory],
+  )
+
+  useEffect(() => {
+    if (!isRegister) {
+      return
+    }
+
+    dispatch(fetchSkillCategories())
+    dispatch(fetchSkillSubcategories())
+    dispatch(fetchUsers())
+  }, [dispatch, isRegister])
+
+  const [loginError, setLoginError] = useState<string | null>(null)
+
+  const handleLogin = (data: { email: string; password: string }) => {
+    const registeredUser = findRegisteredUser(data.email, data.password)
+
+    if (!registeredUser) {
+      setLoginError(LOGIN_ERROR_MESSAGE)
+      return
+    }
+
+    dispatch(login(registeredUser.profile))
     navigate(ROUTES.HOME)
   }
 
   const handleAuthSubmit = (data: { email: string; password: string }) => {
+    setLoginError(null)
+
     if (!isRegister) {
       handleLogin(data)
       return
@@ -95,10 +155,7 @@ export default function LoginPage() {
     })
   }
 
-  const handleFieldChange = (
-    field: keyof Omit<RegistrationFormData, 'avatarUrl' | 'skillImages' | 'birthDate'>,
-    value: string,
-  ) => {
+  const handleFieldChange = (field: RegistrationTextField, value: string) => {
     setRegistrationData((prev) => ({
       ...prev,
       [field]: value,
@@ -107,18 +164,6 @@ export default function LoginPage() {
     setRegistrationErrors((prev) => ({
       ...prev,
       [field]: undefined,
-    }))
-  }
-
-  const handleBirthDateChange = (date: Date | undefined) => {
-    setRegistrationData((prev) => ({
-      ...prev,
-      birthDate: date,
-    }))
-
-    setRegistrationErrors((prev) => ({
-      ...prev,
-      birthDate: undefined,
     }))
   }
 
@@ -158,7 +203,76 @@ export default function LoginPage() {
     }
   }
 
+  const validateRegistrationStep = (): RegistrationFormErrors => {
+    const errors: RegistrationFormErrors = {}
+
+    if (registrationStep === 2) {
+      const nameError = required(registrationData.name)
+      const birthDateError = registrationData.birthDate ? null : 'Поле обязательно для заполнения'
+      const genderError = selectRequired(registrationData.gender)
+      const cityError = selectRequired(registrationData.city)
+      const learningCategoryError = selectRequired(registrationData.learningCategory)
+      const learningSubcategoryError = selectRequired(registrationData.learningSubcategory)
+
+      if (nameError) {
+        errors.name = nameError
+      }
+
+      if (birthDateError) {
+        errors.birthDate = birthDateError
+      }
+
+      if (genderError) {
+        errors.gender = genderError
+      }
+
+      if (cityError) {
+        errors.city = cityError
+      }
+
+      if (learningCategoryError) {
+        errors.learningCategory = learningCategoryError
+      }
+
+      if (learningSubcategoryError) {
+        errors.learningSubcategory = learningSubcategoryError
+      }
+    }
+
+    if (registrationStep === 3) {
+      const skillNameError = required(registrationData.skillName)
+      const skillCategoryError = selectRequired(registrationData.skillCategory)
+      const skillSubcategoryError = selectRequired(registrationData.skillSubcategory)
+      const skillDescriptionError = required(registrationData.skillDescription)
+
+      if (skillNameError) {
+        errors.skillName = skillNameError
+      }
+
+      if (skillCategoryError) {
+        errors.skillCategory = skillCategoryError
+      }
+
+      if (skillSubcategoryError) {
+        errors.skillSubcategory = skillSubcategoryError
+      }
+
+      if (skillDescriptionError) {
+        errors.skillDescription = skillDescriptionError
+      }
+    }
+
+    return errors
+  }
+
   const handleRegistrationNext = () => {
+    const errors = validateRegistrationStep()
+    setRegistrationErrors(errors)
+    const hasErrors = Object.values(errors).some(Boolean)
+    if (hasErrors) {
+      return
+    }
+
     if (registrationStep === 2) {
       setRegistrationStep(3)
       return
@@ -174,17 +288,39 @@ export default function LoginPage() {
     setRegistrationStep(3)
   }
 
+  const getGender = (gender: string): 'male' | 'female' => {
+    if (gender === 'male' || gender === 'female') {
+      return gender
+    }
+
+    return 'male'
+  }
+
   const handleFinishRegistration = () => {
     dispatch(
-      login({
-        id: '1',
-        name: registrationData.name || 'Пользователь',
-        email: registrationCredentials.email,
-        avatarUrl: registrationData.avatarUrl || null,
-        gender: isValidGender(registrationData.gender) ? registrationData.gender : 'male',
-        birthDate: registrationData.birthDate ? registrationData.birthDate.toISOString() : '',
-        city: registrationData.city,
-        description: '',
+      register({
+        password: registrationCredentials.password,
+        profile: {
+          id: registrationCredentials.email,
+          name: registrationData.name,
+          email: registrationCredentials.email,
+          avatarUrl: registrationData.avatarUrl,
+          gender: getGender(registrationData.gender),
+          birthDate: registrationData.birthDate ? registrationData.birthDate.toISOString() : '',
+          city: registrationData.city,
+          description: registrationData.skillDescription,
+          skill: {
+            id: crypto.randomUUID(),
+            title: registrationData.skillName,
+            description: registrationData.skillDescription,
+            type: 'teach',
+            subcategoryId: registrationData.skillSubcategory,
+            imageUrl: galleryImages.map((image) => image.src),
+            authorId: registrationCredentials.email,
+            createdAt: new Date().toISOString(),
+            likeCount: 0,
+          },
+        },
       }),
     )
 
@@ -221,19 +357,30 @@ export default function LoginPage() {
             variant={isRegister ? 'register' : 'login'}
             onSubmit={handleAuthSubmit}
             onLinkClick={!isRegister ? handleRegisterClick : undefined}
+            submitError={!isRegister ? loginError : null}
           />
         ) : (
           <RegistrationForm
             currentStep={registrationStep}
             data={registrationData}
             errors={registrationErrors}
-            genderOptions={[]}
-            cityOptions={[]}
+            genderOptions={genderOptions}
+            cityOptions={cityOptions}
             categoryOptions={categoryOptions}
-            learningSubcategoryOptions={[]}
-            skillSubcategoryOptions={[]}
+            learningSubcategoryOptions={learningSubcategoryOptions}
+            skillSubcategoryOptions={skillSubcategoryOptions}
             onFieldChange={handleFieldChange}
-            onBirthDateChange={handleBirthDateChange}
+            onBirthDateChange={(date) => {
+              setRegistrationData((prev) => ({
+                ...prev,
+                birthDate: date,
+              }))
+
+              setRegistrationErrors((prev) => ({
+                ...prev,
+                birthDate: undefined,
+              }))
+            }}
             onAvatarChange={handleAvatarChange}
             onImagesChange={handleImagesChange}
             onBack={handleRegistrationBack}
@@ -253,12 +400,12 @@ export default function LoginPage() {
       </div>
 
       {isModalOpen && (
-        <ModalUI 
-          title="Ваше предложение" 
+        <ModalUI
+          title="Ваше предложение"
           description="Пожалуйста, проверьте и подтвердите правильность данных"
-          onClose={() => setIsModalOpen(false)} 
+          onClose={() => setIsModalOpen(false)}
           size="large"
-          >
+        >
           <UserSkillWidget
             className={styles.registrationSkill}
             // header={{
@@ -272,23 +419,15 @@ export default function LoginPage() {
             skill={userSkill}
             gallery={{
               images: galleryImages,
-              maxThumbnails: 3
+              maxThumbnails: 3,
             }}
             actions={
               <div className={styles.registrationActions}>
-                <Button
-                  type="button"
-                  variant="secondary"
-                  onClick={handleEditRegistration}
-                >
+                <Button type="button" variant="secondary" onClick={handleEditRegistration}>
                   Редактировать
                 </Button>
 
-                <Button
-                  type="button"
-                  variant="primary"
-                  onClick={handleFinishRegistration}
-                >
+                <Button type="button" variant="primary" onClick={handleFinishRegistration}>
                   Готово
                 </Button>
               </div>

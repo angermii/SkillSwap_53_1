@@ -61,6 +61,10 @@ export const requestsSlice = createSlice({
 
         status: 'pending',
 
+        // новое предложение появляется как непрочитанное уведомление
+        isNotificationRead: false,
+        isNotificationDismissed: false,
+
         createdAt: now,
 
         updatedAt: now,
@@ -71,6 +75,47 @@ export const requestsSlice = createSlice({
       saveRequests(state.requests)
     },
 
+    // Отметить все полученные уведомления как прочитанные
+    readAllNotifications: (state, action: PayloadAction<string>) => {
+      state.requests.forEach((request) => {
+        if (
+          request.toUserId === action.payload &&
+          !request.isNotificationDismissed
+        ) {
+          request.isNotificationRead = true
+        }
+      })
+
+      saveRequests(state.requests)
+    },
+
+    // отметить выбранное уведомление как прочитанное
+    readNotification: (state, action: PayloadAction<string>) => {
+      const request = state.requests.find(
+        (item) =>
+          item.id === action.payload &&
+          !item.isNotificationDismissed,
+      )
+
+      if (request) {
+        request.isNotificationRead = true
+        saveRequests(state.requests)
+      }
+    },
+
+    // Скрыть прочитанные уведомления текущего пользователя
+    clearReadNotifications: (state, action: PayloadAction<string>) => {
+      state.requests.forEach((request) => {
+        if (
+          request.toUserId === action.payload &&
+          request.isNotificationRead
+        ) {
+          request.isNotificationDismissed = true
+        }
+      })
+
+      saveRequests(state.requests)
+    },
 
     // Принять запрос
     acceptRequest: (
@@ -128,6 +173,9 @@ export const {
   acceptRequest,
   rejectRequest,
   cancelRequest,
+  readAllNotifications,
+  readNotification,
+  clearReadNotifications,
 } = requestsSlice.actions
 
 
@@ -135,6 +183,17 @@ export const {
 export const selectAllRequests = (
   state: { requests: RequestsState },
 ) => state.requests.requests
+
+// Получить входящие запросы, которые еще отображаются в уведомлениях
+export const selectNotificationRequests = (
+  state: { requests: RequestsState },
+  userId: string,
+) =>
+  state.requests.requests.filter(
+    (request) =>
+      request.toUserId === userId &&
+      !request.isNotificationDismissed,
+  )
 
 
 // Получить ожидающие запросы

@@ -20,6 +20,7 @@ export type UserDashboardProps = {
   genderOptions: ProfileOption[]
   cityOptions: ProfileOption[]
   isSaveDisabled?: boolean
+  avatarError?: string
   onFieldChange: (field: UserEditableField, value: string) => void
   onBirthDateChange: (date: Date | undefined) => void
   onNewAvatarClick: () => void

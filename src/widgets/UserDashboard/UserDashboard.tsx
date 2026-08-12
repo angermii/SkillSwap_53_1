@@ -11,6 +11,7 @@ export const UserDashboard = ({
   genderOptions,
   cityOptions,
   isSaveDisabled = false,
+  avatarError,
   onFieldChange,
   onBirthDateChange,
   onNewAvatarClick,
@@ -96,6 +97,12 @@ export const UserDashboard = ({
 
       <div className={styles.photo}>
         <UserPhoto src={data.avatarUrl} alt="Фото пользователя" onClick={onNewAvatarClick} />
+
+        {avatarError && (
+          <span className={styles.avatarError} role="alert">
+            {avatarError}
+          </span>
+        )}
       </div>
     </form>
   )
