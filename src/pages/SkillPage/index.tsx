@@ -1,10 +1,4 @@
-import {
-  Footer,
-  groupSkillsByAuthor,
-  mapUserToCardData,
-  UserCard,
-  UserSkillWidget,
-} from '@/widgets'
+import { groupSkillsByAuthor, mapUserToCardData, UserCard, UserSkillWidget } from '@/widgets'
 import { generatePath, useNavigate, useParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '@/store/hooks.ts'
 import { useEffect, useMemo, useState } from 'react'
@@ -153,7 +147,6 @@ export default function SkillPage() {
     return (
       <main className={Styles.Main}>
         <p>Загрузка данных...</p>
-        <Footer />
       </main>
     )
   }
@@ -246,7 +239,6 @@ export default function SkillPage() {
           )}
         </div>
       </div>
-      <Footer />
     </main>
   )
 }
