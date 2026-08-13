@@ -9,7 +9,6 @@ export type SimilarOfferData = {
 
 export type SimilarOffersProps = {
   cards: SimilarOfferData[]
-  onNextClick: () => void
   onDetailsClick: (skillId: string) => void
-  onLikeChange: (skillId: string, count: number, isLiked: boolean) => void
+  onLikeChange: (skillId: string) => void
 }
