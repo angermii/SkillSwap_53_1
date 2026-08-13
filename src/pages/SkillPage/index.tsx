@@ -49,7 +49,7 @@ export default function SkillPage() {
   const subcategoriesById = useAppSelector(selectSkillSubcategoriesById)
   const isLoading = useAppSelector(selectSelectedSkillLoading)
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
-  const [isRequested, setIsRequested] = useState<boolean>(false)
+  const [isRequested] = useState<boolean>(false)
   const subcategoriesById = useAppSelector(selectSkillSubcategoriesById)
   const isLoading = useAppSelector(selectSelectedSkillLoading)
 
