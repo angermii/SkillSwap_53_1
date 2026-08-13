@@ -9,7 +9,7 @@ import { logout } from '@/features/auth'
 import { mapCategoriesToSections } from '@/shared/lib/categorySectionsMapper'
 import { ROUTES } from '@/shared/lib/constants'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { Header } from '@/widgets'
+import { Footer, Header } from '@/widgets'
 import { useEffect, useMemo, useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import {
@@ -20,6 +20,8 @@ import {
 } from '@/entities/request/requestsSlice'
 import { mapRequestsToNotifications } from '@/widgets/Notifications'
 import { loadFavorites, clearCurrentFavorites } from '@/features/favorites'
+
+import Styles from './Layouts.module.css'
 
 export const MainLayout = () => {
   const dispatch = useAppDispatch()
@@ -35,7 +37,7 @@ export const MainLayout = () => {
   )
 
   const notifications = mapRequestsToNotifications(notificationRequests)
- 
+
   useEffect(() => {
     if (user) {
       dispatch(loadFavorites(user.id))
@@ -111,7 +113,10 @@ export const MainLayout = () => {
         onFavoritesClick={() => navigate(ROUTES.FAVORITES)}
         onLogout={handleLogout}
       />
-      <Outlet context={{ searchQuery }} />
+      <div className={Styles.content}>
+        <Outlet context={{ searchQuery }} />
+      </div>
+      <Footer />
     </>
   )
 }

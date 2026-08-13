@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom'
 import { Error, Button } from '@/shared/ui'
-import { Footer } from '@/widgets'
 import { ROUTES } from '@/shared/lib/constants'
 import error404 from '@/shared/illustrations/error404.svg'
 import styles from './NotFoundPage.module.css'
@@ -24,7 +23,6 @@ export default function NotFoundPage() {
           </Button>
         </Error>
       </main>
-      <Footer />
     </>
   )
 }

@@ -13,7 +13,6 @@ import { Button, FilterChip, ModalUI, SortIcon } from '@/shared/ui'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import {
   FiltersBar,
-  Footer,
   UserCatalog,
   groupSkillsByAuthor,
   mapUserToCardData,
@@ -451,7 +450,6 @@ export default function CatalogPage() {
           </div>
         </ModalUI>
       )}
-      <Footer />
     </>
   )
 }
