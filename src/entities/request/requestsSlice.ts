@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { SwapRequest } from './model/types'
 import { LOCAL_STORAGE_KEYS } from '@/shared/lib/constants'
 
@@ -173,21 +173,31 @@ export const selectOutgoingRequestBySkill = (
 }
 
 // Получить входящие запросы, которые еще отображаются в уведомлениях
-export const selectNotificationRequests = (state: { requests: RequestsState }, userId: string) =>
-  state.requests.requests.filter(
-    (request) => request.toUserId === userId && !request.isNotificationDismissed,
-  )
+export const selectNotificationRequests = createSelector(
+  [selectAllRequests, (_, userId: string) => userId],
+  (requests, userId) =>
+    requests.filter((req) => req.toUserId === userId && !req.isNotificationDismissed),
+)
 
 // Получить ожидающие запросы
-export const selectPendingRequests = (state: { requests: RequestsState }) =>
-  state.requests.requests.filter((request) => request.status === 'pending')
+export const selectPendingRequests = createSelector([selectAllRequests], (requests) =>
+  requests.filter((req) => req.status === 'pending'),
+)
+
+// export const selectOutgoingRequests = (state: { requests: RequestsState }, userId: string) =>
+//   state.requests.requests.filter((request) => request.fromUserId === userId)
+export const selectOutgoingRequests = createSelector(
+  [selectAllRequests, (_, userID: string) => userID],
+  (requests, userID) => requests.filter((req) => req.fromUserId === userID),
+)
 
 // Получить принятые запросы
-export const selectAcceptedRequests = (state: { requests: RequestsState }) =>
-  state.requests.requests.filter((request) => request.status === 'accepted')
-
+export const selectAcceptedRequests = createSelector([selectAllRequests], (requests) =>
+  requests.filter((req) => req.status === 'accepted'),
+)
 // Получить отклонённые запросы
-export const selectRejectedRequests = (state: { requests: RequestsState }) =>
-  state.requests.requests.filter((request) => request.status === 'rejected')
+export const selectRejectedRequests = createSelector([selectAllRequests], (requests) =>
+  requests.filter((req) => req.status === 'rejected'),
+)
 
 export default requestsSlice.reducer

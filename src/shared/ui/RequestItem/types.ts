@@ -5,4 +5,5 @@ export type RequestItemProps = {
   date?: string
   onAccept?: (id: string) => void
   onReject?: (id: string) => void
+  onClick?: (id: string) => void
 }

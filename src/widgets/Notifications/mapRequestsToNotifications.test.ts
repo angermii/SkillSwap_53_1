@@ -28,4 +28,37 @@ describe('mapRequestsToNotifications', () => {
 
     expect(notification.date).toBeTruthy()
   })
+  it('считает уведомление непрочитанным, если флаг не задан', () => {
+    const request: SwapRequest = {
+      id: 'request-2',
+      skillId: 'skill-2',
+      fromUserId: 'user-1',
+      toUserId: 'user-2',
+      status: 'pending',
+      createdAt: '2026-01-01T00:00:00.000Z',
+      updatedAt: '2026-01-01T00:00:00.000Z',
+    }
+
+    expect(mapRequestsToNotifications([request])[0].status).toBe('unread')
+  })
+
+  it('помечает уведомление как прочитанное', () => {
+    const request: SwapRequest = {
+      id: 'request-3',
+      skillId: 'skill-3',
+      fromUserId: 'user-1',
+      toUserId: 'user-2',
+      status: 'pending',
+      isNotificationRead: true,
+      isNotificationDismissed: false,
+      createdAt: '2026-01-01T00:00:00.000Z',
+      updatedAt: '2026-01-01T00:00:00.000Z',
+    }
+
+    expect(mapRequestsToNotifications([request])[0].status).toBe('read')
+  })
+
+  it('возвращает пустой массив для пустого списка заявок', () => {
+    expect(mapRequestsToNotifications([])).toEqual([])
+  })
 })
