@@ -8,11 +8,12 @@ import {
 } from '@/api/skills'
 import type { Skill, SkillCategory, SkillSubcategory } from './types'
 
-export type SkillRequestKey = 'skills' | 'selectedSkill' | 'categories' | 'subcategories'
+export type SkillRequestKey = 'skills' | 'selectedSkill' | 'categories' | 'subcategories' | 'userSkills'
 
 // храним списочные результаты и отдельно выбранный навык
 export interface SkillState {
   skills: Skill[]
+  userSkills: Skill[]
   selectedSkill: Skill | null
   categories: SkillCategory[]
   subcategories: SkillSubcategory[]
@@ -23,17 +24,20 @@ export interface SkillState {
 // состояние slice до выполнения первого запроса
 const initialState: SkillState = {
   skills: [],
+  userSkills: [],
   selectedSkill: null,
   categories: [],
   subcategories: [],
   loading: {
     skills: false,
+    userSkills: false,
     selectedSkill: false,
     categories: false,
     subcategories: false,
   },
   error: {
     skills: null,
+    userSkills: null,
     selectedSkill: null,
     categories: null,
     subcategories: null,
@@ -119,14 +123,14 @@ const skillSlice = createSlice({
     // обрабатываем загрузку навыков конкретного пользователя
     builder
       .addCase(fetchSkillByUserId.pending, (state) => {
-        startRequest(state, 'skills')
+        startRequest(state, 'userSkills')
       })
       .addCase(fetchSkillByUserId.fulfilled, (state, action) => {
-        state.loading.skills = false
-        state.skills = action.payload
+        state.loading.userSkills = false
+        state.userSkills = action.payload
       })
       .addCase(fetchSkillByUserId.rejected, (state, action) => {
-        failRequest(state, 'skills', action.error, 'Не удалось загрузить навыки пользователя')
+        failRequest(state, 'userSkills', action.error, 'Не удалось загрузить навыки пользователя')
       })
 
     // обрабатываем загрузку категорий

@@ -1,17 +1,25 @@
 .footer {
   display: flex;
-  flex-direction: row;
+  justify-content: center;
   background-color: #fff;
-  padding: 0 36px;
   width: 100%;
   height: 232px;
-  gap: 189px;
+}
+
+.inner {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 1440px;
+  width: 100%;
+  padding: 32px 36px;  
+  box-sizing: border-box;
 }
 
 .leftSection {
   display: flex;
   flex-direction: column;
-  padding-top: 32px;
   gap: 112px;
 }
 
@@ -33,8 +41,7 @@
   flex-direction: column;
   gap: 12px;
   width: 324px;
-  height: 60px;
-  padding-top: 92px;
+  padding-top: 60px;
 }
 
 .link {

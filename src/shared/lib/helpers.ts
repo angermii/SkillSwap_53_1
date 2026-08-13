@@ -19,3 +19,10 @@ export function truncate(str: string, maxLength: number): string {
 export function generateId(): string {
   return crypto.randomUUID()
 }
+
+/** Безопасно парсит дату из строки; возвращает undefined, если строка пуста или дата некорректна */
+export function parseSafeDate(value?: string): Date | undefined {
+  if (!value) return undefined
+  const date = new Date(value)
+  return Number.isNaN(date.getTime()) ? undefined : date
+}

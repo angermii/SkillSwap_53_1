@@ -1,6 +1,7 @@
 import { GalleryCarousel } from '@/widgets/GalleryCarousel'
 import type { GalleryCarouselProps } from '@/widgets'
-import { SkillInfo, LikeButton, IconButton, ShareIcon, MoreIcon } from '@/shared/ui'
+import { SkillInfo, IconButton, ShareIcon, MoreIcon } from '@/shared/ui'
+import { LikeButton } from '@/shared/ui/likeButton/likeButton'
 import type { ReactNode } from 'react'
 import styles from './UserSkillWidget.module.css'
 import clsx from 'clsx'

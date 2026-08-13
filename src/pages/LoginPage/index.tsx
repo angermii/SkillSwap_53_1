@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { useEffect, useMemo, useState } from 'react'
 
 import { LightBulbIllustration } from '@/shared/illustrations'
-import { Onboarding, ModalUI, Button, StepIndicator } from '@/shared/ui'
+import { Onboarding, ModalUI, Button, StepIndicator, EditIcon } from '@/shared/ui'
 import { RegistrationForm, UserSkillWidget, AuthForm } from '@/widgets'
 import type { RegistrationFormData, RegistrationFormErrors } from '@/widgets'
 import { RegistrationTextField } from '@/widgets/RegistrationForm/type'
@@ -10,18 +10,19 @@ import { RegistrationTextField } from '@/widgets/RegistrationForm/type'
 import styles from './LoginPage.module.css'
 import { ROUTES } from '@/shared/lib/constants'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { login } from '@/features/auth'
+import { login, register, findRegisteredUser } from '@/features/auth'
 
 import { fetchSkillCategories, fetchSkillSubcategories } from '@/entities/skill/model/skillSlice'
 import { selectSkillCategories, selectSkillSubcategories } from '@/entities/skill/model/selectors'
 import { fetchUsers } from '@/entities/user/model/userSlice'
+import { selectCityOptions } from '@/entities/user/model/selectors'
 
-import {
-  required,
-  selectRequired
-} from '@/shared/lib/validators'
+import { required, selectRequired } from '@/shared/lib/validators'
 
 type RegistrationStep = 1 | 2 | 3
+
+const LOGIN_ERROR_MESSAGE =
+  'Email или пароль введён неверно. Пожалуйста проверьте правильность введённых данных'
 
 const initialRegistrationData: RegistrationFormData = {
   name: '',
@@ -45,24 +46,9 @@ const genderOptions = [
   },
   {
     name: 'Женский',
-    value: 'female'
-  }
+    value: 'female',
+  },
 ]
-
-const formatDate = (value: Date | undefined): string => {
-  if (!value) {
-    return ''
-  }
-
-  const day = String(value.getDate()).padStart(2, '0')
-  const month = String(value.getMonth() + 1).padStart(2, '0')
-  const year = value.getFullYear()
-
-  return `${day}.${month}.${year}`
-}
-
-const isValidGender = (value: string): value is 'male' | 'female' =>
-  value === 'male' || value === 'female'
 
 export default function LoginPage() {
   const dispatch = useAppDispatch()
@@ -73,7 +59,9 @@ export default function LoginPage() {
 
   const skillCategories = useAppSelector(selectSkillCategories)
   const skillSubCategories = useAppSelector(selectSkillSubcategories)
-  const users = useAppSelector((state) => state.user.items)
+
+  // города для выпадающего списка приходят из общего селектора (маппинг + "Другое")
+  const cityOptions = useAppSelector(selectCityOptions)
 
   const [registrationStep, setRegistrationStep] = useState<RegistrationStep>(1)
   const [registrationData, setRegistrationData] =
@@ -100,10 +88,7 @@ export default function LoginPage() {
   const learningSubcategoryOptions = useMemo(
     () =>
       skillSubCategories
-        .filter(
-          (subcategory) =>
-            subcategory.categoryId === registrationData.learningCategory,
-        )
+        .filter((subcategory) => subcategory.categoryId === registrationData.learningCategory)
         .map((subcategory) => ({
           name: subcategory.title,
           value: subcategory.id,
@@ -114,26 +99,12 @@ export default function LoginPage() {
   const skillSubcategoryOptions = useMemo(
     () =>
       skillSubCategories
-        .filter(
-          (subcategory) =>
-            subcategory.categoryId === registrationData.skillCategory,
-        )
+        .filter((subcategory) => subcategory.categoryId === registrationData.skillCategory)
         .map((subcategory) => ({
           name: subcategory.title,
           value: subcategory.id,
         })),
     [skillSubCategories, registrationData.skillCategory],
-  )
-
-  const cityOptions = useMemo(
-    () =>
-      Array.from(new Set(users.map((user) => user.city)))
-        .filter(Boolean)
-        .map((city) => ({
-          name: city,
-          value: city,
-        })),
-    [users],
   )
 
   useEffect(() => {
@@ -146,24 +117,23 @@ export default function LoginPage() {
     dispatch(fetchUsers())
   }, [dispatch, isRegister])
 
-  const handleLogin = (data: { email: string; password: string }) => {
-    dispatch(
-      login({
-        id: data.email,
-        name: data.email.split('@')[0],
-        email: data.email,
-        avatarUrl: null,
-        gender: 'male',
-        birthDate: '',
-        city: '',
-        description: '',
-      }),
-    )
+  const [loginError, setLoginError] = useState<string | null>(null)
 
+  const handleLogin = (data: { email: string; password: string }) => {
+    const registeredUser = findRegisteredUser(data.email, data.password)
+
+    if (!registeredUser) {
+      setLoginError(LOGIN_ERROR_MESSAGE)
+      return
+    }
+
+    dispatch(login(registeredUser.profile))
     navigate(ROUTES.HOME)
   }
 
   const handleAuthSubmit = (data: { email: string; password: string }) => {
+    setLoginError(null)
+
     if (!isRegister) {
       handleLogin(data)
       return
@@ -185,10 +155,7 @@ export default function LoginPage() {
     })
   }
 
-  const handleFieldChange = (
-    field: RegistrationTextField,
-    value: string,
-  ) => {
+  const handleFieldChange = (field: RegistrationTextField, value: string) => {
     setRegistrationData((prev) => ({
       ...prev,
       [field]: value,
@@ -197,18 +164,6 @@ export default function LoginPage() {
     setRegistrationErrors((prev) => ({
       ...prev,
       [field]: undefined,
-    }))
-  }
-
-  const handleBirthDateChange = (date: Date | undefined) => {
-    setRegistrationData((prev) => ({
-      ...prev,
-      birthDate: date,
-    }))
-
-    setRegistrationErrors((prev) => ({
-      ...prev,
-      birthDate: undefined,
     }))
   }
 
@@ -253,7 +208,7 @@ export default function LoginPage() {
 
     if (registrationStep === 2) {
       const nameError = required(registrationData.name)
-      const birthDateError = registrationData.birthDate ? null : "Поле обязательно для заполнения"
+      const birthDateError = registrationData.birthDate ? null : 'Поле обязательно для заполнения'
       const genderError = selectRequired(registrationData.gender)
       const cityError = selectRequired(registrationData.city)
       const learningCategoryError = selectRequired(registrationData.learningCategory)
@@ -269,7 +224,7 @@ export default function LoginPage() {
 
       if (genderError) {
         errors.gender = genderError
-      } 
+      }
 
       if (cityError) {
         errors.city = cityError
@@ -317,7 +272,7 @@ export default function LoginPage() {
     if (hasErrors) {
       return
     }
-    
+
     if (registrationStep === 2) {
       setRegistrationStep(3)
       return
@@ -343,15 +298,29 @@ export default function LoginPage() {
 
   const handleFinishRegistration = () => {
     dispatch(
-      login({
-        id: registrationCredentials.email,
-        name: registrationData.name,
-        email: registrationCredentials.email,
-        avatarUrl: registrationData.avatarUrl,
-        gender: getGender(registrationData.gender),
-        birthDate: formatDate(registrationData.birthDate),
-        city: registrationData.city,
-        description: registrationData.skillDescription
+      register({
+        password: registrationCredentials.password,
+        profile: {
+          id: registrationCredentials.email,
+          name: registrationData.name,
+          email: registrationCredentials.email,
+          avatarUrl: registrationData.avatarUrl,
+          gender: getGender(registrationData.gender),
+          birthDate: registrationData.birthDate ? registrationData.birthDate.toISOString() : '',
+          city: registrationData.city,
+          description: registrationData.skillDescription,
+          skill: {
+            id: crypto.randomUUID(),
+            title: registrationData.skillName,
+            description: registrationData.skillDescription,
+            type: 'teach',
+            subcategoryId: registrationData.skillSubcategory,
+            imageUrl: galleryImages.map((image) => image.src),
+            authorId: registrationCredentials.email,
+            createdAt: new Date().toISOString(),
+            likeCount: 0,
+          },
+        },
       }),
     )
 
@@ -369,10 +338,22 @@ export default function LoginPage() {
     [registrationData.skillImages],
   )
 
+  const categoryTitle = useMemo(() => {
+    const category = skillCategories.find((c) => c.id === registrationData.skillCategory)
+    return category?.title || ''
+  }, [skillCategories, registrationData.skillCategory])
+
+  const subcategoryTitle = useMemo(() => {
+    const subcategory = skillSubCategories.find((s) => s.id === registrationData.skillSubcategory)
+    return subcategory?.title || ''
+  }, [skillSubCategories, registrationData.skillSubcategory])
+
   const userSkill = {
     title: registrationData.skillName || 'Мой навык',
     subtitle:
-      registrationData.skillSubcategory || registrationData.skillCategory || 'Навык пользователя',
+      categoryTitle && subcategoryTitle
+        ? `${categoryTitle} / ${subcategoryTitle}`
+        : subcategoryTitle || categoryTitle || 'Категория навыка',
     description: registrationData.skillDescription || 'Описание навыка пока не заполнено',
   }
 
@@ -388,6 +369,7 @@ export default function LoginPage() {
             variant={isRegister ? 'register' : 'login'}
             onSubmit={handleAuthSubmit}
             onLinkClick={!isRegister ? handleRegisterClick : undefined}
+            submitError={!isRegister ? loginError : null}
           />
         ) : (
           <RegistrationForm
@@ -403,12 +385,12 @@ export default function LoginPage() {
             onBirthDateChange={(date) => {
               setRegistrationData((prev) => ({
                 ...prev,
-                birthDate: date
+                birthDate: date,
               }))
 
               setRegistrationErrors((prev) => ({
                 ...prev,
-                birthDate: undefined
+                birthDate: undefined,
               }))
             }}
             onAvatarChange={handleAvatarChange}
@@ -430,26 +412,17 @@ export default function LoginPage() {
       </div>
 
       {isModalOpen && (
-        <ModalUI 
-          title="Ваше предложение" 
-          description="Пожалуйста, проверьте и подтвердите правильность данных"
-          onClose={() => setIsModalOpen(false)} 
-          size="large"
-          >
+        <ModalUI onClose={() => setIsModalOpen(false)} size="large">
           <UserSkillWidget
             className={styles.registrationSkill}
-            // header={{
-            //   title: registrationData.name || 'Пользователь',
-            //   subtitle: registrationData.city || 'Город не указан',
-            // }}
-            // like={{
-            //   count: 0,
-            //   isLiked: false,
-            // }}
+            header={{
+              title: 'Ваше предложение',
+              subtitle: 'Пожалуйста, проверьте и подтвердите правильность данных',
+            }}
             skill={userSkill}
             gallery={{
               images: galleryImages,
-              maxThumbnails: 3
+              maxThumbnails: 3,
             }}
             actions={
               <div className={styles.registrationActions}>
@@ -457,15 +430,12 @@ export default function LoginPage() {
                   type="button"
                   variant="secondary"
                   onClick={handleEditRegistration}
+                  endIcon={<EditIcon />}
                 >
                   Редактировать
                 </Button>
 
-                <Button
-                  type="button"
-                  variant="primary"
-                  onClick={handleFinishRegistration}
-                >
+                <Button type="button" variant="primary" onClick={handleFinishRegistration}>
                   Готово
                 </Button>
               </div>

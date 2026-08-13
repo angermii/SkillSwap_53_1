@@ -1,14 +1,18 @@
-import { useMemo, useState, useRef } from 'react'
+import { useEffect, useMemo, useState, useRef } from 'react'
 import type { ChangeEvent } from 'react'
-
+import { parseSafeDate } from '@/shared/lib/helpers'
 import { updateUser } from '@/features/auth'
+import { fetchUsers } from '@/entities/user/model/userSlice'
+import { selectCityOptions } from '@/entities/user/model/selectors'
 import { BulbIcon, HeartIcon, MessageTextIcon, RequestIcon, UserIcon } from '@/shared/ui/icons'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { Footer, UserDashboard, FavoritesWidget } from '@/widgets'
+import { UserDashboard, FavoritesWidget, Requests, ProfileSkills, ExchangesWidget } from '@/widgets'
+
 import type { UserData, UserEditableField } from '@/widgets'
+
 import { Sidebar } from '@/widgets/Sidebar'
 import type { SidebarItem } from '@/widgets/Sidebar'
-import styles from './ProfilePage.module.css'
+
 import type { ProfileTab } from './type'
 import {
   validateAvatarFile,
@@ -18,24 +22,19 @@ import {
   email,
   selectRequired,
 } from '@/shared/lib/validators'
+import styles from './ProfilePage.module.css'
 
 const GENDER_OPTIONS = [
   { name: 'Мужской', value: 'male' },
   { name: 'Женский', value: 'female' },
 ]
 
-const CITY_OPTIONS = [
-  { name: 'Москва', value: 'Москва' },
-  { name: 'Санкт-Петербург', value: 'Санкт-Петербург' },
-  { name: 'Новосибирск', value: 'Новосибирск' },
-  { name: 'Екатеринбург', value: 'Екатеринбург' },
-  { name: 'Казань', value: 'Казань' },
-  { name: 'Нижний Новгород', value: 'Нижний Новгород' },
-]
-
 export default function ProfilePage() {
   const dispatch = useAppDispatch()
   const authUser = useAppSelector((state) => state.auth.user)
+
+  // города для выпадающего списка приходят из общего селектора (маппинг + "Другое")
+  const cityOptions = useAppSelector(selectCityOptions)
 
   // cсылка позволяет открыть системное окно выбора файла по кнопке редактирования
   const avatarInputRef = useRef<HTMLInputElement>(null)
@@ -53,12 +52,28 @@ export default function ProfilePage() {
   const [formData, setFormData] = useState<UserData>({
     email: authUser?.email ?? '',
     name: authUser?.name ?? '',
-    birthDate: authUser?.birthDate ? new Date(authUser.birthDate) : undefined,
+    birthDate: parseSafeDate(authUser?.birthDate),
     gender: authUser?.gender ?? '',
     city: authUser?.city ?? '',
     about: authUser?.description ?? '',
     avatarUrl: authUser?.avatarUrl ?? '',
   })
+
+  // список городов строится из пользователей, поэтому их нужно загрузить
+  useEffect(() => {
+    void dispatch(fetchUsers())
+  }, [dispatch])
+
+  // города пользователя может не быть в списке (он сохранён как "Другое")
+  const cityOptionsWithCurrent = useMemo(() => {
+    const currentCity = formData.city
+
+    if (!currentCity || cityOptions.some((option) => option.value === currentCity)) {
+      return cityOptions
+    }
+
+    return [{ name: currentCity, value: currentCity }, ...cityOptions]
+  }, [cityOptions, formData.city])
 
   const handleFieldChange = (field: UserEditableField, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }))
@@ -156,17 +171,44 @@ export default function ProfilePage() {
 
   const sidebarItems: SidebarItem<ProfileTab>[] = useMemo(
     () => [
-      { id: 'requests', label: 'Заявки', icon: <RequestIcon /> },
-      { id: 'exchanges', label: 'Мои обмены', icon: <MessageTextIcon /> },
-      { id: 'favorites', label: 'Избранное', icon: <HeartIcon /> },
-      { id: 'skills', label: 'Мои навыки', icon: <BulbIcon /> },
-      { id: 'profile', label: 'Личные данные', icon: <UserIcon /> },
+      {
+        id: 'requests',
+        label: 'Заявки',
+        icon: <RequestIcon />,
+      },
+      {
+        id: 'exchanges',
+        label: 'Мои обмены',
+        icon: <MessageTextIcon />,
+      },
+      {
+        id: 'favorites',
+        label: 'Избранное',
+        icon: <HeartIcon />,
+      },
+      {
+        id: 'skills',
+        label: 'Мои навыки',
+        icon: <BulbIcon />,
+      },
+      {
+        id: 'profile',
+        label: 'Личные данные',
+        icon: <UserIcon />,
+      },
     ],
     [],
   )
 
   const renderTabContent = () => {
     switch (activeTab) {
+      case 'requests':
+        return (
+          <div className={styles.widget}>
+            <Requests />
+          </div>
+        )
+
       case 'profile':
         return (
           <>
@@ -175,12 +217,12 @@ export default function ProfilePage() {
               errors={formErrors}
               avatarError={avatarError}
               genderOptions={GENDER_OPTIONS}
-              cityOptions={CITY_OPTIONS}
+              cityOptions={cityOptionsWithCurrent}
               onFieldChange={handleFieldChange}
               onBirthDateChange={handleBirthDateChange}
               onNewAvatarClick={handleNewAvatarClick}
               onChangePassword={() => {
-                // TODO: модалка смены пароля, отдельная задача
+                // TODO: модалка смены пароля
               }}
               onSave={handleSave}
             />
@@ -194,9 +236,28 @@ export default function ProfilePage() {
             />
           </>
         )
+
+      case 'exchanges':
+        return (
+          <div className={styles.widget}>
+            <ExchangesWidget />
+          </div>
+        )
+
       case 'favorites':
-        return <FavoritesWidget />
-      // TODO: заменить заглушки на виджеты вкладок, когда они будут готовы
+        return (
+          <div className={styles.widget}>
+            <FavoritesWidget />
+          </div>
+        )
+
+      case 'skills':
+        return (
+          <div className={styles.widget}>
+            <ProfileSkills />
+          </div>
+        )
+
       default:
         return <p>Раздел в разработке</p>
     }
@@ -209,8 +270,6 @@ export default function ProfilePage() {
 
         <div className={styles.content}>{renderTabContent()}</div>
       </main>
-
-      <Footer />
     </div>
   )
 }

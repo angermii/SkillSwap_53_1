@@ -1,0 +1,26 @@
+.Widget {
+  width: 100%;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: center;
+}
+
+.Title {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.Exchanges {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  overflow-y: auto;
+}
+
+.None {
+  color: var(--color-text-disabled);
+}

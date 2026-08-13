@@ -5,6 +5,8 @@ import clsx from 'clsx'
 import type { CalendarProps } from './type'
 import styles from './Calendar.module.css'
 
+const isValidDate = (date?: Date): date is Date => !!date && !Number.isNaN(date.getTime())
+
 export const Calendar = ({
   selected,
   onSelect,
@@ -13,12 +15,14 @@ export const Calendar = ({
   toYear = new Date().getFullYear(),
   className,
 }: CalendarProps) => {
+  const safeSelected = isValidDate(selected) ? selected : undefined
+  const safeDefaultMonth = isValidDate(defaultMonth) ? defaultMonth : (safeSelected ?? new Date())
   return (
     <DayPicker
    mode="single"
-   selected={selected}
+   selected={safeSelected}
    onSelect={onSelect}
-   defaultMonth={defaultMonth ?? selected ?? new Date()}
+   defaultMonth={safeDefaultMonth}
    startMonth={new Date(fromYear, 0)}
    endMonth={new Date(toYear, 11)}
    locale={ru}
