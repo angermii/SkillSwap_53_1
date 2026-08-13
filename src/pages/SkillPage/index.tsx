@@ -67,7 +67,12 @@ export default function SkillPage() {
     if (id) {
       void dispatch(fetchSkillById(id))
         .unwrap()
-        .catch((error) => {
+        .then((fetchedSkill) => {
+          if (!fetchedSkill) {
+            navigate('/404', { replace: true })
+          }
+        })
+        .catch(() => {
           navigate('/404', { replace: true })
         })
     }
