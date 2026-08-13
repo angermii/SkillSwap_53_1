@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 
-import { Button, CardTags, LikeButton, UserInfo } from '@/shared/ui'
+import { Button, CardTags, UserInfo } from '@/shared/ui'
+import { LikeButton } from '@/shared/ui/likeButton/likeButton'
 import type { UserCardProps } from './type'
 import styles from './UserCard.module.css'
 
