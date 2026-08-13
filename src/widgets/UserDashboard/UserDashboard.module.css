@@ -74,11 +74,3 @@
 .fieldGroup {
   width: 100%;
 }
-
-.fieldError {
-  display: block;
-  margin-top: 4px;
-  color: var(--color-error);
-  font-size: var(--font-size-caption);
-  line-height: var(--line-height-caption);
-}

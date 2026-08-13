@@ -3,6 +3,7 @@ interface BaseEditableFieldProps {
   value?: string
   defaultValue?: string
   disabled?: boolean
+  error?: string
   isEditing?: boolean
   onEditingChange?: (isEditing: boolean) => void
   onChange?: (value: string) => void

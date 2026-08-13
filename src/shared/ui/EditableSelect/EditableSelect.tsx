@@ -11,6 +11,7 @@ export const EditableSelect = ({
   label,
   value,
   defaultValue = '',
+  error,
   options = [],
   placeholder = 'Не выбрано',
   editable = true,
@@ -65,15 +66,18 @@ export const EditableSelect = ({
 
   if (editing) {
     return (
-      <div ref={selectWrapperRef} className={clsx(styles.root, className)}>
-        <Select
-          label={label}
-          value={currentValue}
-          placeholder={placeholder}
-          options={options}
-          onChange={handleChange}
-          className={clsx(styles.select, className)}
-        />
+      <div className={clsx(styles.root, className)}>
+        <div ref={selectWrapperRef} className={styles.editWrapper}>
+          <Select
+            label={label}
+            value={currentValue}
+            placeholder={placeholder}
+            options={options}
+            onChange={handleChange}
+            className={clsx(styles.select, error && styles.selectError, className)}
+          />
+        </div>
+        {error && <span className={styles.errorText}>{error}</span>}
       </div>
     )
   }
@@ -83,7 +87,7 @@ export const EditableSelect = ({
     <div className={clsx(styles.root, className)}>
       {label && <p className={styles.label}>{label}</p>}
 
-      <div className={styles.wrapper}>
+      <div className={clsx(styles.wrapper, error && styles.error)}>
         <span className={clsx(styles.value, !currentName && styles.placeholder)}>
           {currentName || placeholder}
         </span>
@@ -99,6 +103,7 @@ export const EditableSelect = ({
           <ChevronDownIcon className={styles.icon} aria-hidden="true" />
         )}
       </div>
+      {error && <span className={styles.errorText}>{error}</span>}
     </div>
   )
 }

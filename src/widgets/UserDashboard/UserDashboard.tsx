@@ -34,12 +34,8 @@ export const UserDashboard = ({
             value={data.email}
             onSave={(value) => onFieldChange('email', value)}
             editLabel="Изменить почту"
+            error={errors?.email}
           />
-          {errors?.email && (
-            <span className={styles.fieldError} role="alert">
-              {errors.email}
-            </span>
-          )}
 
           <button type="button" className={styles.passwordButton} onClick={onChangePassword}>
             Изменить пароль
@@ -51,12 +47,8 @@ export const UserDashboard = ({
           value={data.name}
           onSave={(value) => onFieldChange('name', value)}
           editLabel="Изменить имя"
+          error={errors?.name}
         />
-        {errors?.name && (
-          <span className={styles.fieldError} role="alert">
-            {errors.name}
-          </span>
-        )}
 
         <div className={styles.fieldsRow}>
           <div className={styles.fieldGroup}>
@@ -65,12 +57,8 @@ export const UserDashboard = ({
               value={data.birthDate}
               onChange={onBirthDateChange}
               className={styles.datePicker}
+              error={errors?.birthDate}
             />
-            {errors?.birthDate && (
-              <span className={styles.fieldError} role="alert">
-                {errors.birthDate}
-              </span>
-            )}
           </div>
 
           <div className={styles.fieldGroup}>
@@ -82,12 +70,8 @@ export const UserDashboard = ({
               options={genderOptions}
               onChange={(value) => onFieldChange('gender', value)}
               editLabel="Изменить пол, недоступно"
+              error={errors?.gender}
             />
-            {errors?.gender && (
-              <span className={styles.fieldError} role="alert">
-                {errors.gender}
-              </span>
-            )}
           </div>
         </div>
 
@@ -98,12 +82,8 @@ export const UserDashboard = ({
           options={cityOptions}
           onChange={(value) => onFieldChange('city', value)}
           editLabel="Изменить город"
+          error={errors?.city}
         />
-        {errors?.city && (
-          <span className={styles.fieldError} role="alert">
-            {errors.city}
-          </span>
-        )}
 
         <EditableField
           multiline
@@ -113,12 +93,8 @@ export const UserDashboard = ({
           onSave={(value) => onFieldChange('about', value)}
           editLabel="Изменить описание"
           wrapperClassName={styles.about}
+          error={errors?.about}
         />
-        {errors?.about && (
-          <span className={styles.fieldError} role="alert">
-            {errors.about}
-          </span>
-        )}
 
         <Button
           type="submit"
