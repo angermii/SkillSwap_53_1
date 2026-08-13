@@ -1,7 +1,13 @@
-import { groupSkillsByAuthor, mapUserToCardData, UserCard, UserSkillWidget } from '@/widgets'
+import {
+  groupSkillsByAuthor,
+  mapUserToCardData,
+  SimilarOffers,
+  UserCard,
+  UserSkillWidget,
+} from '@/widgets'
 import { generatePath, useNavigate, useParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '@/store/hooks.ts'
-import { useEffect, useMemo, useState } from 'react'
+import { ReactNode, useEffect, useMemo, useState } from 'react'
 import Styles from './SkillPage.module.css'
 import {
   fetchSkill,
@@ -21,6 +27,7 @@ import {
 import { ROUTES } from '@/shared/lib/constants.ts'
 import { createRequest, selectOutgoingRequestBySkill } from '@/entities/request/requestsSlice.ts'
 import { toGalleryImages } from '@/widgets/GalleryCarousel'
+import { useLike } from '@/features/favorites/model/useLike'
 
 export default function SkillPage() {
   //находим навык по url
@@ -44,12 +51,11 @@ export default function SkillPage() {
   )
   const users = useAppSelector((state) => state.user.items)
   const skills = useAppSelector(selectSkills)
+
+  // лайки
   const { likedState, likeCounts, handleLike, isRegistrationModalOpen, closeRegistrationModal } =
     useLike({ skills })
-  const subcategoriesById = useAppSelector(selectSkillSubcategoriesById)
-  const isLoading = useAppSelector(selectSelectedSkillLoading)
-  const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
-  const [isRequested, setIsRequested] = useState<boolean>(false)
+
   const subcategoriesById = useAppSelector(selectSkillSubcategoriesById)
   const isLoading = useAppSelector(selectSelectedSkillLoading)
 
@@ -94,31 +100,58 @@ export default function SkillPage() {
   }, [dispatch, userId])
 
   //похожие предложения собираются по подкатегориям навыков
-  const similarUsersCards = useMemo(() => {
-    if (!subcategory?.id || !skills.length || !users.length) return []
+  const similarOffers = useMemo(() => {
+    if (!category?.id || !skills.length || !users.length) return []
 
     const skillsByAuthor = groupSkillsByAuthor(skills)
-    const filteredAuthors = Array.from(skillsByAuthor.entries()).filter(
-      ([authorId, authorSkills]) => {
-        if (authorId === userId) return false
-        return authorSkills.some((s) => s.type === 'teach' && s.subcategoryId === subcategory.id)
-      },
-    )
 
-    return filteredAuthors
+    return Array.from(skillsByAuthor.entries())
+      .filter(([authorId, authorSkills]) => {
+        // Не показываем самого автора текущего навыка
+        if (authorId === userId) {
+          return false
+        }
+
+        return authorSkills.some((item) => {
+          if (item.type !== 'teach') {
+            return false
+          }
+
+          const itemSubcategory = subcategoriesById.get(item.subcategoryId)
+
+          return itemSubcategory?.categoryId === category.id
+        })
+      })
       .map(([authorId, authorSkills]) => {
-        const currentAuthorData = users.find((u) => u.id === authorId)
+        const author = users.find((user) => user.id === authorId)
 
-        if (!currentAuthorData) return null
+        if (!author) {
+          return null
+        }
 
-        return mapUserToCardData({
-          user: currentAuthorData,
+        const cardData = mapUserToCardData({
+          user: author,
           skills: authorSkills,
           subcategoriesById,
         })
+
+        const skillId = cardData.teachTags[0]?.id
+
+        if (!skillId) {
+          return null
+        }
+
+        const skill = skills.find((item) => item.id === skillId)
+
+        return {
+          skillId,
+          user: cardData,
+          isLiked: likedState[skillId] ?? false,
+          likeCount: likeCounts[skillId] ?? skill?.likeCount ?? 0,
+        }
       })
-      .filter((userCard): userCard is NonNullable<typeof userCard> => userCard !== null)
-  }, [skills, subcategory?.id, users, subcategoriesById, userId])
+      .filter((offer): offer is NonNullable<typeof offer> => offer !== null)
+  }, [category?.id, skills, users, userId, subcategoriesById, likedState, likeCounts])
 
   const galleryImages = useMemo(
     () => toGalleryImages(skill?.imageUrl, { idPrefix: skill?.id, altPrefix: skill?.title }),
@@ -162,6 +195,20 @@ export default function SkillPage() {
     subcategoriesById,
   })
 
+  const ModalActionButton = ({
+    children,
+    onClick,
+  }: {
+    children: ReactNode
+    onClick: () => void
+  }) => (
+    <div className={Styles.ModalActions}>
+      <Button className={Styles.ModalButton} type="button" onClick={onClick}>
+        {children}
+      </Button>
+    </div>
+  )
+
   return (
     <main className={Styles.Main}>
       {isOpenModal && (
@@ -170,16 +217,9 @@ export default function SkillPage() {
           description={'Теперь дождитесь подтверждения. Вам придёт уведомление'}
           icon={<NotificationIcon size={100} />}
           onClose={() => setIsOpenModal(false)}
+          className={Styles.compactModal}
         >
-          <div className={Styles.ModalActions}>
-            <Button
-              className={Styles.ModalButton}
-              type="button"
-              onClick={() => setIsOpenModal(false)}
-            >
-              <span>Готово</span>
-            </Button>
-          </div>
+          <ModalActionButton onClick={() => setIsOpenModal(false)}>Готово</ModalActionButton>
         </ModalUI>
       )}
       {isAuthModalOpen && (
@@ -189,15 +229,9 @@ export default function SkillPage() {
           onClose={() => setIsAuthModalOpen(false)}
           className={Styles.AuthModal}
         >
-          <div className={Styles.ModalActions}>
-            <Button
-              className={Styles.ModalButton}
-              type="button"
-              onClick={() => navigate(ROUTES.REGISTER)}
-            >
-              <span>Зарегистрироваться</span>
-            </Button>
-          </div>
+          <ModalActionButton onClick={() => navigate(ROUTES.REGISTER)}>
+            Зарегистрироваться
+          </ModalActionButton>
         </ModalUI>
       )}
       {isRegistrationModalOpen && (
@@ -207,11 +241,9 @@ export default function SkillPage() {
           onClose={closeRegistrationModal}
           className={Styles.RegistrationModal}
         >
-          <div className={Styles.RegistrationButton}>
-            <Button type="button" onClick={() => navigate(ROUTES.REGISTER)}>
-              Зарегистрироваться
-            </Button>
-          </div>
+          <ModalActionButton onClick={() => navigate(ROUTES.REGISTER)}>
+            Зарегистрироваться
+          </ModalActionButton>
         </ModalUI>
       )}
       <div className={Styles.Skill}>
@@ -243,38 +275,13 @@ export default function SkillPage() {
         />
       </div>
       <div className={Styles.SimilarVariants}>
-        <h2>Похожие предложения</h2>
-
-        <div className={Styles.Cards}>
-          {similarUsersCards.length > 0 ? (
-            similarUsersCards.map((cardData) => {
-              // Берём ID навыка, который отображается в карточке.
-              const skillId = cardData.teachTags[0]?.id
-
-              // Если у карточки нет навыка, не рендерим её.
-              if (!skillId) {
-                return null
-              }
-
-              // Находим сам навык, чтобы получить исходный счётчик лайков.
-              const skill = skills.find((item) => item.id === skillId)
-
-              return (
-                <UserCard
-                  key={cardData.id}
-                  user={cardData}
-                  variant="compact"
-                  isLiked={likedState[skillId] ?? false}
-                  likeCount={likeCounts[skillId] ?? skill?.likeCount ?? 0}
-                  onDetailsClick={() => navigate(generatePath(ROUTES.SKILL, { id: skillId }))}
-                  onLikeChange={() => handleLike(skillId)}
-                />
-              )
-            })
-          ) : (
-            <p>Похожих предложений пока нет</p>
-          )}
-        </div>
+        <SimilarOffers
+          cards={similarOffers}
+          onDetailsClick={(skillId) => navigate(generatePath(ROUTES.SKILL, { id: skillId }))}
+          onLikeChange={(skillId) => {
+            handleLike(skillId)
+          }}
+        ></SimilarOffers>
       </div>
     </main>
   )
