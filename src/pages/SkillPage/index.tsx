@@ -174,6 +174,7 @@ export default function SkillPage() {
     dispatch(
       createRequest({
         skillId: skill.id,
+        skillTitle: skill.title,
         fromUserId: currentUser.id,
         toUserId: userId,
       }),

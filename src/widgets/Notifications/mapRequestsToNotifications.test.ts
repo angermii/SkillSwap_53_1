@@ -7,6 +7,7 @@ describe('mapRequestsToNotifications', () => {
     const request: SwapRequest = {
       id: 'request-1',
       skillId: 'skill-1',
+      skillTitle: 'Основы фотографии',
       fromUserId: 'user-1',
       toUserId: 'user-2',
       status: 'pending',
@@ -22,7 +23,7 @@ describe('mapRequestsToNotifications', () => {
     expect(notification).toMatchObject({
       id: 'request-1',
       title: 'Предложение обмена',
-      description: 'Навык: skill-1',
+      description: 'Навык: Основы фотографии',
       status: 'unread',
     })
 
@@ -39,7 +40,10 @@ describe('mapRequestsToNotifications', () => {
       updatedAt: '2026-01-01T00:00:00.000Z',
     }
 
-    expect(mapRequestsToNotifications([request])[0].status).toBe('unread')
+    expect(mapRequestsToNotifications([request])[0]).toMatchObject({
+      description: 'Навык: skill-2',
+      status: 'unread',
+    })
   })
 
   it('помечает уведомление как прочитанное', () => {

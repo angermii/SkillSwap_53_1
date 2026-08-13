@@ -41,6 +41,7 @@ export const requestsSlice = createSlice({
       state,
       action: PayloadAction<{
         skillId: string
+        skillTitle: string
         fromUserId: string
         toUserId: string
       }>,
@@ -51,6 +52,8 @@ export const requestsSlice = createSlice({
         id: crypto.randomUUID(),
 
         skillId: action.payload.skillId,
+
+        skillTitle: action.payload.skillTitle,
 
         fromUserId: action.payload.fromUserId,
 

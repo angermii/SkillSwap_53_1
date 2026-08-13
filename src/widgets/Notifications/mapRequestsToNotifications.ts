@@ -9,8 +9,7 @@ export const mapRequestsToNotifications = (
     id: request.id,
     title: 'Предложение обмена',
 
-    // Пока запрос содержит только id навыка
-    description: `Навык: ${request.skillId}`,
+    description: `Навык: ${request.skillTitle ?? request.skillId}`,
 
     date: formatDate(request.createdAt),
     status: request.isNotificationRead ? 'read' : 'unread',
