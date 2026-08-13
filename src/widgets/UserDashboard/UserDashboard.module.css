@@ -70,3 +70,7 @@
   line-height: var(--line-height-caption);
   text-align: center;
 }
+
+.fieldGroup {
+  width: 100%;
+}

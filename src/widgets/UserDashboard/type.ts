@@ -21,6 +21,7 @@ export type UserDashboardProps = {
   cityOptions: ProfileOption[]
   isSaveDisabled?: boolean
   avatarError?: string
+  errors?: Record<string, string | undefined>
   onFieldChange: (field: UserEditableField, value: string) => void
   onBirthDateChange: (date: Date | undefined) => void
   onNewAvatarClick: () => void
