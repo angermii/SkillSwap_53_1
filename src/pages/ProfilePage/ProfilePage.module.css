@@ -11,7 +11,7 @@
   width: 100%;
   max-width: 1440px;
   flex: 1;
-  padding: var(--space-xl) 36px 60px;
+  padding: var(--space-xl) 0 60px;
   margin: 0 auto;
 }
 
