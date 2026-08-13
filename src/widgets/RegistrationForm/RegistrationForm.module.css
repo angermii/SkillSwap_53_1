@@ -28,11 +28,11 @@
   width: 100%;
 }
 
-/* .learningSkills {
+.learningSkills {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-} */
+}
 
 .errorText {
   display: block;
