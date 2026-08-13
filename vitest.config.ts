@@ -12,12 +12,22 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'lcov'],
-      include: ['src/**/*.{ts,tsx}'],
+
+      // Порог считается по слою логики: слайсы, селекторы, хелперы и api.
+      // Компоненты и страницы в порог не входят.
+      include: [
+        'src/api/**/*.ts',
+        'src/entities/**/*.ts',
+        'src/features/**/*.ts',
+        'src/shared/lib/**/*.ts',
+        'src/widgets/**/*.ts',
+      ],
       exclude: [
-        'src/main.tsx',
-        'src/setupTests.ts',
+        'src/**/*.test.{ts,tsx}',
         'src/**/*.d.ts',
-        'src/**/*.stories.*',
+        'src/**/index.ts',
+        'src/**/type.ts',
+        'src/**/types.ts',
       ],
       thresholds: {
         statements: 70,

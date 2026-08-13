@@ -164,4 +164,31 @@ describe('userSlice', () => {
 
         expect(store.getState().user.error).toBe('Пользователь не найден')
     })
+
+    it('fetchUserById thunk throws when api returns no user', async () => {
+        vi.mocked(usersApi.fetchUserById).mockResolvedValue(undefined)
+
+        const store = createTestStore()
+
+        await store.dispatch(fetchUserById('unknown'))
+
+        expect(store.getState().user.user).toBeNull()
+        expect(store.getState().user.error).toBe('Пользователь не найден')
+    })
+
+    it('fetchUsers falls back to a default message when error has no message', () => {
+        const store = createTestStore()
+
+        store.dispatch({ type: fetchUsers.rejected.type, error: {} })
+
+        expect(store.getState().user.error).toBe('Не удалось загрузить пользователей')
+    })
+
+    it('fetchUserById falls back to a default message when error has no message', () => {
+        const store = createTestStore()
+
+        store.dispatch({ type: fetchUserById.rejected.type, error: {} })
+
+        expect(store.getState().user.error).toBe('Не удалось загрузить пользователя')
+    })
 })

@@ -196,4 +196,36 @@ describe('filterUsers', () => {
   it('uses initial filters for reset', () => {
     expect(getFilteredIds(createInitialFilters())).toHaveLength(4)
   })
+  it('excludes users without any skills when skill filters are active', () => {
+    const idsWithoutSkills = filterUsers({
+      users,
+      skills: [],
+      subcategories,
+      filters: { ...createInitialFilters(), skillType: 'teach' },
+    }).map((user) => user.id)
+
+    expect(idsWithoutSkills).toEqual([])
+  })
+
+  it('keeps users without skills when only gender and city filters are active', () => {
+    const ids = filterUsers({
+      users,
+      skills: [],
+      subcategories,
+      filters: { ...createInitialFilters(), cities: ['Москва'] },
+    }).map((user) => user.id)
+
+    expect(ids).toEqual(['user-1', 'user-4'])
+  })
+
+  it('ignores a skill whose subcategory is missing from the reference list', () => {
+    const ids = filterUsers({
+      users,
+      skills: [createSkill('skill-8', 'user-1', 'teach', 'unknown')],
+      subcategories,
+      filters: { ...createInitialFilters(), categoryIds: ['creativity'] },
+    }).map((user) => user.id)
+
+    expect(ids).toEqual([])
+  })
 })

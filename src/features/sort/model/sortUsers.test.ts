@@ -165,4 +165,20 @@ describe('sortUsers', () => {
       expect(mockUsers).toEqual(original)
     })
   })
+  describe('sortByPopularity: пользователи без лайков', () => {
+    test('считает лайки за 0, если пользователя нет в teachLikesMap', () => {
+      const teachLikesMap = new Map([['user-002', 3]])
+
+      const result = sortByPopularity(mockUsers, teachLikesMap)
+
+      expect(result[0].id).toBe('user-002')
+      expect(result.map((user) => user.id)).toHaveLength(3)
+    })
+
+    test('возвращает исходный порядок, если карта лайков пуста', () => {
+      const result = sortByPopularity(mockUsers, new Map())
+
+      expect(result.map((user) => user.id)).toEqual(['user-001', 'user-002', 'user-003'])
+    })
+  })
 })
