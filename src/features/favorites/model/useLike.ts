@@ -94,6 +94,7 @@ export const useLike = ({ skills }: UseLikeParams) => {
     likeCounts,
     handleLike,
     isRegistrationModalOpen,
+    setIsRegistrationModalOpen,
     closeRegistrationModal,
   }
 }

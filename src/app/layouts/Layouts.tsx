@@ -11,7 +11,7 @@ import { ROUTES } from '@/shared/lib/constants'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { Footer, Header } from '@/widgets'
 import { useEffect, useMemo, useState } from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate, useLocation } from 'react-router-dom'
 import {
   clearReadNotifications,
   readAllNotifications,
@@ -26,6 +26,7 @@ import Styles from './Layouts.module.css'
 export const MainLayout = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const location = useLocation()
 
   // проверяем залогинен ли юзер и вытаскиваем его
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated)
@@ -107,8 +108,8 @@ export const MainLayout = () => {
         readAll={handleReadAll}
         clearAll={handleClearAll}
         onNotificationClick={handleNotificationClick}
-        onLoginClick={() => navigate(ROUTES.LOGIN)}
-        onRegisterClick={() => navigate(ROUTES.REGISTER)}
+        onLoginClick={() => navigate(ROUTES.LOGIN, { state: { from: location } })}
+        onRegisterClick={() => navigate(ROUTES.REGISTER, { state: { from: location } })}
         onThemeClick={() => {}}
         onFavoritesClick={() => navigate(ROUTES.FAVORITES)}
         onLogout={handleLogout}
