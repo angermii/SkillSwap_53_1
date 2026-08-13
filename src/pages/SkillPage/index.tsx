@@ -113,9 +113,12 @@ export default function SkillPage() {
       const isAlreadyRequested = skill?.id === skillId ? isRequested : false
 
       if (!isAlreadyRequested) {
+        const skillTitle = skill?.title || ''
+
         dispatch(
           createRequest({
             skillId: skillId,
+            skillTitle: skillTitle,
             fromUserId: currentUser.id,
             toUserId: authorId,
           }),
@@ -126,7 +129,15 @@ export default function SkillPage() {
 
       setPendingRequestData(null)
     }
-  }, [pendingRequestData, isAuthenticated, currentUser, skill?.id, isRequested, dispatch])
+  }, [
+    pendingRequestData,
+    isAuthenticated,
+    currentUser,
+    skill?.id,
+    skill?.title,
+    isRequested,
+    dispatch,
+  ])
 
   useEffect(() => {
     if (id) {
