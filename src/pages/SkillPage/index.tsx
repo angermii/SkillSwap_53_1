@@ -19,7 +19,6 @@ import {
   selectSkillSubcategoryById,
 } from '@/entities/skill/model/selectors'
 import { ROUTES } from '@/shared/lib/constants.ts'
-import { toggleFavorite } from '@/features/favorites'
 import { createRequest, selectOutgoingRequestBySkill } from '@/entities/request/requestsSlice.ts'
 import { toGalleryImages } from '@/widgets/GalleryCarousel'
 
@@ -45,6 +44,12 @@ export default function SkillPage() {
   )
   const users = useAppSelector((state) => state.user.items)
   const skills = useAppSelector(selectSkills)
+  const { likedState, likeCounts, handleLike, isRegistrationModalOpen, closeRegistrationModal } =
+    useLike({ skills })
+  const subcategoriesById = useAppSelector(selectSkillSubcategoriesById)
+  const isLoading = useAppSelector(selectSelectedSkillLoading)
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
+  const [isRequested, setIsRequested] = useState<boolean>(false)
   const subcategoriesById = useAppSelector(selectSkillSubcategoriesById)
   const isLoading = useAppSelector(selectSelectedSkillLoading)
 
@@ -195,10 +200,28 @@ export default function SkillPage() {
           </div>
         </ModalUI>
       )}
+      {isRegistrationModalOpen && (
+        <ModalUI
+          title="Хотите поставить лайк?"
+          description="Зарегистрируйтесь, чтобы добавлять навыки в избранное"
+          onClose={closeRegistrationModal}
+          className={Styles.RegistrationModal}
+        >
+          <div className={Styles.RegistrationButton}>
+            <Button type="button" onClick={() => navigate(ROUTES.REGISTER)}>
+              Зарегистрироваться
+            </Button>
+          </div>
+        </ModalUI>
+      )}
       <div className={Styles.Skill}>
         <UserCard user={user} variant={'expanded'} />
         <UserSkillWidget
-          like={{ count: 10, isLiked: false }}
+          like={{
+            count: likeCounts[skill.id] ?? skill.likeCount,
+            isLiked: likedState[skill.id] ?? false,
+            onClick: () => handleLike(skill.id),
+          }}
           skill={{
             title: skill.title,
             subtitle: `${category.title} / ${subcategory.title}`,
@@ -221,19 +244,33 @@ export default function SkillPage() {
       </div>
       <div className={Styles.SimilarVariants}>
         <h2>Похожие предложения</h2>
+
         <div className={Styles.Cards}>
           {similarUsersCards.length > 0 ? (
-            similarUsersCards.map((cardData) => (
-              <UserCard
-                key={cardData?.id}
-                user={cardData}
-                variant={'compact'}
-                onDetailsClick={() =>
-                  navigate(generatePath(ROUTES.SKILL, { id: cardData?.teachTags[0]?.id }))
-                }
-                onLikeChange={() => dispatch(toggleFavorite(cardData?.teachTags[0]?.id))}
-              />
-            ))
+            similarUsersCards.map((cardData) => {
+              // Берём ID навыка, который отображается в карточке.
+              const skillId = cardData.teachTags[0]?.id
+
+              // Если у карточки нет навыка, не рендерим её.
+              if (!skillId) {
+                return null
+              }
+
+              // Находим сам навык, чтобы получить исходный счётчик лайков.
+              const skill = skills.find((item) => item.id === skillId)
+
+              return (
+                <UserCard
+                  key={cardData.id}
+                  user={cardData}
+                  variant="compact"
+                  isLiked={likedState[skillId] ?? false}
+                  likeCount={likeCounts[skillId] ?? skill?.likeCount ?? 0}
+                  onDetailsClick={() => navigate(generatePath(ROUTES.SKILL, { id: skillId }))}
+                  onLikeChange={() => handleLike(skillId)}
+                />
+              )
+            })
           ) : (
             <p>Похожих предложений пока нет</p>
           )}

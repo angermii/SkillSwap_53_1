@@ -36,6 +36,12 @@
   overflow-x: hidden;
 }
 
+.RegistrationButton {
+  display: flex;
+  justify-content: center;
+}
+
+.RegistrationModal {
 .ModalActions {
   display: flex;
   justify-content: center;
