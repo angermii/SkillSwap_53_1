@@ -5,7 +5,7 @@ import {
   UserCard,
   UserSkillWidget,
 } from '@/widgets'
-import { generatePath, useNavigate, useParams } from 'react-router-dom'
+import { generatePath, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '@/store/hooks.ts'
 import { ReactNode, useEffect, useMemo, useState } from 'react'
 import Styles from './SkillPage.module.css'
@@ -34,6 +34,7 @@ export default function SkillPage() {
   //находим навык по url
   const { id } = useParams()
   const navigate = useNavigate()
+  const location = useLocation()
   const dispatch = useAppDispatch()
   const skill = useAppSelector(selectSelectedSkill)
   //текущий залогиненный пользователь
@@ -53,12 +54,18 @@ export default function SkillPage() {
   )
   const users = useAppSelector((state) => state.user.items)
   const skills = useAppSelector(selectSkills)
-
-  // лайки
-  const { likedState, likeCounts, handleLike, isRegistrationModalOpen, closeRegistrationModal } =
-    useLike({ skills })
   const subcategoriesById = useAppSelector(selectSkillSubcategoriesById)
   const isLoading = useAppSelector(selectSelectedSkillLoading)
+
+  // лайки
+  const { 
+    likedState, 
+    likeCounts, 
+    handleLike, 
+    isRegistrationModalOpen, 
+    setIsRegistrationModalOpen,
+    closeRegistrationModal 
+  } = useLike({ skills })
 
   // уже отправленная заявка по этому навыку, чтобы не создавать дубли
   const outgoingRequest = useAppSelector((state) =>
@@ -68,6 +75,51 @@ export default function SkillPage() {
 
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
   const [isAuthModalOpen, setIsAuthModalOpen] = useState<boolean>(false)
+  
+  const [pendingRequestData, setPendingRequestData] = useState<{ skillId: string; authorId: string } | null>(null)
+
+  useEffect(() => {
+    const state = location.state as { openModal?: string; skillId?: string; authorId?: string } | null
+    
+    if (state?.openModal === 'auth') {
+      if (state.skillId && state.authorId) {
+        setPendingRequestData({
+          skillId: state.skillId,
+          authorId: state.authorId
+        })
+      }
+      
+      setIsAuthModalOpen(false)
+      navigate(location.pathname, { replace: true, state: {} })
+    }
+    
+    if (state?.openModal === 'registration') {
+      setIsRegistrationModalOpen(true)
+      navigate(location.pathname, { replace: true, state: {} })
+    }
+  }, [location, navigate, setIsRegistrationModalOpen])
+
+  useEffect(() => {
+    if (pendingRequestData && isAuthenticated && currentUser) {
+      const { skillId, authorId } = pendingRequestData
+      
+      const isAlreadyRequested = skill?.id === skillId ? isRequested : false
+      
+      if (!isAlreadyRequested) {
+        dispatch(
+          createRequest({
+            skillId: skillId,
+            fromUserId: currentUser.id,
+            toUserId: authorId,
+          })
+        )
+        
+        setIsOpenModal(true)
+      }
+      
+      setPendingRequestData(null)
+    }
+  }, [pendingRequestData, isAuthenticated, currentUser, skill?.id, isRequested, dispatch])
 
   useEffect(() => {
     if (id) {
@@ -238,7 +290,16 @@ export default function SkillPage() {
           onClose={() => setIsAuthModalOpen(false)}
           className={Styles.AuthModal}
         >
-          <ModalActionButton onClick={() => navigate(ROUTES.REGISTER)}>
+          <ModalActionButton 
+            onClick={() => navigate(ROUTES.REGISTER, { 
+              state: { 
+                from: location, 
+                openModal: 'auth',
+                skillId: skill?.id,
+                authorId: userId
+              } 
+            })}
+          >
             Зарегистрироваться
           </ModalActionButton>
         </ModalUI>
@@ -250,7 +311,11 @@ export default function SkillPage() {
           onClose={closeRegistrationModal}
           className={Styles.RegistrationModal}
         >
-          <ModalActionButton onClick={() => navigate(ROUTES.REGISTER)}>
+          <ModalActionButton 
+            onClick={() => navigate(ROUTES.REGISTER, { 
+              state: { from: location, openModal: 'registration' } 
+            })}
+          >
             Зарегистрироваться
           </ModalActionButton>
         </ModalUI>

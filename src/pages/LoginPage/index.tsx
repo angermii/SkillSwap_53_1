@@ -1,4 +1,5 @@
 import { useLocation, useNavigate } from 'react-router-dom'
+import type { Location } from 'react-router-dom'
 import { useEffect, useMemo, useState } from 'react'
 
 import { LightBulbIllustration } from '@/shared/illustrations'
@@ -20,6 +21,13 @@ import { selectCityOptions } from '@/entities/user/model/selectors'
 import { required, selectRequired } from '@/shared/lib/validators'
 
 import type { Skill } from '@/shared/types'
+
+type LocationState = {
+  from?: Location
+  openModal?: string
+  skillId?: string
+  authorId?: string
+}
 
 type RegistrationStep = 1 | 2 | 3
 
@@ -59,6 +67,11 @@ export default function LoginPage() {
   const location = useLocation()
 
   const isRegister = location.pathname === ROUTES.REGISTER
+  const locationState = location.state as LocationState | null
+  const from = locationState?.from
+  const openModalOnReturn = locationState?.openModal
+  const skillId = locationState?.skillId
+  const authorId = locationState?.authorId
 
   const skillCategories = useAppSelector(selectSkillCategories)
   const skillSubCategories = useAppSelector(selectSkillSubcategories)
@@ -149,7 +162,29 @@ export default function LoginPage() {
     }
 
     dispatch(login(registeredUser.profile))
-    navigate(ROUTES.HOME)
+
+    const isSafeReturnPath =
+      from?.pathname && from.pathname !== ROUTES.LOGIN && from.pathname !== ROUTES.REGISTER
+
+    const returnPath = isSafeReturnPath ? `${from!.pathname}${from!.search ?? ''}` : ROUTES.HOME
+
+    // Передаем флаг для открытия модалки, если он был
+    const state: LocationState = {}
+    if (openModalOnReturn) {
+      state.openModal = openModalOnReturn
+    }
+    if (skillId) {
+      state.skillId = skillId
+    }
+    if (authorId) {
+      state.authorId = authorId
+    }
+
+    const hasStateKeys = Object.keys(state).length > 0
+    navigate(returnPath, {
+      replace: true,
+      state: hasStateKeys ? state : undefined
+    })
   }
 
   const handleAuthSubmit = (data: { email: string; password: string }) => {
@@ -165,15 +200,13 @@ export default function LoginPage() {
   }
 
   const handleRegisterClick = () => {
-    navigate(ROUTES.REGISTER)
+  
+    navigate(ROUTES.REGISTER, { state: location.state })
 
     setRegistrationStep(1)
     setRegistrationData(initialRegistrationData)
     setRegistrationErrors({})
-    setRegistrationCredentials({
-      email: '',
-      password: '',
-    })
+    setRegistrationCredentials({ email: '', password: '' })
   }
 
   const handleFieldChange = (field: RegistrationTextField, value: string) => {
@@ -411,7 +444,29 @@ export default function LoginPage() {
     )
 
     setIsModalOpen(false)
-    navigate(ROUTES.HOME)
+
+    const isSafeReturnPath =
+      from?.pathname && from.pathname !== ROUTES.LOGIN && from.pathname !== ROUTES.REGISTER
+
+    const returnPath = isSafeReturnPath ? `${from!.pathname}${from!.search ?? ''}` : ROUTES.HOME
+
+    // Передаем флаг для открытия модалки, если он был
+    const state: LocationState = {}
+    if (openModalOnReturn) {
+      state.openModal = openModalOnReturn
+    }
+    if (skillId) {
+      state.skillId = skillId
+    }
+    if (authorId) {
+      state.authorId = authorId
+    }
+
+    const hasStateKeys = Object.keys(state).length > 0
+    navigate(returnPath, {
+      replace: true,
+      state: hasStateKeys ? state : undefined
+    })
   }
 
   const galleryImages = useMemo(
