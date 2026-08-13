@@ -72,6 +72,7 @@ describe('requestsSlice', () => {
     store.dispatch(
       createRequest({
         skillId: 'skill-1',
+        skillTitle: 'Тестовый навык 1',
         fromUserId: 'user-1',
         toUserId: 'user-2',
       }),
@@ -86,6 +87,7 @@ describe('requestsSlice', () => {
 
     expect(requests[0]).toMatchObject({
       skillId: 'skill-1',
+      skillTitle: 'Тестовый навык 1',
       fromUserId: 'user-1',
       toUserId: 'user-2',
       status: 'pending',
@@ -114,6 +116,7 @@ describe('requestsSlice', () => {
     store.dispatch(
       createRequest({
         skillId: 'skill-1',
+        skillTitle: 'Тестовый навык 2',
         fromUserId: 'user-1',
         toUserId: 'user-2',
       }),
@@ -123,6 +126,7 @@ describe('requestsSlice', () => {
     store.dispatch(
       createRequest({
         skillId: 'skill-2',
+        skillTitle: 'Тестовый навык 3',
         fromUserId: 'user-2',
         toUserId: 'user-3',
       }),
@@ -147,6 +151,7 @@ describe('requestsSlice', () => {
     store.dispatch(
       createRequest({
         skillId: 'skill-1',
+        skillTitle: 'Тестовый навык 4',
         fromUserId: 'user-1',
         toUserId: 'user-3',
       }),
@@ -155,6 +160,7 @@ describe('requestsSlice', () => {
     store.dispatch(
       createRequest({
         skillId: 'skill-2',
+        skillTitle: 'Тестовый навык 5',
         fromUserId: 'user-2',
         toUserId: 'user-3',
       }),
@@ -184,6 +190,7 @@ describe('requestsSlice', () => {
     store.dispatch(
       createRequest({
         skillId: 'skill-1',
+        skillTitle: 'Тестовый навык 6',
         fromUserId: 'user-1',
         toUserId: 'user-3',
       }),
@@ -192,6 +199,7 @@ describe('requestsSlice', () => {
     store.dispatch(
       createRequest({
         skillId: 'skill-2',
+        skillTitle: 'Тестовый навык 7',
         fromUserId: 'user-2',
         toUserId: 'user-3',
       }),
@@ -229,6 +237,7 @@ describe('requestsSlice', () => {
     store.dispatch(
       createRequest({
         skillId: 'skill-1',
+        skillTitle: 'Тестовый навык 8',
         fromUserId: 'user-1',
         toUserId: 'user-2',
       }),
@@ -269,6 +278,7 @@ describe('requestsSlice', () => {
     store.dispatch(
       createRequest({
         skillId: 'skill-1',
+        skillTitle: 'Тестовый навык 9',
         fromUserId: 'user-1',
         toUserId: 'user-2',
       }),
@@ -309,6 +319,7 @@ describe('requestsSlice', () => {
     store.dispatch(
       createRequest({
         skillId: 'skill-1',
+        skillTitle: 'Тестовый навык 10',
         fromUserId: 'user-1',
         toUserId: 'user-2',
       }),
@@ -354,6 +365,7 @@ describe('requestsSlice', () => {
     store.dispatch(
       createRequest({
         skillId: 'skill-1',
+        skillTitle: 'Тестовый навык 11',
         fromUserId: 'user-1',
         toUserId: 'user-2',
       }),

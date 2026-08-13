@@ -47,6 +47,7 @@ export type RequestStatus = 'pending' | 'accepted' | 'rejected' | 'inProgress' |
 export interface SwapRequest {
   id: string
   skillId: string
+  skillTitle?: string
   fromUserId: string
   toUserId: string
   status: RequestStatus
