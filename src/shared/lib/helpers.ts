@@ -26,3 +26,24 @@ export function parseSafeDate(value?: string): Date | undefined {
   const date = new Date(value)
   return Number.isNaN(date.getTime()) ? undefined : date
 }
+
+/** Рассчитывает полный возраст по дате рождения */
+export function calculateAge(birthDate: string, today = new Date()): number {
+  const birth = parseSafeDate(birthDate)
+
+  if (!birth || birth > today) {
+    return 0
+  }
+
+  let age = today.getFullYear() - birth.getFullYear()
+
+  const birthdayHasNotPassed =
+    today.getMonth() < birth.getMonth() ||
+    (today.getMonth() === birth.getMonth() && today.getDate() < birth.getDate())
+
+  if (birthdayHasNotPassed) {
+    age -= 1
+  }
+
+  return Math.max(age, 0)
+}

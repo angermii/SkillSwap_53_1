@@ -14,6 +14,7 @@ export type RegistrationFormData = {
   city: string
   learningCategory: string
   learningSubcategory: string
+  learningSubcategoryIds: string[]
   skillName: string
   skillCategory: string
   skillSubcategory: string
@@ -25,7 +26,7 @@ export type RegistrationFormData = {
 // текстовые поля, которые можно изменять через общий обработчик onFieldChange
 export type RegistrationTextField = Exclude<
   keyof RegistrationFormData,
-  'avatarUrl' | 'skillImages' | 'birthDate'
+  'avatarUrl' | 'skillImages' | 'birthDate' | 'learningSubcategoryIds'
 >
 
 // сообщения об ошибках для текстовых полей и списков формы
@@ -47,6 +48,7 @@ export type RegistrationFormProps = {
   categoryOptions: RegistrationOption[]
   learningSubcategoryOptions: RegistrationOption[]
   skillSubcategoryOptions: RegistrationOption[]
+  selectedLearningSubcategories: RegistrationOption[]
 
   // обработчики изменения данных и переходов между шагами
   onFieldChange: (field: RegistrationTextField, value: string) => void
@@ -55,4 +57,5 @@ export type RegistrationFormProps = {
   onImagesChange: (files: File[]) => void
   onBack: () => void
   onNext: () => void
+  onRemoveLearningSubcategory: (subcategoryId: string) => void
 }

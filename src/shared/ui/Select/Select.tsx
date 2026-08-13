@@ -10,6 +10,7 @@ export function Select({
   iconSrc,
   options = [],
   value,
+  error,
   onChange,
   className,
   ...restProps
@@ -38,7 +39,7 @@ export function Select({
   return (
     <div {...restProps} className={clsx(Styles.selectWrapper, className)}>
       <p className={Styles.label}>{label}</p>
-      <div ref={ref} className={clsx(Styles.select, { [Styles.opened]: isOpen })}>
+      <div ref={ref} className={clsx(Styles.select, { [Styles.opened]: isOpen }, error && Styles.error)}>
         <button
           type="button"
           className={clsx(Styles.placeholder, { [Styles.opened]: isOpen })}
@@ -78,6 +79,7 @@ export function Select({
           </div>
         )}
       </div>
+      {error && <span className={Styles.errorText}>{error}</span>}
     </div>
   )
 }

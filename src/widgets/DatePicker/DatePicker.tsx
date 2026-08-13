@@ -28,6 +28,7 @@ export const DatePicker = ({
   className,
   inputClassName,
   dropdownClassName,
+  error,
   ...props
 }: DatePickerProps) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -89,6 +90,7 @@ export const DatePicker = ({
       }
       aria-haspopup="menu"
       aria-expanded={isOpen}
+      error={error}
     />
   )
 

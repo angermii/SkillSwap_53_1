@@ -2,10 +2,13 @@ import { selectSkillSubcategoryById } from '@/entities/skill/model/selectors'
 import { Button } from '@/shared/ui'
 import { useAppSelector } from '@/store/hooks'
 import { UserSkillWidget } from '@/widgets/UserSkillWidget'
+import { getAuthUserSkills } from '@/shared/lib/authUserMapper'
 
 export function ProfileSkills() {
   const authUser = useAppSelector((state) => state.auth.user)
-  const skill = authUser?.skill
+  const skill = authUser
+    ? getAuthUserSkills(authUser).find((item) => item.type === 'teach')
+    : undefined
 
   const subcategory = useAppSelector((state) =>
     selectSkillSubcategoryById(state, skill?.subcategoryId ?? ''),

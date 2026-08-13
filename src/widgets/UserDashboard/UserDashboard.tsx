@@ -12,6 +12,7 @@ export const UserDashboard = ({
   cityOptions,
   isSaveDisabled = false,
   avatarError,
+  errors,
   onFieldChange,
   onBirthDateChange,
   onNewAvatarClick,
@@ -33,6 +34,7 @@ export const UserDashboard = ({
             value={data.email}
             onSave={(value) => onFieldChange('email', value)}
             editLabel="Изменить почту"
+            error={errors?.email}
           />
 
           <button type="button" className={styles.passwordButton} onClick={onChangePassword}>
@@ -45,25 +47,32 @@ export const UserDashboard = ({
           value={data.name}
           onSave={(value) => onFieldChange('name', value)}
           editLabel="Изменить имя"
+          error={errors?.name}
         />
 
         <div className={styles.fieldsRow}>
-          <DatePicker
-            label="Дата рождения"
-            value={data.birthDate}
-            onChange={onBirthDateChange}
-            className={styles.datePicker}
-          />
+          <div className={styles.fieldGroup}>
+            <DatePicker
+              label="Дата рождения"
+              value={data.birthDate}
+              onChange={onBirthDateChange}
+              className={styles.datePicker}
+              error={errors?.birthDate}
+            />
+          </div>
 
-          <EditableSelect
-            label="Пол"
-            editable={false}
-            value={data.gender}
-            placeholder="Не указан"
-            options={genderOptions}
-            onChange={(value) => onFieldChange('gender', value)}
-            editLabel="Изменить пол, недоступно"
-          />
+          <div className={styles.fieldGroup}>
+            <EditableSelect
+              label="Пол"
+              editable={false}
+              value={data.gender}
+              placeholder="Не указан"
+              options={genderOptions}
+              onChange={(value) => onFieldChange('gender', value)}
+              editLabel="Изменить пол, недоступно"
+              error={errors?.gender}
+            />
+          </div>
         </div>
 
         <EditableSelect
@@ -73,6 +82,7 @@ export const UserDashboard = ({
           options={cityOptions}
           onChange={(value) => onFieldChange('city', value)}
           editLabel="Изменить город"
+          error={errors?.city}
         />
 
         <EditableField
@@ -83,6 +93,7 @@ export const UserDashboard = ({
           onSave={(value) => onFieldChange('about', value)}
           editLabel="Изменить описание"
           wrapperClassName={styles.about}
+          error={errors?.about}
         />
 
         <Button

@@ -3,6 +3,7 @@ import { DatePicker } from '@/widgets/DatePicker'
 import {
   Avatar,
   Button,
+  FilterChip,
   GalleryAddIcon,
   Input,
   PlusIcon,
@@ -24,12 +25,14 @@ export const RegistrationForm = ({
   categoryOptions,
   learningSubcategoryOptions,
   skillSubcategoryOptions,
+  selectedLearningSubcategories,
   onFieldChange,
   onAvatarChange,
   onImagesChange,
   onBirthDateChange,
   onBack,
   onNext,
+  onRemoveLearningSubcategory,
 }: RegistrationFormProps) => {
   // передает родителю изменения обычных текстовых полей
   const handleTextChange =
@@ -118,11 +121,8 @@ export const RegistrationForm = ({
                 inputClassName={styles.textField}
                 error={errors.birthDate}
               />
-
-              {errors.birthDate && (
-                <span className={styles.errorText} role='alert'>{errors.birthDate}</span>
-              )}
             </div>
+
             <div className={styles.fieldGroup}>
               <Select
                 label="Пол"
@@ -130,13 +130,8 @@ export const RegistrationForm = ({
                 placeholder="Не указан"
                 options={genderOptions}
                 onChange={(value) => onFieldChange('gender', value)}
+                error={errors?.gender}
               />
-
-              {errors.gender && (
-                <span className={styles.errorText} role="alert">
-                  {errors.gender}
-                </span>
-              )}
             </div>
           </div>
 
@@ -147,13 +142,8 @@ export const RegistrationForm = ({
               placeholder="Не указан"
               options={cityOptions}
               onChange={(value) => onFieldChange('city', value)}
+              error={errors?.city}
             />
-
-            {errors.city && (
-              <span className={styles.errorText} role="alert">
-                {errors.city}
-              </span>
-            )}
           </div>
 
           <div className={styles.fieldGroup}>
@@ -163,13 +153,8 @@ export const RegistrationForm = ({
               placeholder="Выберите категорию"
               options={categoryOptions}
               onChange={(value) => onFieldChange('learningCategory', value)}
+              error={errors?.learningCategory}
             />
-
-            {errors.learningCategory && (
-              <span className={styles.errorText} role="alert">
-                {errors.learningCategory}
-              </span>
-            )}
           </div>
 
           <div className={styles.fieldGroup}>
@@ -179,14 +164,21 @@ export const RegistrationForm = ({
               placeholder="Выберите подкатегорию"
               options={learningSubcategoryOptions}
               onChange={(value) => onFieldChange('learningSubcategory', value)}
+              error={errors?.learningSubcategory}
             />
-
-            {errors.learningSubcategory && (
-              <span className={styles.errorText} role="alert">
-                {errors.learningSubcategory}
-              </span>
-            )}
           </div>
+
+          {selectedLearningSubcategories.length > 0 && (
+            <div className={styles.learningSkills} aria-label="Выбранные навыки">
+              {selectedLearningSubcategories.map((subcategory) => (
+                <FilterChip
+                  key={subcategory.value}
+                  label={subcategory.name}
+                  onRemove={() => onRemoveLearningSubcategory(subcategory.value)}
+                />
+              ))}
+            </div>
+          )}
         </div>
       )}
 
@@ -209,13 +201,8 @@ export const RegistrationForm = ({
               placeholder="Выберите категорию навыка"
               options={categoryOptions}
               onChange={(value) => onFieldChange('skillCategory', value)}
+              error={errors?.skillCategory}
             />
-
-            {errors.skillCategory && (
-              <span className={styles.errorText} role="alert">
-                {errors.skillCategory}
-              </span>
-            )}
           </div>
 
           <div className={styles.fieldGroup}>
@@ -225,13 +212,8 @@ export const RegistrationForm = ({
               placeholder="Выберите подкатегорию навыка"
               options={skillSubcategoryOptions}
               onChange={(value) => onFieldChange('skillSubcategory', value)}
+              error={errors?.skillSubcategory}
             />
-
-            {errors.skillSubcategory && (
-              <span className={styles.errorText} role="alert">
-                {errors.skillSubcategory}
-              </span>
-            )}
           </div>
 
           <Input

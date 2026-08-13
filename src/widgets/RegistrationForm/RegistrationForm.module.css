@@ -28,6 +28,12 @@
   width: 100%;
 }
 
+.learningSkills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
 .errorText {
   display: block;
   margin-top: 4px;

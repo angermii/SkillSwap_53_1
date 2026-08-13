@@ -10,5 +10,6 @@ export interface SelectProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onCha
   iconSrc?: string
   options?: option[]
   value?: string
+  error?: string
   onChange?: (value: string) => void
 }

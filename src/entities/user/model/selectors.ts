@@ -4,6 +4,7 @@ import { OTHER_CITY_OPTION } from '@/shared/lib/constants'
 
 import type { UserState } from './userSlice'
 import type { User } from './types'
+import { RootState } from '@/store'
 
 type StateWithUser = { user: UserState }
 
@@ -17,6 +18,12 @@ export type CityOption = {
 
 export const selectUsers = (state: StateWithUser): User[] => state.user.items
 
+
+export const selectUserById = (state: RootState, userId?: string) => {
+  if (!userId) return null
+
+  return state.user.items.find((user) => user.id === userId) ?? null
+}
 // Options
 
 export const selectCityOptions = createSelector([selectUsers], (users): CityOption[] => {
@@ -26,3 +33,4 @@ export const selectCityOptions = createSelector([selectUsers], (users): CityOpti
 
   return [...cities.map((city) => ({ name: city, value: city })), { ...OTHER_CITY_OPTION }]
 })
+
