@@ -1,5 +1,8 @@
 import { RequestItem } from '@/shared/ui'
+import { generatePath, useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import { SwapRequest } from '@/shared/types'
+import { ROUTES } from '@/shared/lib/constants'
 
 import {
   acceptRequest,
@@ -10,8 +13,22 @@ import {
 
 import styles from './Requests.module.css'
 
+const getOutgoingDescription = (status: SwapRequest['status']) => {
+  switch (status) {
+    case 'pending':
+      return 'Вы отправили предложение обмена'
+    case 'accepted':
+      return 'Предложение принято'
+    case 'rejected':
+      return 'Предложение отклонено'
+    default:
+      return ''
+  }
+}
+
 export const Requests = () => {
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
   const currentUser = useAppSelector((state) => state.auth.user)
 
@@ -20,6 +37,14 @@ export const Requests = () => {
   const outgoingRequests = useAppSelector((state) => currentUser ? selectOutgoingRequests(state, currentUser.id) : [])
 
   const incomingRequests = pendingRequests.filter((request) => request.toUserId === currentUser?.id)
+
+  const handleRequestClick = (skillId: string) => {
+    navigate(
+      generatePath(ROUTES.SKILL, {
+        id: skillId,
+      })
+    )
+  }
 
   const handleAccept = (requestId: string) => {
     dispatch(acceptRequest(requestId))
@@ -49,8 +74,9 @@ export const Requests = () => {
                 key={request.id}
                 id={request.id}
                 title="Заявка на обмен"
-                description="Вы отправили предложение обмена"
+                description={getOutgoingDescription(request.status)}
                 date={new Date(request.createdAt).toLocaleDateString('ru-RU')}
+                onClick={() => handleRequestClick(request.skillId)}
               />
             ))}
           </div>
@@ -70,6 +96,7 @@ export const Requests = () => {
                 title="Новая заявка на обмен"
                 description="Пользователь предлагает обмен"
                 date={new Date(request.createdAt).toLocaleDateString('ru-RU')}
+                onClick={() => handleRequestClick(request.skillId)}
                 onAccept={handleAccept}
                 onReject={handleReject}
               />

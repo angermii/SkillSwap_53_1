@@ -11,10 +11,15 @@ export const RequestItem = ({
   date,
   onAccept,
   onReject,
+  onClick,
 }: RequestItemProps) => {
   return (
     <div className={Styles.Wrapper}>
-      <div className={Styles.Notification}>
+      <button
+        type='button' 
+        className={Styles.Notification}
+        onClick={() => onClick?.(id)}
+      >
         <div className={Styles.Item}>
           <BulbIcon size={40} />
 
@@ -25,7 +30,7 @@ export const RequestItem = ({
         </div>
 
         <p className={Styles.Date}>{date}</p>
-      </div>
+      </button>
 
       <div className={Styles.Buttons}>
         {onAccept && (
