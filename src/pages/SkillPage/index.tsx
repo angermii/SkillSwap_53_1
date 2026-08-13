@@ -27,7 +27,6 @@ import {
   selectSkillSubcategoryById,
 } from '@/entities/skill/model/selectors'
 import { ROUTES } from '@/shared/lib/constants.ts'
-import { toggleFavorite } from '@/features/favorites'
 import { createRequest } from '@/entities/request/requestsSlice.ts'
 
 export default function SkillPage() {
@@ -62,8 +61,8 @@ export default function SkillPage() {
       void dispatch(fetchSkillById(id))
         .unwrap()
         .catch(() => {
-  navigate('/404', { replace: true })
-})
+          navigate('/404', { replace: true })
+        })
     }
   }, [dispatch, id, navigate])
 
@@ -200,19 +199,33 @@ export default function SkillPage() {
       </div>
       <div className={Styles.SimilarVariants}>
         <h2>Похожие предложения</h2>
+
         <div className={Styles.Cards}>
           {similarUsersCards.length > 0 ? (
-            similarUsersCards.map((cardData) => (
-              <UserCard
-                key={cardData?.id}
-                user={cardData}
-                variant={'compact'}
-                onDetailsClick={() =>
-                  navigate(generatePath(ROUTES.SKILL, { id: cardData?.teachTags[0]?.id }))
-                }
-                onLikeChange={() => dispatch(toggleFavorite(cardData?.teachTags[0]?.id))}
-              />
-            ))
+            similarUsersCards.map((cardData) => {
+              // Берём ID навыка, который отображается в карточке.
+              const skillId = cardData.teachTags[0]?.id
+
+              // Если у карточки нет навыка, не рендерим её.
+              if (!skillId) {
+                return null
+              }
+
+              // Находим сам навык, чтобы получить исходный счётчик лайков.
+              const skill = skills.find((item) => item.id === skillId)
+
+              return (
+                <UserCard
+                  key={cardData.id}
+                  user={cardData}
+                  variant="compact"
+                  isLiked={likedState[skillId] ?? false}
+                  likeCount={likeCounts[skillId] ?? skill?.likeCount ?? 0}
+                  onDetailsClick={() => navigate(generatePath(ROUTES.SKILL, { id: skillId }))}
+                  onLikeChange={() => handleLike(skillId)}
+                />
+              )
+            })
           ) : (
             <p>Похожих предложений пока нет</p>
           )}
