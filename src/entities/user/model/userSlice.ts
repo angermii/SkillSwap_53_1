@@ -1,4 +1,6 @@
-import { User } from './types'
+import type { User } from './types'
+import { getRegisteredUsers } from '@/features/auth'
+import { mapAuthUserToUser } from '@/shared/lib/authUserMapper'
 import { fetchUsers as apiFetchUsers, fetchUserById as apiFetchUserById } from '@/api/users'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
@@ -16,11 +18,30 @@ const initialState: UserState = {
   error: null,
 }
 
-export const fetchUsers = createAsyncThunk('user/fetchUsers', async () => await apiFetchUsers())
+export const fetchUsers = createAsyncThunk<User[]>('user/fetchUsers', async () => {
+  const apiUsers = await apiFetchUsers()
+  const usersById = new Map(apiUsers.map((user) => [user.id, user]))
 
-export const fetchUserById = createAsyncThunk('user/fetchUserById', async (id: string) => {
+  getRegisteredUsers().forEach(({ profile }) => {
+    usersById.set(profile.id, mapAuthUserToUser(profile))
+  })
+
+  return Array.from(usersById.values())
+})
+
+export const fetchUserById = createAsyncThunk<User, string>('user/fetchUserById', async (id) => {
+  const registeredProfile = getRegisteredUsers().find(({ profile }) => profile.id === id)?.profile
+
+  if (registeredProfile) {
+    return mapAuthUserToUser(registeredProfile)
+  }
+
   const user = await apiFetchUserById(id)
-  if (!user) throw new Error('Пользователь не найден')
+
+  if (!user) {
+    throw new Error('Пользователь не найден')
+  }
+
   return user
 })
 

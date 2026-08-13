@@ -3,6 +3,7 @@ import { DatePicker } from '@/widgets/DatePicker'
 import {
   Avatar,
   Button,
+  FilterChip,
   GalleryAddIcon,
   Input,
   PlusIcon,
@@ -24,12 +25,14 @@ export const RegistrationForm = ({
   categoryOptions,
   learningSubcategoryOptions,
   skillSubcategoryOptions,
+  selectedLearningSubcategories,
   onFieldChange,
   onAvatarChange,
   onImagesChange,
   onBirthDateChange,
   onBack,
   onNext,
+  onRemoveLearningSubcategory,
 }: RegistrationFormProps) => {
   // передает родителю изменения обычных текстовых полей
   const handleTextChange =
@@ -187,6 +190,18 @@ export const RegistrationForm = ({
               </span>
             )}
           </div>
+
+          {selectedLearningSubcategories.length > 0 && (
+            <div className={styles.learningSkills} aria-label="Выбранные навыки">
+              {selectedLearningSubcategories.map((subcategory) => (
+                <FilterChip
+                  key={subcategory.value}
+                  label={subcategory.name}
+                  onRemove={() => onRemoveLearningSubcategory(subcategory.value)}
+                />
+              ))}
+            </div>
+          )}
         </div>
       )}
 
