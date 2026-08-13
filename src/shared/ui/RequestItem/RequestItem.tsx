@@ -28,19 +28,23 @@ export const RequestItem = ({
       </div>
 
       <div className={Styles.Buttons}>
-        <Button
-          onClick={() => onAccept?.(id)}
-          className={Styles.ButtonAccept}
-        >
-          Принять
-        </Button>
+        {onAccept && (
+          <Button
+            onClick={() => onAccept?.(id)}
+            className={Styles.ButtonAccept}
+          >
+            Принять
+          </Button>
+        )}
 
-        <Button
-          onClick={() => onReject?.(id)}
-          className={Styles.ButtonReject}
-        >
-          Отклонить
-        </Button>
+        {onReject && (
+          <Button
+            onClick={() => onReject?.(id)}
+            className={Styles.ButtonReject}
+          >
+            Отклонить
+          </Button>
+        )}
       </div>
     </div>
   )

@@ -182,6 +182,9 @@ export const selectNotificationRequests = (state: { requests: RequestsState }, u
 export const selectPendingRequests = (state: { requests: RequestsState }) =>
   state.requests.requests.filter((request) => request.status === 'pending')
 
+export const selectOutgoingRequests = (state: { requests: RequestsState }, userId: string) => 
+  state.requests.requests.filter((request) => request.fromUserId === userId)
+
 // Получить принятые запросы
 export const selectAcceptedRequests = (state: { requests: RequestsState }) =>
   state.requests.requests.filter((request) => request.status === 'accepted')
