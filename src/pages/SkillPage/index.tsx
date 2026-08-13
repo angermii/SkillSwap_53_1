@@ -28,6 +28,7 @@ import { ROUTES } from '@/shared/lib/constants.ts'
 import { createRequest, selectOutgoingRequestBySkill } from '@/entities/request/requestsSlice.ts'
 import { toGalleryImages } from '@/widgets/GalleryCarousel'
 import { useLike } from '@/features/favorites/model/useLike'
+import { selectUserById } from '@/entities/user/model/selectors'
 
 export default function SkillPage() {
   //находим навык по url
@@ -40,7 +41,8 @@ export default function SkillPage() {
   const currentUser = useAppSelector((state) => state.auth.user)
   //находим пользователя, которому принадлежит навык
   const userId = skill?.authorId
-  const selectedUser = useAppSelector((state) => state.user.user)
+  const selectedUser = useAppSelector((state) => selectUserById(state, userId))
+  const isLoadingUser = useAppSelector((state) => state.user.loading)
   //все навыки, связанные с пользователем
   const userSkills = useAppSelector((state) => state.skill.userSkills)
   const subcategory = useAppSelector((state) =>
@@ -55,7 +57,6 @@ export default function SkillPage() {
   // лайки
   const { likedState, likeCounts, handleLike, isRegistrationModalOpen, closeRegistrationModal } =
     useLike({ skills })
-
   const subcategoriesById = useAppSelector(selectSkillSubcategoriesById)
   const isLoading = useAppSelector(selectSelectedSkillLoading)
 
@@ -181,12 +182,20 @@ export default function SkillPage() {
     setIsOpenModal(true)
   }
 
-  if (isLoading || !skill || !selectedUser || !subcategory || !category) {
+  if (isLoading || !skill || !subcategory || !category) {
     return (
       <main className={Styles.Main}>
         <p>Загрузка данных...</p>
       </main>
     )
+  }
+
+  if (isLoadingUser) {
+    return <div>Загрузка пользователя...</div>
+  }
+
+  if (!selectedUser || selectedUser.id !== userId) {
+    return <div>Пользователь не найден</div>
   }
 
   const user = mapUserToCardData({
