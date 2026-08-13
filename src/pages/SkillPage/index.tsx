@@ -9,7 +9,7 @@ import {
 } from '@/widgets'
 import { generatePath, useNavigate, useParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '@/store/hooks.ts'
-import { ReactNode, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Styles from './SkillPage.module.css'
 import {
   fetchSkill,
@@ -61,7 +61,12 @@ export default function SkillPage() {
     if (id) {
       void dispatch(fetchSkillById(id))
         .unwrap()
-        .catch((error) => {
+        .then((fetchedSkill) => {
+          if (!fetchedSkill) {
+            navigate('/404', { replace: true })
+          }
+        })
+        .catch(() => {
           navigate('/404', { replace: true })
         })
     }
