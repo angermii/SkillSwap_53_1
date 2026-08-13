@@ -35,3 +35,19 @@
   gap: var(--space-lg);
   overflow-x: hidden;
 }
+
+.ModalActions {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-xl);
+}
+
+.ModalButton {
+  width: 100%;
+}
+
+.AuthModal {
+  height: auto;
+  min-height: 0;
+  padding: 60px;
+}
