@@ -8,7 +8,7 @@ import {
 } from '@/api/skills'
 import type { Skill, SkillCategory, SkillSubcategory } from './types'
 
-export type SkillRequestKey = 'skills' | 'selectedSkill' | 'categories' | 'subcategories'
+export type SkillRequestKey = 'skills' | 'selectedSkill' | 'categories' | 'subcategories' | 'userSkills'
 
 // храним списочные результаты и отдельно выбранный навык
 export interface SkillState {
@@ -37,7 +37,7 @@ const initialState: SkillState = {
   },
   error: {
     skills: null,
-    userSkills: false,
+    userSkills: null,
     selectedSkill: null,
     categories: null,
     subcategories: null,

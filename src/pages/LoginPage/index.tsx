@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { useEffect, useMemo, useState } from 'react'
 
 import { LightBulbIllustration } from '@/shared/illustrations'
-import { Onboarding, ModalUI, Button, StepIndicator } from '@/shared/ui'
+import { Onboarding, ModalUI, Button, StepIndicator, EditIcon } from '@/shared/ui'
 import { RegistrationForm, UserSkillWidget, AuthForm } from '@/widgets'
 import type { RegistrationFormData, RegistrationFormErrors } from '@/widgets'
 import { RegistrationTextField } from '@/widgets/RegistrationForm/type'
@@ -338,10 +338,22 @@ export default function LoginPage() {
     [registrationData.skillImages],
   )
 
+  const categoryTitle = useMemo(() => {
+    const category = skillCategories.find((c) => c.id === registrationData.skillCategory)
+    return category?.title || ''
+  }, [skillCategories, registrationData.skillCategory])
+
+  const subcategoryTitle = useMemo(() => {
+    const subcategory = skillSubCategories.find((s) => s.id === registrationData.skillSubcategory)
+    return subcategory?.title || ''
+  }, [skillSubCategories, registrationData.skillSubcategory])
+
   const userSkill = {
     title: registrationData.skillName || 'Мой навык',
     subtitle:
-      registrationData.skillSubcategory || registrationData.skillCategory || 'Навык пользователя',
+      categoryTitle && subcategoryTitle
+        ? `${categoryTitle} / ${subcategoryTitle}`
+        : subcategoryTitle || categoryTitle || 'Категория навыка',
     description: registrationData.skillDescription || 'Описание навыка пока не заполнено',
   }
 
@@ -400,22 +412,13 @@ export default function LoginPage() {
       </div>
 
       {isModalOpen && (
-        <ModalUI
-          title="Ваше предложение"
-          description="Пожалуйста, проверьте и подтвердите правильность данных"
-          onClose={() => setIsModalOpen(false)}
-          size="large"
-        >
+        <ModalUI onClose={() => setIsModalOpen(false)} size="large">
           <UserSkillWidget
             className={styles.registrationSkill}
-            // header={{
-            //   title: registrationData.name || 'Пользователь',
-            //   subtitle: registrationData.city || 'Город не указан',
-            // }}
-            // like={{
-            //   count: 0,
-            //   isLiked: false,
-            // }}
+            header={{
+              title: 'Ваше предложение',
+              subtitle: 'Пожалуйста, проверьте и подтвердите правильность данных',
+            }}
             skill={userSkill}
             gallery={{
               images: galleryImages,
@@ -423,7 +426,12 @@ export default function LoginPage() {
             }}
             actions={
               <div className={styles.registrationActions}>
-                <Button type="button" variant="secondary" onClick={handleEditRegistration}>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={handleEditRegistration}
+                  endIcon={<EditIcon />}
+                >
                   Редактировать
                 </Button>
 

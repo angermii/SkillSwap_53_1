@@ -1,12 +1,4 @@
-// TODO: реализовать страницу SkillPage
-import { useLike } from '@/features/favorites/model/useLike'
-import {
-  Footer,
-  groupSkillsByAuthor,
-  mapUserToCardData,
-  UserCard,
-  UserSkillWidget,
-} from '@/widgets'
+import { groupSkillsByAuthor, mapUserToCardData, UserCard, UserSkillWidget } from '@/widgets'
 import { generatePath, useNavigate, useParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '@/store/hooks.ts'
 import { useEffect, useMemo, useState } from 'react'
@@ -27,7 +19,8 @@ import {
   selectSkillSubcategoryById,
 } from '@/entities/skill/model/selectors'
 import { ROUTES } from '@/shared/lib/constants.ts'
-import { createRequest } from '@/entities/request/requestsSlice.ts'
+import { createRequest, selectOutgoingRequestBySkill } from '@/entities/request/requestsSlice.ts'
+import { toGalleryImages } from '@/widgets/GalleryCarousel'
 
 export default function SkillPage() {
   //находим навык по url
@@ -35,7 +28,9 @@ export default function SkillPage() {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const skill = useAppSelector(selectSelectedSkill)
-
+  //текущий залогиненный пользователь
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated)
+  const currentUser = useAppSelector((state) => state.auth.user)
   //находим пользователя, которому принадлежит навык
   const userId = skill?.authorId
   const selectedUser = useAppSelector((state) => state.user.user)
@@ -55,11 +50,27 @@ export default function SkillPage() {
   const isLoading = useAppSelector(selectSelectedSkillLoading)
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
   const [isRequested, setIsRequested] = useState<boolean>(false)
+  const subcategoriesById = useAppSelector(selectSkillSubcategoriesById)
+  const isLoading = useAppSelector(selectSelectedSkillLoading)
+
+  // уже отправленная заявка по этому навыку, чтобы не создавать дубли
+  const outgoingRequest = useAppSelector((state) =>
+    selectOutgoingRequestBySkill(state, skill?.id, currentUser?.id),
+  )
+  const isRequested = outgoingRequest !== null
+
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState<boolean>(false)
 
   useEffect(() => {
     if (id) {
       void dispatch(fetchSkillById(id))
         .unwrap()
+        .then((fetchedSkill) => {
+          if (!fetchedSkill) {
+            navigate('/404', { replace: true })
+          }
+        })
         .catch(() => {
           navigate('/404', { replace: true })
         })
@@ -109,26 +120,38 @@ export default function SkillPage() {
       .filter((userCard): userCard is NonNullable<typeof userCard> => userCard !== null)
   }, [skills, subcategory?.id, users, subcategoriesById, userId])
 
+  const galleryImages = useMemo(
+    () => toGalleryImages(skill?.imageUrl, { idPrefix: skill?.id, altPrefix: skill?.title }),
+    [skill?.id, skill?.imageUrl, skill?.title],
+  )
+
   const handleRequest = () => {
     if (!skill?.id || !userId) return
-    //добавить проверку на успех запроса(возможно)
-    void dispatch(
+
+    // неавторизованному пользователю предлагаем зарегистрироваться
+    if (!isAuthenticated || !currentUser) {
+      setIsAuthModalOpen(true)
+      return
+    }
+
+    // защита от повторной заявки
+    if (isRequested) return
+
+    dispatch(
       createRequest({
         skillId: skill.id,
-        //здесь добавить id пользователя
-        fromUserId: '',
+        fromUserId: currentUser.id,
         toUserId: userId,
       }),
     )
+
     setIsOpenModal(true)
-    setIsRequested(true)
   }
 
   if (isLoading || !skill || !selectedUser || !subcategory || !category) {
     return (
       <main className={Styles.Main}>
         <p>Загрузка данных...</p>
-        <Footer />
       </main>
     )
   }
@@ -148,9 +171,33 @@ export default function SkillPage() {
           icon={<NotificationIcon size={100} />}
           onClose={() => setIsOpenModal(false)}
         >
-          <Button type="button" onClick={() => setIsOpenModal(false)}>
-            <span>Готово</span>
-          </Button>
+          <div className={Styles.ModalActions}>
+            <Button
+              className={Styles.ModalButton}
+              type="button"
+              onClick={() => setIsOpenModal(false)}
+            >
+              <span>Готово</span>
+            </Button>
+          </div>
+        </ModalUI>
+      )}
+      {isAuthModalOpen && (
+        <ModalUI
+          title="Хотите предложить обмен?"
+          description="Зарегистрируйтесь, чтобы предлагать обмен навыками"
+          onClose={() => setIsAuthModalOpen(false)}
+          className={Styles.AuthModal}
+        >
+          <div className={Styles.ModalActions}>
+            <Button
+              className={Styles.ModalButton}
+              type="button"
+              onClick={() => navigate(ROUTES.REGISTER)}
+            >
+              <span>Зарегистрироваться</span>
+            </Button>
+          </div>
         </ModalUI>
       )}
       {isRegistrationModalOpen && (
@@ -181,16 +228,14 @@ export default function SkillPage() {
             description: skill.description,
           }}
           className={Styles.SkillWidget}
-          gallery={{
-            images: skill.imageUrl,
-            maxThumbnails: 3,
-          }}
+          gallery={{ images: galleryImages, maxThumbnails: 3 }}
           actions={
             <Button
               variant={isRequested ? 'secondary' : 'primary'}
               startIcon={isRequested ? <ClockIcon /> : undefined}
               type="button"
-              onClick={isRequested ? () => {} : handleRequest}
+              disabled={isRequested}
+              onClick={handleRequest}
             >
               <span>{isRequested ? 'Обмен предложен' : 'Предложить обмен'}</span>
             </Button>
@@ -231,10 +276,6 @@ export default function SkillPage() {
           )}
         </div>
       </div>
-      <Footer />
     </main>
   )
 }
-
-//еще не добавлена карусель для карточек похожие предложения как в макете
-//фото в userSkillWidget не прогружаются

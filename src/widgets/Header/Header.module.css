@@ -25,6 +25,10 @@
   letter-spacing: 0.02em;
 }
 
+.span {
+  color: var(--color-text);
+}
+
 .navigation {
   display: flex;
   align-items: center;
@@ -102,7 +106,7 @@
 }
 
 .dropdownAccount {
-  transform: translateX(-100px) translateY(20px);
+  transform: translateY(20px);
 }
 
 .notificationWidget {

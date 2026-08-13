@@ -29,6 +29,7 @@ const emptyLoading = {
   selectedSkill: false,
   categories: false,
   subcategories: false,
+  userSkills: false,
 }
 
 const emptyError = {
@@ -36,6 +37,7 @@ const emptyError = {
   selectedSkill: null,
   categories: null,
   subcategories: null,
+  userSkills: null,
 }
 
 describe('skillSlice', () => {
@@ -49,6 +51,7 @@ describe('skillSlice', () => {
       subcategories: [],
       loading: emptyLoading,
       error: emptyError,
+      userSkills: []
     })
   })
 
@@ -66,6 +69,7 @@ describe('skillSlice', () => {
       subcategories: [],
       loading: emptyLoading,
       error: emptyError,
+      userSkills: []
     })
   })
 
@@ -84,6 +88,7 @@ describe('skillSlice', () => {
       subcategories: [],
       loading: emptyLoading,
       error: emptyError,
+      userSkills: []
     })
   })
 
@@ -91,17 +96,18 @@ describe('skillSlice', () => {
     const store = createTestStore()
 
     store.dispatch(fetchSkillByUserId.pending('request-id', testSkill.authorId))
-    expect(store.getState().skill.loading.skills).toBe(true)
+    expect(store.getState().skill.loading.userSkills).toBe(true)
 
     store.dispatch(fetchSkillByUserId.fulfilled([testSkill], 'request-id', testSkill.authorId))
 
     expect(store.getState().skill).toEqual({
-      skills: [testSkill],
+      skills: [],
       selectedSkill: null,
       categories: [],
       subcategories: [],
       loading: emptyLoading,
       error: emptyError,
+      userSkills: [testSkill]
     })
   })
 
@@ -123,6 +129,7 @@ describe('skillSlice', () => {
         ...emptyError,
         skills: 'Failed to fetch skills',
       },
+      userSkills: []
     })
   })
 })

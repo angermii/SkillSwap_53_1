@@ -47,7 +47,7 @@ export const Header = ({
                   className={styles.categoryButton}
                   onClick={() => setIsMenuOpen((prev) => !prev)}
                 >
-                  <span>Все навыки</span>
+                  <span className={styles.span}>Все навыки</span>
                   <ChevronDownIcon />
                 </button>
               }
@@ -134,6 +134,7 @@ export const Header = ({
               isOpen={isAccountOpen}
               onClose={() => setIsAccountOpen(false)}
               contentClassName={styles.dropdownAccount}
+              align="end"
             >
               <AccountMenu onLogout={onLogout} />
             </Dropdown>

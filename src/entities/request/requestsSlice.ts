@@ -23,10 +23,7 @@ const getInitialRequests = (): SwapRequest[] => {
 }
 
 const saveRequests = (requests: SwapRequest[]) => {
-  localStorage.setItem(
-    LOCAL_STORAGE_KEYS.REQUESTS,
-    JSON.stringify(requests),
-  )
+  localStorage.setItem(LOCAL_STORAGE_KEYS.REQUESTS, JSON.stringify(requests))
 }
 
 const initialState: RequestsState = {
@@ -78,10 +75,7 @@ export const requestsSlice = createSlice({
     // Отметить все полученные уведомления как прочитанные
     readAllNotifications: (state, action: PayloadAction<string>) => {
       state.requests.forEach((request) => {
-        if (
-          request.toUserId === action.payload &&
-          !request.isNotificationDismissed
-        ) {
+        if (request.toUserId === action.payload && !request.isNotificationDismissed) {
           request.isNotificationRead = true
         }
       })
@@ -92,9 +86,7 @@ export const requestsSlice = createSlice({
     // отметить выбранное уведомление как прочитанное
     readNotification: (state, action: PayloadAction<string>) => {
       const request = state.requests.find(
-        (item) =>
-          item.id === action.payload &&
-          !item.isNotificationDismissed,
+        (item) => item.id === action.payload && !item.isNotificationDismissed,
       )
 
       if (request) {
@@ -106,10 +98,7 @@ export const requestsSlice = createSlice({
     // Скрыть прочитанные уведомления текущего пользователя
     clearReadNotifications: (state, action: PayloadAction<string>) => {
       state.requests.forEach((request) => {
-        if (
-          request.toUserId === action.payload &&
-          request.isNotificationRead
-        ) {
+        if (request.toUserId === action.payload && request.isNotificationRead) {
           request.isNotificationDismissed = true
         }
       })
@@ -118,13 +107,8 @@ export const requestsSlice = createSlice({
     },
 
     // Принять запрос
-    acceptRequest: (
-      state,
-      action: PayloadAction<string>,
-    ) => {
-      const request = state.requests.find(
-        item => item.id === action.payload,
-      )
+    acceptRequest: (state, action: PayloadAction<string>) => {
+      const request = state.requests.find((item) => item.id === action.payload)
 
       if (request) {
         request.status = 'accepted'
@@ -134,15 +118,9 @@ export const requestsSlice = createSlice({
       saveRequests(state.requests)
     },
 
-
     // Отклонить запрос
-    rejectRequest: (
-      state,
-      action: PayloadAction<string>,
-    ) => {
-      const request = state.requests.find(
-        item => item.id === action.payload,
-      )
+    rejectRequest: (state, action: PayloadAction<string>) => {
+      const request = state.requests.find((item) => item.id === action.payload)
 
       if (request) {
         request.status = 'rejected'
@@ -152,21 +130,14 @@ export const requestsSlice = createSlice({
       saveRequests(state.requests)
     },
 
-
     // Отменить запрос
-    cancelRequest: (
-      state,
-      action: PayloadAction<string>,
-    ) => {
-      state.requests = state.requests.filter(
-        item => item.id !== action.payload,
-      )
+    cancelRequest: (state, action: PayloadAction<string>) => {
+      state.requests = state.requests.filter((item) => item.id !== action.payload)
 
       saveRequests(state.requests)
     },
   },
 })
-
 
 export const {
   createRequest,
@@ -178,49 +149,45 @@ export const {
   clearReadNotifications,
 } = requestsSlice.actions
 
-
 // Получить все запросы
-export const selectAllRequests = (
+export const selectAllRequests = (state: { requests: RequestsState }) => state.requests.requests
+
+// Получить заявку, отправленную пользователем по конкретному навыку
+export const selectOutgoingRequestBySkill = (
   state: { requests: RequestsState },
-) => state.requests.requests
+  skillId: string | undefined,
+  fromUserId: string | undefined,
+) => {
+  if (!skillId || !fromUserId) {
+    return null
+  }
+
+  return (
+    state.requests.requests.find(
+      (request) =>
+        request.skillId === skillId &&
+        request.fromUserId === fromUserId &&
+        request.status !== 'rejected',
+    ) ?? null
+  )
+}
 
 // Получить входящие запросы, которые еще отображаются в уведомлениях
-export const selectNotificationRequests = (
-  state: { requests: RequestsState },
-  userId: string,
-) =>
+export const selectNotificationRequests = (state: { requests: RequestsState }, userId: string) =>
   state.requests.requests.filter(
-    (request) =>
-      request.toUserId === userId &&
-      !request.isNotificationDismissed,
+    (request) => request.toUserId === userId && !request.isNotificationDismissed,
   )
-
 
 // Получить ожидающие запросы
-export const selectPendingRequests = (
-  state: { requests: RequestsState },
-) =>
-  state.requests.requests.filter(
-    request => request.status === 'pending',
-  )
-
+export const selectPendingRequests = (state: { requests: RequestsState }) =>
+  state.requests.requests.filter((request) => request.status === 'pending')
 
 // Получить принятые запросы
-export const selectAcceptedRequests = (
-  state: { requests: RequestsState },
-) =>
-  state.requests.requests.filter(
-    request => request.status === 'accepted',
-  )
-
+export const selectAcceptedRequests = (state: { requests: RequestsState }) =>
+  state.requests.requests.filter((request) => request.status === 'accepted')
 
 // Получить отклонённые запросы
-export const selectRejectedRequests = (
-  state: { requests: RequestsState },
-) =>
-  state.requests.requests.filter(
-    request => request.status === 'rejected',
-  )
-
+export const selectRejectedRequests = (state: { requests: RequestsState }) =>
+  state.requests.requests.filter((request) => request.status === 'rejected')
 
 export default requestsSlice.reducer

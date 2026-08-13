@@ -1,4 +1,4 @@
-import { FavoritesWidget, Footer } from '@/widgets'
+import { FavoritesWidget } from '@/widgets'
 import styles from './FavoritesPage.module.css'
 
 export default function FavoritesPage() {
@@ -7,8 +7,6 @@ export default function FavoritesPage() {
       <main className={styles.page}>
         <FavoritesWidget headingAs="h1" />
       </main>
-
-      <Footer />
     </div>
   )
 }
