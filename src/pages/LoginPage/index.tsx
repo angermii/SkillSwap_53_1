@@ -19,6 +19,8 @@ import { selectCityOptions } from '@/entities/user/model/selectors'
 
 import { required, selectRequired } from '@/shared/lib/validators'
 
+import type { Skill } from '@/shared/types'
+
 type RegistrationStep = 1 | 2 | 3
 
 const LOGIN_ERROR_MESSAGE =
@@ -31,6 +33,7 @@ const initialRegistrationData: RegistrationFormData = {
   city: '',
   learningCategory: '',
   learningSubcategory: '',
+  learningSubcategoryIds: [],
   skillName: '',
   skillCategory: '',
   skillSubcategory: '',
@@ -88,7 +91,11 @@ export default function LoginPage() {
   const learningSubcategoryOptions = useMemo(
     () =>
       skillSubCategories
-        .filter((subcategory) => subcategory.categoryId === registrationData.learningCategory)
+        .filter(
+          (subcategory) =>
+            !registrationData.learningCategory ||
+            subcategory.categoryId === registrationData.learningCategory,
+        )
         .map((subcategory) => ({
           name: subcategory.title,
           value: subcategory.id,
@@ -96,10 +103,24 @@ export default function LoginPage() {
     [skillSubCategories, registrationData.learningCategory],
   )
 
+  const selectedLearningSubcategories = useMemo(
+    () =>
+      registrationData.learningSubcategoryIds.flatMap((subcategoryId) => {
+        const subcategory = skillSubCategories.find((item) => item.id === subcategoryId)
+
+        return subcategory ? [{ name: subcategory.title, value: subcategory.id }] : []
+      }),
+    [skillSubCategories, registrationData.learningSubcategoryIds],
+  )
+
   const skillSubcategoryOptions = useMemo(
     () =>
       skillSubCategories
-        .filter((subcategory) => subcategory.categoryId === registrationData.skillCategory)
+        .filter(
+          (subcategory) =>
+            !registrationData.skillCategory ||
+            subcategory.categoryId === registrationData.skillCategory,
+        )
         .map((subcategory) => ({
           name: subcategory.title,
           value: subcategory.id,
@@ -156,14 +177,58 @@ export default function LoginPage() {
   }
 
   const handleFieldChange = (field: RegistrationTextField, value: string) => {
-    setRegistrationData((prev) => ({
-      ...prev,
-      [field]: value,
-    }))
+    setRegistrationData((prev) => {
+      const nextData = {
+        ...prev,
+        [field]: value,
+      }
+
+      // выбрали категорию на шаге 2
+      // старая подкатегория больше может ей не соответствовать
+      if (field === 'learningCategory') {
+        nextData.learningSubcategory = ''
+      }
+
+      // добавляем выбранную подкатегорию в список
+      // и очищаем селекты для следующего выбора
+      if (field === 'learningSubcategory') {
+        const subcategory = skillSubCategories.find((item) => item.id === value)
+
+        if (subcategory) {
+          const isAlreadySelected = prev.learningSubcategoryIds.includes(value)
+
+          nextData.learningSubcategoryIds = isAlreadySelected
+            ? prev.learningSubcategoryIds
+            : [...prev.learningSubcategoryIds, value]
+
+          nextData.learningCategory = ''
+          nextData.learningSubcategory = ''
+        }
+      }
+
+      // то же самое для единственного навыка teach на шаге 3
+      if (field === 'skillCategory') {
+        nextData.skillSubcategory = ''
+      }
+
+      if (field === 'skillSubcategory') {
+        const subcategory = skillSubCategories.find((item) => item.id === value)
+        nextData.skillCategory = subcategory?.categoryId ?? ''
+      }
+
+      return nextData
+    })
 
     setRegistrationErrors((prev) => ({
       ...prev,
       [field]: undefined,
+    }))
+  }
+
+  const handleRemoveLearningSubcategory = (subcategoryId: string) => {
+    setRegistrationData((prev) => ({
+      ...prev,
+      learningSubcategoryIds: prev.learningSubcategoryIds.filter((id) => id !== subcategoryId),
     }))
   }
 
@@ -211,8 +276,8 @@ export default function LoginPage() {
       const birthDateError = registrationData.birthDate ? null : 'Поле обязательно для заполнения'
       const genderError = selectRequired(registrationData.gender)
       const cityError = selectRequired(registrationData.city)
-      const learningCategoryError = selectRequired(registrationData.learningCategory)
-      const learningSubcategoryError = selectRequired(registrationData.learningSubcategory)
+      const learningSubcategoryError =
+        registrationData.learningSubcategoryIds.length === 0 ? 'Выберите хотя бы один навык' : null
 
       if (nameError) {
         errors.name = nameError
@@ -228,10 +293,6 @@ export default function LoginPage() {
 
       if (cityError) {
         errors.city = cityError
-      }
-
-      if (learningCategoryError) {
-        errors.learningCategory = learningCategoryError
       }
 
       if (learningSubcategoryError) {
@@ -297,11 +358,42 @@ export default function LoginPage() {
   }
 
   const handleFinishRegistration = () => {
+    const authorId = registrationCredentials.email
+    const createdAt = new Date().toISOString()
+
+    const teachSkill: Skill = {
+      id: crypto.randomUUID(),
+      title: registrationData.skillName,
+      description: registrationData.skillDescription,
+      type: 'teach',
+      subcategoryId: registrationData.skillSubcategory,
+      imageUrl: galleryImages.map((image) => image.src),
+      authorId,
+      createdAt,
+      likeCount: 0,
+    }
+
+    const learnSkills: Skill[] = registrationData.learningSubcategoryIds.map((subcategoryId) => {
+      const subcategory = skillSubCategories.find((item) => item.id === subcategoryId)
+
+      return {
+        id: crypto.randomUUID(),
+        title: subcategory?.title ?? subcategoryId,
+        description: '',
+        type: 'learn',
+        subcategoryId,
+        imageUrl: null,
+        authorId,
+        createdAt,
+        likeCount: 0,
+      }
+    })
+
     dispatch(
       register({
         password: registrationCredentials.password,
         profile: {
-          id: registrationCredentials.email,
+          id: authorId,
           name: registrationData.name,
           email: registrationCredentials.email,
           avatarUrl: registrationData.avatarUrl,
@@ -309,17 +401,11 @@ export default function LoginPage() {
           birthDate: registrationData.birthDate ? registrationData.birthDate.toISOString() : '',
           city: registrationData.city,
           description: registrationData.skillDescription,
-          skill: {
-            id: crypto.randomUUID(),
-            title: registrationData.skillName,
-            description: registrationData.skillDescription,
-            type: 'teach',
-            subcategoryId: registrationData.skillSubcategory,
-            imageUrl: galleryImages.map((image) => image.src),
-            authorId: registrationCredentials.email,
-            createdAt: new Date().toISOString(),
-            likeCount: 0,
-          },
+          createdAt,
+          // временно оставляем для существующего личного кабинета
+          skill: teachSkill,
+          // новая модель всех навыков пользователя
+          skills: [teachSkill, ...learnSkills],
         },
       }),
     )
@@ -381,6 +467,7 @@ export default function LoginPage() {
             categoryOptions={categoryOptions}
             learningSubcategoryOptions={learningSubcategoryOptions}
             skillSubcategoryOptions={skillSubcategoryOptions}
+            selectedLearningSubcategories={selectedLearningSubcategories}
             onFieldChange={handleFieldChange}
             onBirthDateChange={(date) => {
               setRegistrationData((prev) => ({
@@ -397,6 +484,7 @@ export default function LoginPage() {
             onImagesChange={handleImagesChange}
             onBack={handleRegistrationBack}
             onNext={handleRegistrationNext}
+            onRemoveLearningSubcategory={handleRemoveLearningSubcategory}
           />
         )}
 

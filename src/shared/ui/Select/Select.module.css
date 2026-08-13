@@ -82,10 +82,13 @@
   left: -1px;
   z-index: 5;
   width: auto;
+  max-height: 256px;
   display: flex;
   flex-direction: column;
   padding: 8px 0;
   gap: 4px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   background-color: #fff;
   border: 1px solid #69735d;
   border-top: none;

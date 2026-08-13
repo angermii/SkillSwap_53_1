@@ -7,8 +7,13 @@ import {
   fetchSkills,
 } from '@/api/skills'
 import type { Skill, SkillCategory, SkillSubcategory } from './types'
+import { getRegisteredUsers } from '@/features/auth'
+import { getAuthUserSkills } from '@/shared/lib/authUserMapper'
 
 export type SkillRequestKey = 'skills' | 'selectedSkill' | 'categories' | 'subcategories' | 'userSkills'
+
+const getRegisteredSkills = (): Skill[] =>
+  getRegisteredUsers().flatMap(({ profile }) => getAuthUserSkills(profile))
 
 // храним списочные результаты и отдельно выбранный навык
 export interface SkillState {
@@ -61,18 +66,42 @@ const failRequest = (
 }
 
 // загружает полный список навыков через существующий api
-export const fetchSkill = createAsyncThunk<Skill[]>('skill/fetchSkill', async () => fetchSkills())
+export const fetchSkill = createAsyncThunk<Skill[]>('skill/fetchSkill', async () => {
+  const apiSkills = await fetchSkills()
+  const skillsById = new Map(apiSkills.map((skill) => [skill.id, skill]))
+
+  getRegisteredSkills().forEach((skill) => {
+    skillsById.set(skill.id, skill)
+  })
+
+  return Array.from(skillsById.values())
+})
 
 // загружает один навык по его идентификатору
 export const fetchSkillById = createAsyncThunk<Skill | undefined, string>(
   'skill/fetchSkillById',
-  async (id) => fetchSkillByIdApi(id),
+  async (id) => {
+    const registeredSkill = getRegisteredSkills().find((skill) => skill.id === id)
+
+    return registeredSkill ?? fetchSkillByIdApi(id)
+  },
 )
 
 // загружает навыки конкретного пользователя через api
 export const fetchSkillByUserId = createAsyncThunk<Skill[], string>(
   'skill/fetchSkillByUserId',
-  async (userId) => fetchSkillByUserIdApi(userId),
+  async (userId) => {
+    const apiSkills = await fetchSkillByUserIdApi(userId)
+    const skillsById = new Map(apiSkills.map((skill) => [skill.id, skill]))
+
+    getRegisteredSkills()
+      .filter((skill) => skill.authorId === userId)
+      .forEach((skill) => {
+        skillsById.set(skill.id, skill)
+      })
+
+    return Array.from(skillsById.values())
+  },
 )
 
 // загружает справочник категорий навыков
