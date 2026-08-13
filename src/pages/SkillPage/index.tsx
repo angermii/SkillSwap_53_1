@@ -1,9 +1,15 @@
 // TODO: реализовать страницу SkillPage
-
-import { Footer, groupSkillsByAuthor, mapUserToCardData, UserCard, UserSkillWidget } from '@/widgets'
+import { useLike } from '@/features/favorites/model/useLike'
+import {
+  Footer,
+  groupSkillsByAuthor,
+  mapUserToCardData,
+  UserCard,
+  UserSkillWidget,
+} from '@/widgets'
 import { generatePath, useNavigate, useParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '@/store/hooks.ts'
-import { ReactNode, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Styles from './SkillPage.module.css'
 import {
   fetchSkill,
@@ -26,34 +32,38 @@ import { createRequest } from '@/entities/request/requestsSlice.ts'
 
 export default function SkillPage() {
   //находим навык по url
-  const { id } = useParams();
+  const { id } = useParams()
   const navigate = useNavigate()
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
   const skill = useAppSelector(selectSelectedSkill)
-  //Нужно найти id пользователя залогиненного, либо редирект(недоделано)
-  const currentUser = '';
+
   //находим пользователя, которому принадлежит навык
-  const userId = skill?.authorId;
-  const selectedUser = useAppSelector((state) => state.user.user);
+  const userId = skill?.authorId
+  const selectedUser = useAppSelector((state) => state.user.user)
   //все навыки, связанные с пользователем
-  const userSkills = useAppSelector((state) => state.skill.userSkills);
+  const userSkills = useAppSelector((state) => state.skill.userSkills)
   const subcategory = useAppSelector((state) =>
-      skill?.subcategoryId ? selectSkillSubcategoryById(state, skill.subcategoryId) : null);
-  const category = useAppSelector((state) =>  subcategory?.categoryId ? selectSkillCategoryById(state, subcategory.categoryId) : null);
-  const users = useAppSelector((state) => state.user.items);
-  const skills = useAppSelector(selectSkills);
-  const subcategoriesById = useAppSelector(selectSkillSubcategoriesById);
-  const isLoading = useAppSelector(selectSelectedSkillLoading);
-  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
-  const [isRequested, setIsRequested] = useState<boolean>(false);
+    skill?.subcategoryId ? selectSkillSubcategoryById(state, skill.subcategoryId) : null,
+  )
+  const category = useAppSelector((state) =>
+    subcategory?.categoryId ? selectSkillCategoryById(state, subcategory.categoryId) : null,
+  )
+  const users = useAppSelector((state) => state.user.items)
+  const skills = useAppSelector(selectSkills)
+  const { likedState, likeCounts, handleLike, isRegistrationModalOpen, closeRegistrationModal } =
+    useLike({ skills })
+  const subcategoriesById = useAppSelector(selectSkillSubcategoriesById)
+  const isLoading = useAppSelector(selectSelectedSkillLoading)
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
+  const [isRequested, setIsRequested] = useState<boolean>(false)
 
   useEffect(() => {
-    if (id){
+    if (id) {
       void dispatch(fetchSkillById(id))
         .unwrap()
-        .catch((error) => {
-          navigate('/404', { replace: true })
-        })
+        .catch(() => {
+  navigate('/404', { replace: true })
+})
     }
   }, [dispatch, id, navigate])
 
@@ -62,14 +72,12 @@ export default function SkillPage() {
     void dispatch(fetchSkill())
   }, [dispatch])
 
-
-
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [id])
 
   useEffect(() => {
-    if (userId){
+    if (userId) {
       void dispatch(fetchUserById(userId))
       void dispatch(fetchSkillByUserId(userId))
     }
@@ -146,10 +154,28 @@ export default function SkillPage() {
           </Button>
         </ModalUI>
       )}
+      {isRegistrationModalOpen && (
+        <ModalUI
+          title="Хотите поставить лайк?"
+          description="Зарегистрируйтесь, чтобы добавлять навыки в избранное"
+          onClose={closeRegistrationModal}
+          className={Styles.RegistrationModal}
+        >
+          <div className={Styles.RegistrationButton}>
+            <Button type="button" onClick={() => navigate(ROUTES.REGISTER)}>
+              Зарегистрироваться
+            </Button>
+          </div>
+        </ModalUI>
+      )}
       <div className={Styles.Skill}>
         <UserCard user={user} variant={'expanded'} />
         <UserSkillWidget
-          like={{ count: 10, isLiked: false }}
+          like={{
+            count: likeCounts[skill.id] ?? skill.likeCount,
+            isLiked: likedState[skill.id] ?? false,
+            onClick: () => handleLike(skill.id),
+          }}
           skill={{
             title: skill.title,
             subtitle: `${category.title} / ${subcategory.title}`,
@@ -165,7 +191,7 @@ export default function SkillPage() {
               variant={isRequested ? 'secondary' : 'primary'}
               startIcon={isRequested ? <ClockIcon /> : undefined}
               type="button"
-              onClick={isRequested ? ()=>{} : handleRequest}
+              onClick={isRequested ? () => {} : handleRequest}
             >
               <span>{isRequested ? 'Обмен предложен' : 'Предложить обмен'}</span>
             </Button>
