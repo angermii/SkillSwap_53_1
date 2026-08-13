@@ -1,5 +1,3 @@
-// TODO: реализовать страницу SkillPage
-
 import {
   Footer,
   groupSkillsByAuthor,
@@ -9,7 +7,7 @@ import {
 } from '@/widgets'
 import { generatePath, useNavigate, useParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '@/store/hooks.ts'
-import { ReactNode, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Styles from './SkillPage.module.css'
 import {
   fetchSkill,
@@ -28,7 +26,7 @@ import {
 } from '@/entities/skill/model/selectors'
 import { ROUTES } from '@/shared/lib/constants.ts'
 import { toggleFavorite } from '@/features/favorites'
-import { createRequest } from '@/entities/request/requestsSlice.ts'
+import { createRequest, selectOutgoingRequestBySkill } from '@/entities/request/requestsSlice.ts'
 import { toGalleryImages } from '@/widgets/GalleryCarousel'
 
 export default function SkillPage() {
@@ -37,8 +35,9 @@ export default function SkillPage() {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const skill = useAppSelector(selectSelectedSkill)
-  //Нужно найти id пользователя залогиненного, либо редирект(недоделано)
-  const currentUser = ''
+  //текущий залогиненный пользователь
+  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated)
+  const currentUser = useAppSelector((state) => state.auth.user)
   //находим пользователя, которому принадлежит навык
   const userId = skill?.authorId
   const selectedUser = useAppSelector((state) => state.user.user)
@@ -54,8 +53,15 @@ export default function SkillPage() {
   const skills = useAppSelector(selectSkills)
   const subcategoriesById = useAppSelector(selectSkillSubcategoriesById)
   const isLoading = useAppSelector(selectSelectedSkillLoading)
+
+  // уже отправленная заявка по этому навыку, чтобы не создавать дубли
+  const outgoingRequest = useAppSelector((state) =>
+    selectOutgoingRequestBySkill(state, skill?.id, currentUser?.id),
+  )
+  const isRequested = outgoingRequest !== null
+
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false)
-  const [isRequested, setIsRequested] = useState<boolean>(false)
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState<boolean>(false)
 
   useEffect(() => {
     if (id) {
@@ -117,17 +123,25 @@ export default function SkillPage() {
 
   const handleRequest = () => {
     if (!skill?.id || !userId) return
-    //добавить проверку на успех запроса(возможно)
-    void dispatch(
+
+    // неавторизованному пользователю предлагаем зарегистрироваться
+    if (!isAuthenticated || !currentUser) {
+      setIsAuthModalOpen(true)
+      return
+    }
+
+    // защита от повторной заявки
+    if (isRequested) return
+
+    dispatch(
       createRequest({
         skillId: skill.id,
-        //здесь добавить id пользователя
-        fromUserId: '',
+        fromUserId: currentUser.id,
         toUserId: userId,
       }),
     )
+
     setIsOpenModal(true)
-    setIsRequested(true)
   }
 
   if (isLoading || !skill || !selectedUser || !subcategory || !category) {
@@ -154,9 +168,33 @@ export default function SkillPage() {
           icon={<NotificationIcon size={100} />}
           onClose={() => setIsOpenModal(false)}
         >
-          <Button type="button" onClick={() => setIsOpenModal(false)}>
-            <span>Готово</span>
-          </Button>
+          <div className={Styles.ModalActions}>
+            <Button
+              className={Styles.ModalButton}
+              type="button"
+              onClick={() => setIsOpenModal(false)}
+            >
+              <span>Готово</span>
+            </Button>
+          </div>
+        </ModalUI>
+      )}
+      {isAuthModalOpen && (
+        <ModalUI
+          title="Хотите предложить обмен?"
+          description="Зарегистрируйтесь, чтобы предлагать обмен навыками"
+          onClose={() => setIsAuthModalOpen(false)}
+          className={Styles.AuthModal}
+        >
+          <div className={Styles.ModalActions}>
+            <Button
+              className={Styles.ModalButton}
+              type="button"
+              onClick={() => navigate(ROUTES.REGISTER)}
+            >
+              <span>Зарегистрироваться</span>
+            </Button>
+          </div>
         </ModalUI>
       )}
       <div className={Styles.Skill}>
@@ -175,7 +213,8 @@ export default function SkillPage() {
               variant={isRequested ? 'secondary' : 'primary'}
               startIcon={isRequested ? <ClockIcon /> : undefined}
               type="button"
-              onClick={isRequested ? () => {} : handleRequest}
+              disabled={isRequested}
+              onClick={handleRequest}
             >
               <span>{isRequested ? 'Обмен предложен' : 'Предложить обмен'}</span>
             </Button>
@@ -206,6 +245,3 @@ export default function SkillPage() {
     </main>
   )
 }
-
-//еще не добавлена карусель для карточек похожие предложения как в макете
-//фото в userSkillWidget не прогружаются
