@@ -75,4 +75,13 @@ describe('searchUsers', () => {
   it('ищет по городу без учёта регистра', () => {
     expect(searchUsers(skills, 'КАЗ', users)).toEqual([users[1]])
   })
+  it('исключает пользователей без навыков, даже если совпадает имя', () => {
+    const usersWithoutSkills = [...users, createUser('user-3', 'Фотограф Пётр', 'Уфа')]
+
+    expect(searchUsers(skills, 'фото', usersWithoutSkills)).toEqual([users[0]])
+  })
+
+  it('возвращает пустой массив, если пользователи не переданы', () => {
+    expect(searchUsers(skills, 'фото')).toEqual([])
+  })
 })

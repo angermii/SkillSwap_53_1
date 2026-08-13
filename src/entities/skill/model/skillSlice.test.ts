@@ -1,8 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { describe, expect, it } from 'vitest'
-import skillReducer, { fetchSkill, fetchSkillById, fetchSkillByUserId } from './skillSlice'
-import type { Skill } from './types'
-console.log('NEW TEST FILE');
+import skillReducer, {
+  fetchSkill,
+  fetchSkillById,
+  fetchSkillByUserId,
+  fetchSkillCategories,
+  fetchSkillSubcategories,
+} from './skillSlice'
+import type { Skill, SkillCategory, SkillSubcategory } from './types'
 // создаем изолированный store только со skill reducer
 const createTestStore = () =>
   configureStore({
@@ -39,6 +44,12 @@ const emptyError = {
   subcategories: null,
   userSkills: null,
 }
+
+const testCategories: SkillCategory[] = [{ id: 'category-001', title: 'Образование' }]
+
+const testSubcategories: SkillSubcategory[] = [
+  { id: 'subcategory-001', title: 'Программирование', categoryId: 'category-001' },
+]
 
 describe('skillSlice', () => {
   it('has empty initial state', () => {
@@ -131,5 +142,98 @@ describe('skillSlice', () => {
       },
       userSkills: []
     })
+  })
+  it('stores error when fetchSkillById fails', () => {
+    const store = createTestStore()
+
+    store.dispatch(fetchSkillById.pending('request-id', 'skill-001'))
+    store.dispatch(
+      fetchSkillById.rejected(new Error('Not found'), 'request-id', 'skill-001'),
+    )
+
+    expect(store.getState().skill.loading.selectedSkill).toBe(false)
+    expect(store.getState().skill.error.selectedSkill).toBe('Not found')
+  })
+
+  it('stores error when fetchSkillByUserId fails', () => {
+    const store = createTestStore()
+
+    store.dispatch(fetchSkillByUserId.pending('request-id', 'user-001'))
+    store.dispatch(
+      fetchSkillByUserId.rejected(new Error('Not found'), 'request-id', 'user-001'),
+    )
+
+    expect(store.getState().skill.loading.userSkills).toBe(false)
+    expect(store.getState().skill.error.userSkills).toBe('Not found')
+  })
+
+  it('sets loading and stores categories when fetchSkillCategories succeeds', () => {
+    const store = createTestStore()
+
+    store.dispatch(fetchSkillCategories.pending('request-id', undefined))
+    expect(store.getState().skill.loading.categories).toBe(true)
+
+    store.dispatch(fetchSkillCategories.fulfilled(testCategories, 'request-id', undefined))
+
+    expect(store.getState().skill.loading.categories).toBe(false)
+    expect(store.getState().skill.categories).toEqual(testCategories)
+  })
+
+  it('stores error when fetchSkillCategories fails', () => {
+    const store = createTestStore()
+
+    store.dispatch(
+      fetchSkillCategories.rejected(new Error('Categories failed'), 'request-id', undefined),
+    )
+
+    expect(store.getState().skill.error.categories).toBe('Categories failed')
+  })
+
+  it('sets loading and stores subcategories when fetchSkillSubcategories succeeds', () => {
+    const store = createTestStore()
+
+    store.dispatch(fetchSkillSubcategories.pending('request-id', undefined))
+    expect(store.getState().skill.loading.subcategories).toBe(true)
+
+    store.dispatch(fetchSkillSubcategories.fulfilled(testSubcategories, 'request-id', undefined))
+
+    expect(store.getState().skill.loading.subcategories).toBe(false)
+    expect(store.getState().skill.subcategories).toEqual(testSubcategories)
+  })
+
+  it('stores error when fetchSkillSubcategories fails', () => {
+    const store = createTestStore()
+
+    store.dispatch(
+      fetchSkillSubcategories.rejected(new Error('Subcategories failed'), 'request-id', undefined),
+    )
+
+    expect(store.getState().skill.error.subcategories).toBe('Subcategories failed')
+  })
+
+  it('falls back to a default message when the error has no message', () => {
+    const store = createTestStore()
+
+    store.dispatch({ type: fetchSkill.rejected.type, error: {} })
+    store.dispatch({ type: fetchSkillById.rejected.type, error: {} })
+    store.dispatch({ type: fetchSkillByUserId.rejected.type, error: {} })
+    store.dispatch({ type: fetchSkillCategories.rejected.type, error: {} })
+    store.dispatch({ type: fetchSkillSubcategories.rejected.type, error: {} })
+
+    expect(store.getState().skill.error).toEqual({
+      skills: 'Не удалось загрузить навыки',
+      selectedSkill: 'Не удалось загрузить навык',
+      userSkills: 'Не удалось загрузить навыки пользователя',
+      categories: 'Не удалось загрузить категории',
+      subcategories: 'Не удалось загрузить подкатегории',
+    })
+  })
+
+  it('resets selected skill when fetchSkillById returns nothing', () => {
+    const store = createTestStore()
+
+    store.dispatch(fetchSkillById.fulfilled(undefined, 'request-id', 'unknown'))
+
+    expect(store.getState().skill.selectedSkill).toBeNull()
   })
 })

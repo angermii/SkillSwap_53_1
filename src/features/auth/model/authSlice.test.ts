@@ -104,4 +104,53 @@ describe('authSlice', () => {
     expect(store.getState().auth).toEqual({ user: null, isAuthenticated: false })
     expect(localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_USER)).toBeNull()
   })
+
+  it('updateUser does nothing when there is no logged in user', async () => {
+    const { updateUser } = await import('./authSlice')
+    const store = await createTestStore()
+
+    store.dispatch(updateUser({ city: 'Казань' }))
+
+    expect(store.getState().auth).toEqual({ user: null, isAuthenticated: false })
+  })
+
+  it('updateUser updates state and persists changes to localStorage', async () => {
+    const { login, updateUser } = await import('./authSlice')
+    const store = await createTestStore()
+
+    store.dispatch(login(mockLoginPayload))
+    store.dispatch(updateUser({ city: 'Казань', description: 'Новое описание' }))
+
+    const state = store.getState().auth
+    expect(state.user?.city).toBe('Казань')
+    expect(state.user?.description).toBe('Новое описание')
+    expect(state.user?.name).toBe('Иван')
+
+    const stored = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_USER)!)
+    expect(stored).toEqual(state.user)
+  })
+
+  it('updateUser syncs the profile in the registered users registry', async () => {
+    const { register, updateUser } = await import('./authSlice')
+    const store = await createTestStore()
+
+    store.dispatch(register({ profile: mockLoginPayload, password: 'password' }))
+    store.dispatch(updateUser({ city: 'Казань' }))
+
+    const registeredUsers = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.USERS)!)
+    expect(registeredUsers[0].profile.city).toBe('Казань')
+    expect(registeredUsers[0].password).toBe('password')
+  })
+
+  it('updateUser keeps the registry in sync when the email changes', async () => {
+    const { register, updateUser } = await import('./authSlice')
+    const store = await createTestStore()
+
+    store.dispatch(register({ profile: mockLoginPayload, password: 'password' }))
+    store.dispatch(updateUser({ email: 'new@a.ru' }))
+
+    const registeredUsers = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.USERS)!)
+    expect(registeredUsers).toHaveLength(1)
+    expect(registeredUsers[0].profile.email).toBe('new@a.ru')
+  })
 })
