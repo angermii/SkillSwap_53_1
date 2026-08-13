@@ -446,7 +446,9 @@ export default function CatalogPage() {
           className={styles.registrationModal}
         >
           <div className={styles.registrationButton}>
-            <Button onClick={() => navigate(ROUTES.REGISTER)}>Зарегистрироваться</Button>
+            <Button className={styles.ModalButton} onClick={() => navigate(ROUTES.REGISTER)}>
+              Зарегистрироваться
+            </Button>
           </div>
         </ModalUI>
       )}

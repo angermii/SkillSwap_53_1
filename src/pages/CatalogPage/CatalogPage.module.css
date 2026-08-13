@@ -37,10 +37,15 @@
 .registrationButton {
   display: flex;
   justify-content: center;
+  margin-top: var(--space-xl);
 }
 
 .registrationModal {
   height: auto;
   min-height: 0;
   padding: 60px;
+}
+
+.ModalButton {
+  width: 100%;
 }
