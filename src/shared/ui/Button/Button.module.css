@@ -6,11 +6,11 @@
   height: 48px;
   padding: 12px 24px;
   border: 1px solid transparent;
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   font: inherit;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 24px;
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-h4);
   letter-spacing: 0.02em;
   white-space: nowrap;
   cursor: pointer;
@@ -22,65 +22,65 @@
 }
 
 .primary {
-  color: #253017;
-  background-color: #abd27a;
+  color: var(--color-text);
+  background-color: var(--color-accent);
 }
 
 .primary:hover {
-  background-color: #deebc5;
+  background-color: var(--color-button-hover);
 }
 
 .primary:active {
-  color: #fff;
-  background-color: #508826;
+  color: var(--color-card-input);
+  background-color: var(--color-link-button);
 }
 
 .primary:disabled {
-  color: #69735d;
-  background-color: #e4e8df;
+  color: var(--color-caption);
+  background-color: var(--color-disabled);
 }
 
 .secondary {
-  color: #253017;
-  background-color: #fff;
-  border-color: #abd27a;
+  color: var(--color-text);
+  background-color: var(--color-card-input);
+  border-color: var(--color-accent);
 }
 
 .secondary:hover {
-  color: #69735d;
-  border-color: #deebc5;
+  color: var(--color-caption);
+  border-color: var(--color-button-hover);
 }
 
 .secondary:active {
-  color: #253017;
-  border-color: #508826;
+  color: var(--color-text);
+  border-color: var(--color-link-button);
 }
 
 .secondary:disabled {
-  color: #9ca197;
-  border-color: #e4e8df;
+  color: var(--color-text-disabled);
+  border-color: var(--color-disabled);
 }
 
 .ghost {
-  color: #253017;
-  background-color: #fff;
+  color: var(--color-text);
+  background-color: var(--color-card-input);
 }
 
 .ghost:hover {
-  background-color: #deebc5;
+  background-color: var(--color-button-hover);
 }
 
 .social {
   width: 100%; /* ширину задает контейнер формы */
   gap: 12px;
-  color: #253017;
-  background-color: #fff;
-  border-color: #69735d;
+  color: var(--color-text);
+  background-color: var(--color-card-input);
+  border-color: var(--color-caption);
 }
 
 .social:hover {
-  border-color: #abd27a;
-  color: #69735d;
+  border-color: var(--color-accent);
+  color: var(--color-caption);
 }
 
 .icon {

@@ -1,8 +1,4 @@
-import type {
-  Skill,
-  SkillCategory,
-  SkillSubcategory,
-} from '@/shared/types'
+import type { Skill, SkillCategory, SkillSubcategory } from '@/shared/types'
 
 const BASE_URL = '/db'
 

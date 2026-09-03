@@ -3,15 +3,20 @@ import { NotificationItem, Notification } from '@/shared/ui'
 import clsx from 'clsx'
 
 export interface NotificationsProps {
-  notifications?: Notification[];
-  readAll?: () => void;
-  clearAll?: () => void;
-  onClick?: (id: string) => void;
+  notifications?: Notification[]
+  readAll?: () => void
+  clearAll?: () => void
+  onClick?: (id: string) => void
 }
 
-export const Notifications = ({notifications = [], readAll, clearAll, onClick} : NotificationsProps) => {
-  const unread = notifications.filter((item) => item.status === "unread");
-  const read = notifications.filter((item) => item.status === "read");
+export const Notifications = ({
+  notifications = [],
+  readAll,
+  clearAll,
+  onClick,
+}: NotificationsProps) => {
+  const unread = notifications.filter((item) => item.status === 'unread')
+  const read = notifications.filter((item) => item.status === 'read')
   if (notifications.length === 0) {
     return (
       <div className={Styles.Widget}>

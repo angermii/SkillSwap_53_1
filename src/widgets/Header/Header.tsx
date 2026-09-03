@@ -48,7 +48,7 @@ export const Header = ({
                   onClick={() => setIsMenuOpen((prev) => !prev)}
                 >
                   <span className={styles.span}>Все навыки</span>
-                  <ChevronDownIcon />
+                  <ChevronDownIcon className={styles.icon} />
                 </button>
               }
               isOpen={isMenuOpen}
@@ -126,6 +126,7 @@ export const Header = ({
             <Dropdown
               trigger={
                 <HeaderUser
+                  className={styles.iconButton}
                   name={user.name}
                   avatarSrc={user.avatarUrl ?? undefined}
                   onClick={() => setIsAccountOpen((prev) => !prev)}

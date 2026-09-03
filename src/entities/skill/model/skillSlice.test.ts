@@ -62,7 +62,7 @@ describe('skillSlice', () => {
       subcategories: [],
       loading: emptyLoading,
       error: emptyError,
-      userSkills: []
+      userSkills: [],
     })
   })
 
@@ -80,7 +80,7 @@ describe('skillSlice', () => {
       subcategories: [],
       loading: emptyLoading,
       error: emptyError,
-      userSkills: []
+      userSkills: [],
     })
   })
 
@@ -99,7 +99,7 @@ describe('skillSlice', () => {
       subcategories: [],
       loading: emptyLoading,
       error: emptyError,
-      userSkills: []
+      userSkills: [],
     })
   })
 
@@ -118,7 +118,7 @@ describe('skillSlice', () => {
       subcategories: [],
       loading: emptyLoading,
       error: emptyError,
-      userSkills: [testSkill]
+      userSkills: [testSkill],
     })
   })
 
@@ -140,16 +140,14 @@ describe('skillSlice', () => {
         ...emptyError,
         skills: 'Failed to fetch skills',
       },
-      userSkills: []
+      userSkills: [],
     })
   })
   it('stores error when fetchSkillById fails', () => {
     const store = createTestStore()
 
     store.dispatch(fetchSkillById.pending('request-id', 'skill-001'))
-    store.dispatch(
-      fetchSkillById.rejected(new Error('Not found'), 'request-id', 'skill-001'),
-    )
+    store.dispatch(fetchSkillById.rejected(new Error('Not found'), 'request-id', 'skill-001'))
 
     expect(store.getState().skill.loading.selectedSkill).toBe(false)
     expect(store.getState().skill.error.selectedSkill).toBe('Not found')
@@ -159,9 +157,7 @@ describe('skillSlice', () => {
     const store = createTestStore()
 
     store.dispatch(fetchSkillByUserId.pending('request-id', 'user-001'))
-    store.dispatch(
-      fetchSkillByUserId.rejected(new Error('Not found'), 'request-id', 'user-001'),
-    )
+    store.dispatch(fetchSkillByUserId.rejected(new Error('Not found'), 'request-id', 'user-001'))
 
     expect(store.getState().skill.loading.userSkills).toBe(false)
     expect(store.getState().skill.error.userSkills).toBe('Not found')

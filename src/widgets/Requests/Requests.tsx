@@ -34,7 +34,9 @@ export const Requests = () => {
 
   const pendingRequests = useAppSelector(selectPendingRequests)
 
-  const outgoingRequests = useAppSelector((state) => currentUser ? selectOutgoingRequests(state, currentUser.id) : [])
+  const outgoingRequests = useAppSelector((state) =>
+    currentUser ? selectOutgoingRequests(state, currentUser.id) : [],
+  )
 
   const incomingRequests = pendingRequests.filter((request) => request.toUserId === currentUser?.id)
 
@@ -42,7 +44,7 @@ export const Requests = () => {
     navigate(
       generatePath(ROUTES.SKILL, {
         id: skillId,
-      })
+      }),
     )
   }
 

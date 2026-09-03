@@ -9,9 +9,9 @@
 }
 
 .label {
-  font-size: 16px;
+  font-size: var(--font-size-body);
   font-weight: var(--font-weight-regular);
-  color: #253017;
+  color: var(--color-text);
   margin-bottom: 4px;
 }
 
@@ -20,9 +20,9 @@
   flex: 1 1 auto;
   align-items: stretch;
   position: relative;
-  background: #fff;
-  border: 1px solid #69735D;
-  border-radius: 12px;
+  background: var(--color-card-input);
+  border: 1px solid var(--color-caption);
+  border-radius: var(--radius-lg);
   padding: 0 20px;
   min-height: 48px;
   transition: all 0.2s ease-in-out;
@@ -33,18 +33,18 @@
 }
 
 .wrapper:focus-within {
-  border-color: #69735D;
-  box-shadow: 0 1px 5px #69735D;
+  border-color: var(--color-caption);
+  box-shadow: 0 1px 5px var(--color-caption);
 }
 
 .wrapper.error {
   align-items: stretch;
-  border-color: #BF3920;
+  border-color: var(--color-error);
 }
 
 .wrapper.error:focus-within {
-  border-color: #BF3920;
-  box-shadow: 0 1px 5px #BF3920;
+  border-color: var(--color-error);
+  box-shadow: 0 1px 5px var(--color-error);
 }
 
 .textarea {
@@ -58,32 +58,32 @@
   width: 100%;
   min-width: 100px;
   flex: 1;
-  font-size: 16px;
-  color: #253017;
+  font-size: var(--font-size-body);
+  color: var(--color-text);
   font-family: inherit;
 }
 
 .input::placeholder {
-  color: #69735D;
+  color: var(--color-caption);
 }
 
 .leftIcon {
   display: flex;
   align-items: center;
   margin-right: var(--space-sm);
-  color: #253017;
+  color: var(--color-text);
 }
 
 .rightIcon {
   display: flex;
   align-items: center;
   margin-left: var(--space-sm);
-  color: #253017;
+  color: var(--color-text);
 }
 
 .errorText {
-  font-size: 12px;
+  font-size: var(--font-size-caption);
   color: var(--color-error);
-  font-weight: 400;
+  font-weight: var(--font-weight-regular);
   margin-top: 4px;
 }

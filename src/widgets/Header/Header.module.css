@@ -88,6 +88,11 @@
   border: none;
   background: transparent;
   cursor: pointer;
+  color: var(--color-text);
+}
+
+.icon {
+  color: var(--color-text);
 }
 
 .user {

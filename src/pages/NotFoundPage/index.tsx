@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { Error, Button } from '@/shared/ui'
 import { ROUTES } from '@/shared/lib/constants'
-import error404 from '@/shared/illustrations/error404.svg'
+import { Error404Illustration } from '@/shared/illustrations/index'
 import styles from './NotFoundPage.module.css'
 
 export default function NotFoundPage() {
@@ -11,7 +11,7 @@ export default function NotFoundPage() {
     <>
       <main className={styles.main}>
         <Error
-          errorImg={error404}
+          errorImg={Error404Illustration}
           imageWidth={460}
           imageHeight={304}
           title="Страница не найдена"

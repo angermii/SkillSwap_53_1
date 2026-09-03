@@ -1,1 +1,1 @@
-export { UserCatalog } from './UserCatalog';
+export { UserCatalog } from './UserCatalog'

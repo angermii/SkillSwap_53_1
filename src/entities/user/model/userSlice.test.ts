@@ -31,164 +31,148 @@ const testUser: User = {
 }
 
 describe('userSlice', () => {
-    beforeEach(() => {
-        vi.clearAllMocks()
+  beforeEach(() => {
+    vi.clearAllMocks()
+  })
+
+  it('has empty initial state', () => {
+    const store = createTestStore()
+
+    expect(store.getState().user).toEqual({
+      items: [],
+      user: null,
+      loading: false,
+      error: null,
     })
+  })
+  it('stores users when fetchUsers succeeds', () => {
+    const store = createTestStore()
 
-    it('has empty initial state', () => {
-        const store = createTestStore()
+    store.dispatch(fetchUsers.pending('request-id', undefined))
+    expect(store.getState().user.loading).toBe(true)
 
-        expect(store.getState().user).toEqual({
-        items: [],
-        user: null,
-        loading: false,
-        error: null,
-        })   
+    store.dispatch(fetchUsers.fulfilled([testUser], 'request-id', undefined))
+
+    expect(store.getState().user).toEqual({
+      items: [testUser],
+      user: null,
+      loading: false,
+      error: null,
     })
-    it('stores users when fetchUsers succeeds', () => {
-        const store = createTestStore()
+  })
 
-        store.dispatch(fetchUsers.pending('request-id', undefined))
-        expect(store.getState().user.loading).toBe(true)
+  it('stores selected user when fetchUserById succeeds', () => {
+    const store = createTestStore()
 
-        store.dispatch(fetchUsers.fulfilled([testUser], 'request-id', undefined))
+    store.dispatch(fetchUserById.pending('request-id', testUser.id))
+    expect(store.getState().user.loading).toBe(true)
 
-        expect(store.getState().user).toEqual({
-        items: [testUser],
-        user: null,
-        loading: false,
-        error: null,
-        })
+    store.dispatch(fetchUserById.fulfilled(testUser, 'request-id', testUser.id))
+
+    expect(store.getState().user).toEqual({
+      items: [],
+      user: testUser,
+      loading: false,
+      error: null,
     })
+  })
 
-    it('stores selected user when fetchUserById succeeds', () => {
-        const store = createTestStore()
+  it('stores error when fetchUsers fails', () => {
+    const store = createTestStore()
 
-        store.dispatch(fetchUserById.pending('request-id', testUser.id))
-        expect(store.getState().user.loading).toBe(true)
+    store.dispatch(fetchUsers.pending('request-id', undefined))
+    store.dispatch(fetchUsers.rejected(new Error('Failed to fetch users'), 'request-id', undefined))
 
-        store.dispatch(
-        fetchUserById.fulfilled(testUser, 'request-id', testUser.id),
-        )
-
-        expect(store.getState().user).toEqual({
-        items: [],
-        user: testUser,
-        loading: false,
-        error: null,
-        })
+    expect(store.getState().user).toEqual({
+      items: [],
+      user: null,
+      loading: false,
+      error: 'Failed to fetch users',
     })
+  })
 
-    it('stores error when fetchUsers fails', () => {
-        const store = createTestStore()
+  it('stores error when fetchUserById fails', () => {
+    const store = createTestStore()
 
-        store.dispatch(fetchUsers.pending('request-id', undefined))
-        store.dispatch(
-        fetchUsers.rejected(
-            new Error('Failed to fetch users'),
-            'request-id',
-            undefined,
-        ),
-        )
+    store.dispatch(fetchUserById.pending('request-id', testUser.id))
+    store.dispatch(
+      fetchUserById.rejected(new Error('Пользователь не найден'), 'request-id', testUser.id),
+    )
 
-        expect(store.getState().user).toEqual({
-        items: [],
-        user: null,
-        loading: false,
-        error: 'Failed to fetch users',
-        })
+    expect(store.getState().user).toEqual({
+      items: [],
+      user: null,
+      loading: false,
+      error: 'Пользователь не найден',
     })
+  })
 
-    it('stores error when fetchUserById fails', () => {
-        const store = createTestStore()
+  it('fetchUsers thunk calls api and stores users', async () => {
+    vi.mocked(usersApi.fetchUsers).mockResolvedValue([testUser])
 
-        store.dispatch(fetchUserById.pending('request-id', testUser.id))
-        store.dispatch(
-        fetchUserById.rejected(
-            new Error('Пользователь не найден'),
-            'request-id',
-            testUser.id,
-        ),
-        )
+    const store = createTestStore()
 
-        expect(store.getState().user).toEqual({
-        items: [],
-        user: null,
-        loading: false,
-        error: 'Пользователь не найден',
-        })
-    })
+    await store.dispatch(fetchUsers())
 
-    it('fetchUsers thunk calls api and stores users', async () => {
-        vi.mocked(usersApi.fetchUsers).mockResolvedValue([testUser])
+    expect(usersApi.fetchUsers).toHaveBeenCalledTimes(1)
+    expect(store.getState().user.items).toEqual([testUser])
+  })
 
-        const store = createTestStore()
+  it('fetchUserById thunk calls api and stores selected user', async () => {
+    vi.mocked(usersApi.fetchUserById).mockResolvedValue(testUser)
 
-        await store.dispatch(fetchUsers())
+    const store = createTestStore()
 
-        expect(usersApi.fetchUsers).toHaveBeenCalledTimes(1)
-        expect(store.getState().user.items).toEqual([testUser])
-    })
+    await store.dispatch(fetchUserById(testUser.id))
 
-    it('fetchUserById thunk calls api and stores selected user', async () => {
-        vi.mocked(usersApi.fetchUserById).mockResolvedValue(testUser)
+    expect(usersApi.fetchUserById).toHaveBeenCalledWith(testUser.id)
+    expect(store.getState().user.user).toEqual(testUser)
+  })
 
-        const store = createTestStore()
+  it('fetchUsers thunk handles api error', async () => {
+    vi.mocked(usersApi.fetchUsers).mockRejectedValue(new Error('Failed to fetch users'))
 
-        await store.dispatch(fetchUserById(testUser.id))
+    const store = createTestStore()
 
-        expect(usersApi.fetchUserById).toHaveBeenCalledWith(testUser.id)
-        expect(store.getState().user.user).toEqual(testUser)
-    })
+    await store.dispatch(fetchUsers())
 
-    it('fetchUsers thunk handles api error', async () => {
-        vi.mocked(usersApi.fetchUsers).mockRejectedValue(
-        new Error('Failed to fetch users'),
-        )
+    expect(store.getState().user.error).toBe('Failed to fetch users')
+  })
 
-        const store = createTestStore()
+  it('fetchUserById thunk handles api error', async () => {
+    vi.mocked(usersApi.fetchUserById).mockRejectedValue(new Error('Пользователь не найден'))
 
-        await store.dispatch(fetchUsers())
+    const store = createTestStore()
 
-        expect(store.getState().user.error).toBe('Failed to fetch users')
-    })
+    await store.dispatch(fetchUserById(testUser.id))
 
-    it('fetchUserById thunk handles api error', async () => {
-        vi.mocked(usersApi.fetchUserById).mockRejectedValue(
-        new Error('Пользователь не найден'),
-        )
+    expect(store.getState().user.error).toBe('Пользователь не найден')
+  })
 
-        const store = createTestStore()
+  it('fetchUserById thunk throws when api returns no user', async () => {
+    vi.mocked(usersApi.fetchUserById).mockResolvedValue(undefined)
 
-        await store.dispatch(fetchUserById(testUser.id))
+    const store = createTestStore()
 
-        expect(store.getState().user.error).toBe('Пользователь не найден')
-    })
+    await store.dispatch(fetchUserById('unknown'))
 
-    it('fetchUserById thunk throws when api returns no user', async () => {
-        vi.mocked(usersApi.fetchUserById).mockResolvedValue(undefined)
+    expect(store.getState().user.user).toBeNull()
+    expect(store.getState().user.error).toBe('Пользователь не найден')
+  })
 
-        const store = createTestStore()
+  it('fetchUsers falls back to a default message when error has no message', () => {
+    const store = createTestStore()
 
-        await store.dispatch(fetchUserById('unknown'))
+    store.dispatch({ type: fetchUsers.rejected.type, error: {} })
 
-        expect(store.getState().user.user).toBeNull()
-        expect(store.getState().user.error).toBe('Пользователь не найден')
-    })
+    expect(store.getState().user.error).toBe('Не удалось загрузить пользователей')
+  })
 
-    it('fetchUsers falls back to a default message when error has no message', () => {
-        const store = createTestStore()
+  it('fetchUserById falls back to a default message when error has no message', () => {
+    const store = createTestStore()
 
-        store.dispatch({ type: fetchUsers.rejected.type, error: {} })
+    store.dispatch({ type: fetchUserById.rejected.type, error: {} })
 
-        expect(store.getState().user.error).toBe('Не удалось загрузить пользователей')
-    })
-
-    it('fetchUserById falls back to a default message when error has no message', () => {
-        const store = createTestStore()
-
-        store.dispatch({ type: fetchUserById.rejected.type, error: {} })
-
-        expect(store.getState().user.error).toBe('Не удалось загрузить пользователя')
-    })
+    expect(store.getState().user.error).toBe('Не удалось загрузить пользователя')
+  })
 })

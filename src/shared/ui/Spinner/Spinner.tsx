@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
-import clsx from 'clsx';
-import styles from './Spinner.module.css';
+import { useState, useEffect } from 'react'
+import clsx from 'clsx'
+import styles from './Spinner.module.css'
 
 export interface SpinnerProps {
-  className?: string;
-  intervalMs?: number; // Позволит настраивать скорость извне, если захочется
+  className?: string
+  intervalMs?: number // Позволит настраивать скорость извне, если захочется
 }
 
 // Массив категорий на основе твоего дизайна
@@ -15,27 +15,27 @@ const CATEGORY_ICONS = [
   { id: 'languages', icon: '🌍', label: 'Иностранные языки' },
   { id: 'education', icon: '📚', label: 'Образование и развитие' },
   { id: 'health', icon: '🧘‍♀️', label: 'Здоровье и лайфстайл' },
-];
+]
 
 export const Spinner = ({ className, intervalMs = 600 }: SpinnerProps) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0)
 
   useEffect(() => {
     // Устанавливаем таймер, который меняет индекс категории
     const timer = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % CATEGORY_ICONS.length);
-    }, intervalMs);
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % CATEGORY_ICONS.length)
+    }, intervalMs)
 
     // Обязательно очищаем таймер при размонтировании компонента!
-    return () => clearInterval(timer);
-  }, [intervalMs]);
+    return () => clearInterval(timer)
+  }, [intervalMs])
 
-  const activeCategory = CATEGORY_ICONS[currentIndex];
+  const activeCategory = CATEGORY_ICONS[currentIndex]
 
   return (
-    <div 
-      className={clsx(styles.spinnerWrapper, className)} 
-      role="status" 
+    <div
+      className={clsx(styles.spinnerWrapper, className)}
+      role="status"
       aria-label={`Загрузка... ${activeCategory.label}`}
     >
       <div className={styles.iconContainer}>
@@ -44,5 +44,5 @@ export const Spinner = ({ className, intervalMs = 600 }: SpinnerProps) => {
         <span className={styles.icon}>{activeCategory.icon}</span>
       </div>
     </div>
-  );
-};
+  )
+}

@@ -1,2 +1,2 @@
-export {PopUp} from './PopUp'
-export type {PopUpProps} from './types'
+export { PopUp } from './PopUp'
+export type { PopUpProps } from './types'

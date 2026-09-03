@@ -4,7 +4,7 @@ export interface EditableSelectProps {
   label?: string
   value?: string
   defaultValue?: string
-  error?: string;
+  error?: string
   options?: option[]
   placeholder?: string
   editable?: boolean

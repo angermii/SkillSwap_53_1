@@ -1,6 +1,6 @@
-import clsx from 'clsx';
-import type { ButtonHTMLAttributes, ReactNode } from 'react';
-import styles from './iconButton.module.css';
+import clsx from 'clsx'
+import type { ButtonHTMLAttributes, ReactNode } from 'react'
+import styles from './iconButton.module.css'
 
 export type IconButtonProps = {
   icon: ReactNode

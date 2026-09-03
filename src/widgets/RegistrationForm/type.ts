@@ -30,11 +30,7 @@ export type RegistrationTextField = Exclude<
 >
 
 // сообщения об ошибках для текстовых полей и списков формы
-export type RegistrationFormErrors = Partial<
-  Record<
-    | RegistrationTextField 
-    | 'birthDate', string>
->
+export type RegistrationFormErrors = Partial<Record<RegistrationTextField | 'birthDate', string>>
 
 // данные и обработчики, которые RegistrationForm получает от родительского компонента
 export type RegistrationFormProps = {

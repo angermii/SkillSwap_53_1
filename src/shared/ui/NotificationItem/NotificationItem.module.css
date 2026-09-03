@@ -1,30 +1,30 @@
-.Wrapper{
+.Wrapper {
   width: 100%;
   display: inline-flex;
   flex-direction: column;
   gap: var(--space-md);
 }
 
-.Notification{
+.Notification {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   gap: 20px;
 }
 
-.Item{
+.Item {
   display: flex;
   flex-direction: row;
   gap: var(--space-sm);
 }
 
-.Date{
+.Date {
   color: var(--color-caption);
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
 }
 
-.Text{
+.Text {
   width: 306px;
   text-align: left;
   display: flex;
@@ -45,6 +45,6 @@
   }
 }
 
-.ButtonWrapper{
+.ButtonWrapper {
   width: 114px;
 }

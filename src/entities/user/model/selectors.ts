@@ -18,7 +18,6 @@ export type CityOption = {
 
 export const selectUsers = (state: StateWithUser): User[] => state.user.items
 
-
 export const selectUserById = (state: RootState, userId?: string) => {
   if (!userId) return null
 
@@ -33,4 +32,3 @@ export const selectCityOptions = createSelector([selectUsers], (users): CityOpti
 
   return [...cities.map((city) => ({ name: city, value: city })), { ...OTHER_CITY_OPTION }]
 })
-

@@ -1,7 +1,7 @@
 .footer {
   display: flex;
   justify-content: center;
-  background-color: #fff;
+  background-color: var(--color-card-input);
   width: 100%;
   height: 232px;
 }
@@ -13,7 +13,7 @@
   align-items: flex-start;
   max-width: 1440px;
   width: 100%;
-  padding: 32px 36px;  
+  padding: 32px 36px;
   box-sizing: border-box;
 }
 
@@ -33,7 +33,7 @@
 .nav {
   display: flex;
   flex-direction: row;
-  gap: 24px;
+  gap: var(--space-lg);
 }
 
 .column {

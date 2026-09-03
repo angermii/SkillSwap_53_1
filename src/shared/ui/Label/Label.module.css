@@ -4,39 +4,39 @@
   justify-content: center;
   padding: 8px 12px;
   border-radius: 20px;
-  color: #253017;
+  color: var(--color-text);
   font: inherit;
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 16px;
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-caption);
   letter-spacing: 0.02em;
   white-space: nowrap;
 }
 
 .yellow {
-  background-color: #ebe5c5;
+  background-color: var(--color-tag-languages);
 }
 
 .blue {
-  background-color: #e7f2f6;
+  background-color: var(--color-tag-education);
 }
 
 .green {
-  background-color: #e9f7e7;
+  background-color: var(--color-tag-health);
 }
 
 .purple {
-  background-color: #eee7f7;
+  background-color: var(--color-tag-business);
 }
 
 .pink {
-  background-color: #f7e7f2;
+  background-color: var(--color-tag-art);
 }
 
 .peach {
-  background-color: #f7ebe5;
+  background-color: var(--color-tag-home);
 }
 
 .gray {
-  background-color: #e8ecf7;
+  background-color: var(--color-tag-plus);
 }

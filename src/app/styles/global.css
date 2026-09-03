@@ -2,28 +2,28 @@
 
 @font-face {
   font-family: Jost;
-  src: url("../../shared/fonts/Jost-Medium.woff2") format("woff2");
+  src: url('../../shared/fonts/Jost-Medium.woff2') format('woff2');
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
   font-family: Jost;
-  src: url("../../shared/fonts/Jost-SemiBold.woff2") format("woff2");
+  src: url('../../shared/fonts/Jost-SemiBold.woff2') format('woff2');
   font-weight: 600;
   font-style: normal;
 }
 
 @font-face {
   font-family: Roboto;
-  src: url("../../shared/fonts/Roboto-Regular.woff2") format("woff2");
+  src: url('../../shared/fonts/Roboto-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: Roboto;
-  src: url("../../shared/fonts/Roboto-Medium.woff2") format("woff2");
+  src: url('../../shared/fonts/Roboto-Medium.woff2') format('woff2');
   font-weight: 500;
   font-style: normal;
 }
@@ -32,7 +32,7 @@
   /* Colors */
   --color-text: #253017;
   --color-caption: #69735d;
-  --color-text-disabled: #9ca197;
+  --color-text-disabled: #010101;
   --color-toggle: #b2b9a9;
   --color-disabled: #e4e8df;
   --color-card-input: #fff;
@@ -63,10 +63,11 @@
   /* Typography */
 
   /* Font families */
-  --font-family-heading: "Jost", sans-serif;
-  --font-family-body: "Roboto", sans-serif;
+  --font-family-heading: 'Jost', sans-serif;
+  --font-family-body: 'Roboto', sans-serif;
   --font-weight-regular: 400;
   --font-weight-medium: 500;
+  --font-weight-heavy: 600;
 
   /* Font sizes */
   --font-size-h1: 32px;
@@ -94,15 +95,32 @@
   --shadow-md: 0 4px 6px rgb(0 0 0 / 7%);
 }
 
-/* Тёмная тема — добавить поддержку через data-theme="dark" */
+/* Тёмная тема */
 
-/* [data-theme='dark'] {
-  --color-bg: #0f172a;
-  --color-bg-secondary: #1e293b;
+[data-theme='dark'] {
+  /* Colors */
   --color-text: #f1f5f9;
-  --color-text-secondary: #94a3b8;
-  --color-border: #334155;
-} */
+  --color-caption: #94a3b8;
+  --color-text-disabled: #64748b;
+  --color-toggle: #475569;
+  --color-disabled: #334155;
+  --color-card-input: #1e293b;
+  --color-link-button: #5d7b49;
+  --color-accent: #679c27;
+  --color-button-hover: #636f4e;
+  --color-background: #0f172a;
+  --color-error: #f07259;
+  --color-alarm: #f29186;
+
+  /* Color Tags */
+  --color-tag-business: #8672a6;
+  --color-tag-art: #a46290;
+  --color-tag-languages: #878059;
+  --color-tag-education: #618894;
+  --color-tag-home: #927263;
+  --color-tag-health: #658762;
+  --color-tag-plus: #757985;
+}
 
 /* ─── Reset ──────────────────────────────────────────────── */
 
@@ -136,5 +154,3 @@ button {
   background: none;
   font: inherit;
 }
-
-

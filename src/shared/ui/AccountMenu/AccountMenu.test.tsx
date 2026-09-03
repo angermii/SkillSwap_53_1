@@ -12,10 +12,8 @@ const renderMenu = (props: Partial<Parameters<typeof AccountMenu>[0]> = {}) =>
     </MemoryRouter>,
   )
 
-  vi.mock('@/shared/ui/icons/LogoutIcon.svg?react', () => ({
-  default: (props: React.SVGProps<SVGSVGElement>) => (
-    <svg data-testid="logout-icon" {...props} />
-  ),
+vi.mock('@/shared/ui/icons/LogoutIcon.svg?react', () => ({
+  default: (props: React.SVGProps<SVGSVGElement>) => <svg data-testid="logout-icon" {...props} />,
 }))
 
 describe('AccountMenu', () => {

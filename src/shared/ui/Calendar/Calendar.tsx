@@ -19,19 +19,19 @@ export const Calendar = ({
   const safeDefaultMonth = isValidDate(defaultMonth) ? defaultMonth : (safeSelected ?? new Date())
   return (
     <DayPicker
-   mode="single"
-   selected={safeSelected}
-   onSelect={onSelect}
-   defaultMonth={safeDefaultMonth}
-   startMonth={new Date(fromYear, 0)}
-   endMonth={new Date(toYear, 11)}
-   locale={ru}
-   weekStartsOn={1}
-   captionLayout="dropdown"
-   hideNavigation
-   showOutsideDays
-   fixedWeeks
-   className={clsx(styles.root, className)}
+      mode="single"
+      selected={safeSelected}
+      onSelect={onSelect}
+      defaultMonth={safeDefaultMonth}
+      startMonth={new Date(fromYear, 0)}
+      endMonth={new Date(toYear, 11)}
+      locale={ru}
+      weekStartsOn={1}
+      captionLayout="dropdown"
+      hideNavigation
+      showOutsideDays
+      fixedWeeks
+      className={clsx(styles.root, className)}
       classNames={{
         months: styles.months,
         month: styles.month,

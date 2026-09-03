@@ -3,7 +3,7 @@
   align-items: center;
   gap: 12px;
   width: fit-content;
-  color: #253017;
+  color: var(--color-text);
   text-decoration: none;
 }
 
@@ -12,9 +12,9 @@
 }
 
 .logo:focus-visible {
-  outline: 2px solid #253017;
+  outline: 2px solid var(--color-text);
   outline-offset: 4px;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
 }
 
 .icon {
@@ -25,7 +25,7 @@
   height: 40px;
   padding: 6px;
   border-radius: 50%;
-  background-color: #abd27a;
+  background-color: var(--color-accent);
 }
 
 .icon svg {
@@ -36,8 +36,8 @@
 
 .text {
   font-family: Jost, sans-serif;
-  font-size: 24px;
-  font-weight: 600;
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-heavy);
   line-height: 32px;
   letter-spacing: -0.011em;
 }

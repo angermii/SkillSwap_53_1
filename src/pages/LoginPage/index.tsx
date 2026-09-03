@@ -2,7 +2,11 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import type { Location } from 'react-router-dom'
 import { useEffect, useMemo, useState } from 'react'
 
-import { LightBulbIllustration } from '@/shared/illustrations'
+import {
+  LightBulbIllustration,
+  SchoolBoardIllustration,
+  UserInfoIllustration,
+} from '@/shared/illustrations'
 import { Onboarding, ModalUI, Button, StepIndicator, EditIcon } from '@/shared/ui'
 import { RegistrationForm, UserSkillWidget, AuthForm } from '@/widgets'
 import type { RegistrationFormData, RegistrationFormErrors } from '@/widgets'
@@ -183,7 +187,7 @@ export default function LoginPage() {
     const hasStateKeys = Object.keys(state).length > 0
     navigate(returnPath, {
       replace: true,
-      state: hasStateKeys ? state : undefined
+      state: hasStateKeys ? state : undefined,
     })
   }
 
@@ -200,7 +204,6 @@ export default function LoginPage() {
   }
 
   const handleRegisterClick = () => {
-  
     navigate(ROUTES.REGISTER, { state: location.state })
 
     setRegistrationStep(1)
@@ -465,7 +468,7 @@ export default function LoginPage() {
     const hasStateKeys = Object.keys(state).length > 0
     navigate(returnPath, {
       replace: true,
-      state: hasStateKeys ? state : undefined
+      state: hasStateKeys ? state : undefined,
     })
   }
 
@@ -497,6 +500,56 @@ export default function LoginPage() {
         : subcategoryTitle || categoryTitle || 'Категория навыка',
     description: registrationData.skillDescription || 'Описание навыка пока не заполнено',
   }
+
+  // Определяем контент для Onboarding
+  const onboardingIllustration = useMemo(() => {
+    if (!isRegister) return LightBulbIllustration
+    switch (registrationStep) {
+      case 1:
+        return LightBulbIllustration
+      case 2:
+        return UserInfoIllustration
+
+      case 3:
+        return SchoolBoardIllustration
+      default:
+        return LightBulbIllustration
+    }
+  }, [isRegister, registrationStep])
+
+  const onboardingTitle = useMemo(() => {
+    if (isRegister) {
+      switch (registrationStep) {
+        case 1:
+          return 'Добро пожаловать в SkillSwap!'
+        case 2:
+          return 'Расскажите немного о себе'
+        case 3:
+          return 'Укажите чем вы готовы поделиться'
+        default:
+          return 'Добро пожаловать в SkillSwap!'
+      }
+    } else {
+      return 'С возвращением в SkillSwap!'
+    }
+  }, [isRegister, registrationStep])
+
+  const onboardingDescription = useMemo(() => {
+    if (isRegister) {
+      switch (registrationStep) {
+        case 1:
+          return 'Присоединяйтесь к SkillSwap и обменивайтесь знаниями и навыками с другими людьми'
+        case 2:
+          return 'Это поможет другим людям лучше вас узнать, чтобы выбрать для обмена'
+        case 3:
+          return 'Так другие люди смогут увидеть ваши предложения и прелодить вам обмен!'
+        default:
+          return 'Присоединяйтесь к SkillSwap и обменивайтесь знаниями и навыками с другими людьми'
+      }
+    } else {
+      return 'Обменивайтесь знаниями и навыками с другими людьми'
+    }
+  }, [isRegister, registrationStep])
 
   return (
     <main className={styles.page}>
@@ -544,13 +597,9 @@ export default function LoginPage() {
         )}
 
         <Onboarding
-          illustration={<LightBulbIllustration />}
-          title={isRegister ? 'Добро пожаловать в SkillSwap!' : 'С возвращением в SkillSwap!'}
-          description={
-            isRegister
-              ? 'Присоединяйтесь к SkillSwap и обменивайтесь знаниями и навыками с другими людьми'
-              : 'Обменивайтесь знаниями и навыками с другими людьми'
-          }
+          illustration={onboardingIllustration}
+          title={onboardingTitle}
+          description={onboardingDescription}
         />
       </div>
 

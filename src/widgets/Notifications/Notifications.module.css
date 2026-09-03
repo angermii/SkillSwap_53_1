@@ -1,4 +1,4 @@
-.Widget{
+.Widget {
   width: 556px;
   background-color: var(--color-card-input);
   display: inline-flex;
@@ -9,7 +9,7 @@
   align-items: center;
 }
 
-.NotiBlock{
+.NotiBlock {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -17,35 +17,35 @@
   gap: 32px;
 }
 
-.Notify{
+.Notify {
   display: flex;
   flex-direction: column;
   gap: 24px;
   overflow-y: auto;
 }
 
-.Unread{
+.Unread {
   max-height: 232px;
 }
 
-.Read{
+.Read {
   max-height: 104px;
 }
 
-.Title{
+.Title {
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-.ButtonSpan{
+.ButtonSpan {
   color: var(--color-link-button);
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
   font-weight: var(--font-weight-medium);
 }
 
-.None{
-  color: var(--color-text-disabled)
+.None {
+  color: var(--color-text-disabled);
 }

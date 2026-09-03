@@ -48,9 +48,9 @@ import ViewPasswordSvg from './ViewPasswordIcon.svg?react'
 
 import { createIcon } from './createIcon'
 
-import GoogleSvg from './GoogleIcon.svg?react';
-import AppleSvg from './AppleIcon.svg?react';
-import NotificationSvg from './NotificationIcon.svg?react';
+import GoogleSvg from './GoogleIcon.svg?react'
+import AppleSvg from './AppleIcon.svg?react'
+import NotificationSvg from './NotificationIcon.svg?react'
 
 export type { IconProps } from './createIcon'
 
@@ -101,6 +101,6 @@ export const SunIcon = createIcon(SunSvg)
 export const UserCircleIcon = createIcon(UserCircleSvg)
 export const UserIcon = createIcon(UserSvg)
 export const ViewPasswordIcon = createIcon(ViewPasswordSvg)
-export const GoogleIcon = createIcon(GoogleSvg);
-export const AppleIcon = createIcon(AppleSvg);
+export const GoogleIcon = createIcon(GoogleSvg)
+export const AppleIcon = createIcon(AppleSvg)
 export const NotificationIcon = createIcon(NotificationSvg)

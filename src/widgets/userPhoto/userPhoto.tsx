@@ -1,7 +1,7 @@
-import { Avatar } from '@/shared/ui';
-import { IconButton } from '@/shared/ui';
-import { GalleryEditIcon } from '@/shared/ui/icons';
-import styles from './userPhoto.module.css';
+import { Avatar } from '@/shared/ui'
+import { IconButton } from '@/shared/ui'
+import { GalleryEditIcon } from '@/shared/ui/icons'
+import styles from './userPhoto.module.css'
 
 export type UserPhotoProps = {
   alt: string
