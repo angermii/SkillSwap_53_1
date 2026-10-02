@@ -49,3 +49,19 @@
 .None {
   color: var(--color-text-disabled);
 }
+
+@media (width <= 768px) {
+  .Widget {
+    max-width: 100%;
+    padding: 30px;
+  }
+
+  .NotiBlock {
+    width: 100%;
+  }
+
+  .Notify {
+    flex-direction: column;
+    gap: 12px;
+  }
+}

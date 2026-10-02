@@ -2,10 +2,27 @@
   padding: 60px;
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(2, 488px);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 
   /* Заполняем сетку по столбцам, чтобы порядок соответствовал макету */
   grid-template-rows: repeat(3, auto);
   grid-auto-flow: column;
   gap: 40px;
+}
+
+@media (width <=1024px) {
+  .Wrapper {
+    padding: 45px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 30px;
+  }
+}
+
+@media (width <=768px) {
+  .Wrapper {
+    padding: 30px;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-auto-flow: row;
+  }
 }

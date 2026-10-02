@@ -9,7 +9,6 @@
 .cards {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 324px));
   gap: 24px;
 }
 

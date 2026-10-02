@@ -5,6 +5,7 @@ import styles from './Logo.module.css'
 
 type LogoProps = {
   className?: string
+  hideText?: boolean
 }
 
 /**
@@ -13,7 +14,7 @@ type LogoProps = {
  * className позволяет дополнить стили компонента снаружи
  */
 
-export const Logo = ({ className }: LogoProps) => (
+export const Logo = ({ className, hideText = false }: LogoProps) => (
   <Link
     to="/"
     className={clsx(styles.logo, className)}
@@ -35,6 +36,6 @@ export const Logo = ({ className }: LogoProps) => (
       </svg>
     </span>
 
-    <span className={styles.text}>SkillSwap</span>
+    <span className={clsx(styles.text, hideText && styles.hiddenText)}>SkillSwap</span>
   </Link>
 )

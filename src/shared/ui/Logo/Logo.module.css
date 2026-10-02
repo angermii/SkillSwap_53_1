@@ -41,3 +41,9 @@
   line-height: 32px;
   letter-spacing: -0.011em;
 }
+
+@media (width <= 768px) {
+  .hiddenText {
+    display: none;
+  }
+}

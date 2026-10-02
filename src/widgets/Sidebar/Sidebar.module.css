@@ -52,3 +52,45 @@
   align-items: center;
   justify-content: center;
 }
+
+@media (width <= 1024px) {
+  .sidebar {
+    width: 200px;
+    padding: 24px;
+  }
+
+  .item {
+    padding: 0 10px;
+  }
+}
+
+@media (width <= 768px) {
+  .sidebar {
+    height: 48px;
+    width: 100%;
+    min-height: auto;
+    overflow-x: auto;
+    padding: 0;
+  }
+
+  .list {
+    flex-direction: row;
+    width: max-content;
+    min-width: 100%;
+    justify-content: center;
+    gap: 12px;
+    padding: 0 12px;
+  }
+
+  .item {
+    flex: 0 0 auto;
+  }
+
+  .label {
+    display: none;
+  }
+
+  .item.active .label {
+    display: inline;
+  }
+}

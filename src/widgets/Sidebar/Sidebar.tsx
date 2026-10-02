@@ -2,6 +2,7 @@ import clsx from 'clsx'
 
 import styles from './Sidebar.module.css'
 import type { SidebarProps } from './type'
+import { useEffect, useRef } from 'react'
 
 export const Sidebar = <Id extends string>({
   items,
@@ -11,6 +12,16 @@ export const Sidebar = <Id extends string>({
   className,
   ...props
 }: SidebarProps<Id>) => {
+  const activeItemRef = useRef<HTMLLIElement | null>(null)
+
+  useEffect(() => {
+    activeItemRef.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+      inline: 'nearest',
+    })
+  }, [activeId])
+
   return (
     <aside {...props} className={clsx(styles.sidebar, className)}>
       <nav aria-label={ariaLabel}>
@@ -19,7 +30,7 @@ export const Sidebar = <Id extends string>({
             const isActive = id === activeId
 
             return (
-              <li key={id}>
+              <li key={id} ref={isActive ? activeItemRef : null}>
                 <button
                   type="button"
                   aria-current={isActive || undefined}
@@ -30,7 +41,7 @@ export const Sidebar = <Id extends string>({
                     {icon}
                   </span>
 
-                  <span>{label}</span>
+                  <span className={styles.label}>{label}</span>
                 </button>
               </li>
             )

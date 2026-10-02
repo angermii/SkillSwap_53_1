@@ -3,7 +3,6 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 556px;
   min-height: 692px;
   padding: 40px 60px;
   background-color: var(--color-card-input);
@@ -88,7 +87,7 @@
 .fieldsRow {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  align-items: start;
+  align-items: end;
   gap: 22px;
 }
 
@@ -142,10 +141,10 @@
   width: 100%;
 }
 
-@media (width <= 600px) {
+@media (width <= 768px) {
   .form {
     min-height: auto;
-    padding: 32px 20px;
+    padding: 60px 30px;
   }
 
   .fieldsRow,

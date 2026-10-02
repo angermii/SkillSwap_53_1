@@ -5,3 +5,15 @@
   width: 100%;
   flex: 1;
 }
+
+@media (width <=1024px) {
+  .content {
+    max-width: 100vw;
+  }
+}
+
+@media (width <= 768px) {
+  .content {
+    padding: 0 18px;
+  }
+}

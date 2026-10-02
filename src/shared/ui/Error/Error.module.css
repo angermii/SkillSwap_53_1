@@ -16,7 +16,7 @@
   justify-content: center;
 }
 
-.imgWrapper img {
+.imgWrapper svg {
   color: var(--color-text);
 }
 
@@ -56,4 +56,19 @@
   grid-template-columns: 1fr 1fr;
   justify-items: stretch;
   gap: var(--space-lg);
+}
+
+@media (width <= 748px) {
+  .errorWrapper {
+    max-width: 90vw;
+    min-height: auto;
+  }
+
+  .imgWrapper {
+    max-height: 220px;
+  }
+
+  .imgWrapper svg {
+    max-height: inherit;
+  }
 }

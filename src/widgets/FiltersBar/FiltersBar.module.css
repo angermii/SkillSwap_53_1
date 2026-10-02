@@ -55,111 +55,42 @@
   opacity: 0.8;
 }
 
-/* =========================================
-   3. ОБЕРТКА И СЕКЦИИ ФИЛЬТРОВ
-   ========================================= */
-.sectionsWrapper {
+.modalFilters {
+  overflow-y: auto;
+}
+
+.modalFiltersContent {
   display: flex;
   flex-direction: column;
   gap: 32px;
 }
 
-.section {
-  display: flex;
-  flex-direction: column;
+.mobileFilters {
+  display: none;
 }
 
-.subtitle {
-  margin: 0;
-  margin-bottom: 20px;
-  color: var(--color-text);
-  font-family: var(--font-family-heading);
-  font-size: var(--font-size-h3);
-  font-weight: var(--font-weight-medium);
-  line-height: var(--line-height-h4);
-  letter-spacing: -0.011em;
+@media (width <=1024px) {
+  .sidebar {
+    padding: 16px;
+  }
 }
 
-.list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
+@media (width <= 768px) {
+  .sidebar {
+    display: none;
+  }
 
-/* =========================================
-   4. АККОРДЕОН НАВЫКОВ
-   ========================================= */
-.categoryBlock {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
+  .mobileFilters {
+    display: flex;
+  }
 
-.categoryHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.subList {
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding-left: 32px; /* Сдвиг под иконку родителя */
-}
-
-/* =========================================
-   5. ИНТЕРАКТИВНЫЕ ЭЛЕМЕНТЫ (КНОПКИ РАСКРЫТИЯ)
-   ========================================= */
-.chevronBtn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4px;
-  color: var(--color-caption);
-  transition: color 0.2s ease;
-}
-
-.chevronBtn:hover {
-  color: var(--color-text);
-}
-
-.toggleBtn {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  width: fit-content;
-  margin-top: 12px;
-  padding: 0;
-  color: var(--color-link-button);
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-caption);
-  font-weight: var(--font-weight-regular);
-}
-
-.toggleBtn:hover {
-  opacity: 0.8;
-}
-
-.chevron {
-  width: 16px;
-  height: 16px;
-  transition: transform 0.2s ease;
-}
-
-.chevronUp {
-  transform: rotate(180deg);
-}
-
-.subListWrapper {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.3s ease-in-out;
-  overflow: hidden;
-}
-
-.subListExpanded {
-  grid-template-rows: 1fr;
+  .mobileFiltersHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 0 12px;
+    background-color: var(--color-card-input);
+    border-radius: 12px;
+  }
 }

@@ -10,6 +10,7 @@
   flex-direction: row;
   align-items: flex-start;
   gap: 20px;
+  width: 100%;
 }
 
 .Item {
@@ -17,6 +18,11 @@
   flex-direction: row;
   gap: var(--space-sm);
   color: var(--color-text);
+  width: 100%;
+}
+
+.icon {
+  flex-shrink: 0;
 }
 
 .Date {
@@ -26,10 +32,11 @@
 }
 
 .Text {
-  width: 306px;
   text-align: left;
   display: flex;
   flex-direction: column;
+  flex: 1 1 auto;
+  min-width: 0;
 
   > h4 {
     font-family: Roboto, sans-serif;

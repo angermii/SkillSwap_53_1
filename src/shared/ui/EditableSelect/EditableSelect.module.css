@@ -1,6 +1,7 @@
 .root {
   width: 100%;
-  min-width: 206px;
+
+  /* min-width: 206px; */
   font-family: var(--font-family-body);
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);

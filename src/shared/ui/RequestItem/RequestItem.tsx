@@ -17,7 +17,7 @@ export const RequestItem = ({
     <div className={Styles.Wrapper}>
       <button type="button" className={Styles.Notification} onClick={() => onClick?.(id)}>
         <div className={Styles.Item}>
-          <BulbIcon size={40} />
+          <BulbIcon size={40} className={Styles.icon} />
 
           <div className={Styles.Text}>
             <h4>{title}</h4>

@@ -1,9 +1,10 @@
 .userInfo {
-  display: inline-flex;
+  display: flex;
   gap: 12px;
   align-items: center;
   width: 100%;
   max-width: 260px;
+  min-width: 0;
   color: var(--color-text);
 }
 

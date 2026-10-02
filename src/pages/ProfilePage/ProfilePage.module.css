@@ -34,3 +34,13 @@
   border-radius: var(--radius-lg);
   padding: 60px;
 }
+
+@media (width <=768px) {
+  .page {
+    flex-direction: column;
+  }
+
+  .widget {
+    padding: 32px;
+  }
+}

@@ -15,7 +15,7 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(297px, 1fr));
   gap: var(--space-lg);
 }
 
@@ -30,14 +30,16 @@
   line-height: var(--line-height-body);
 }
 
-@media (width <= 1024px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
 @media (width <= 768px) {
+  .catalog {
+    gap: var(--space-lg);
+  }
+
   .grid {
-    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  .section {
+    gap: var(--space-lg);
   }
 }

@@ -34,7 +34,7 @@
 
 .content {
   display: grid;
-  grid-template-columns: minmax(0, 420px) minmax(0, 440px);
+  grid-template-columns: minmax(0, 420px) minmax(200px, 440px);
   justify-content: space-between;
   place-self: center;
   column-gap: 77px;
@@ -45,4 +45,16 @@
   grid-template-columns: minmax(0, 420px) minmax(0, 440px);
   gap: 44px;
   align-items: stretch;
+}
+
+@media (width <= 1024px) {
+  .content {
+    grid-template-columns: minmax(0, 400px);
+    grid-template-rows: minmax(0, 300px) 1fr;
+    gap: 24px;
+  }
+
+  .gallery {
+    order: -1;
+  }
 }

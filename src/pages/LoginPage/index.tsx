@@ -600,6 +600,7 @@ export default function LoginPage() {
           illustration={onboardingIllustration}
           title={onboardingTitle}
           description={onboardingDescription}
+          className={styles.onboarding}
         />
       </div>
 
