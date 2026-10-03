@@ -41,7 +41,7 @@
 .fieldsRow {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  align-items: end;
+  align-items: start;
   gap: var(--space-lg);
 }
 

@@ -37,7 +37,7 @@ export const ExchangesWidget = () => {
             key={request.id}
             id={request.id}
             title="Предложение обмена"
-            description={`Навык: ${request.skillId}`}
+            description={`Навык: ${request.skillTitle ?? request.skillId}`}
             date={formatDate(request.createdAt)}
             onCancel={handleCancel}
           />

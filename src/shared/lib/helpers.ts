@@ -45,3 +45,32 @@ export function calculateAge(birthDate: string, today = new Date()): number {
 
   return Math.max(age, 0)
 }
+
+// date to string dd.mm.yyyy
+export const formatDateToString = (date: Date): string => {
+  const day = String(date.getDate()).padStart(2, '0')
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const year = date.getFullYear()
+
+  return `${day}.${month}.${year}`
+}
+
+// parse string dd.mm.yyyy to date
+export const parseDateInput = (value: string): Date | undefined => {
+  const match = /^(\d{2})\.(\d{2})\.(\d{4})$/.exec(value)
+  if (!match) return undefined
+
+  const [, dayString, monthString, yearString] = match
+  const day = Number(dayString)
+  const month = Number(monthString)
+  const year = Number(yearString)
+
+  const date = new Date(year, month - 1, day)
+
+  // Проверка календарной корректности, например, исключает 31.02.2000
+  if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) {
+    return undefined
+  }
+
+  return date
+}

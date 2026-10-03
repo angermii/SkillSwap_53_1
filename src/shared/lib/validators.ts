@@ -31,6 +31,17 @@ export const maxLength = (max: number) => {
   }
 }
 
+export const alphabetRegex = (value: string): string | null => {
+  if (!value) return null
+
+  // Проверяем, что содержит только буквы (латиница и кириллица)
+  const nameRegex = /^[A-Za-zА-Яа-яЁё]+$/
+  if (!nameRegex.test(value)) {
+    return 'Поле может содержать только буквы'
+  }
+  return null
+}
+
 export const email = (value: string): string | null => {
   if (!value) return null
   // Стандартная проверка на @ и домен
@@ -75,6 +86,37 @@ export const date = (value: string): string | null => {
 
   if (!isValidCalendarDate) {
     return 'Введена несуществующая дата'
+  }
+
+  return null
+}
+
+export const dateOfBirth = (value: string): string | null => {
+  if (!value) return null
+
+  const dateError = date(value)
+  if (dateError) {
+    return dateError
+  }
+
+  const [day, month, year] = value.split('.').map(Number)
+  const birthDate = new Date(year, month - 1, day)
+  const today = new Date()
+  const todayDate = new Date(today.getFullYear(), today.getMonth(), today.getDate())
+
+  if (birthDate > todayDate) {
+    return 'Дата рождения не может быть в будущем'
+  }
+
+  let age = todayDate.getFullYear() - year
+  const birtdayHasPassedThisYear =
+    todayDate.getMonth() > month - 1 ||
+    (todayDate.getMonth() === month - 1 && todayDate.getDate() >= day)
+
+  if (!birtdayHasPassedThisYear) age -= 1
+
+  if (age < 18) {
+    return 'Для регистрации необходимо быть старше 18 лет'
   }
 
   return null

@@ -2,6 +2,7 @@
   width: 100%;
   display: inline-flex;
   flex-direction: column;
+  gap: 24px;
 }
 
 .Exchange {
@@ -21,6 +22,7 @@
   color: var(--color-caption);
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
+  padding-top: 10px;
 }
 
 .Text {

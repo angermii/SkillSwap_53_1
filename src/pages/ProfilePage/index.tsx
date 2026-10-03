@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState, useRef } from 'react'
 import type { ChangeEvent } from 'react'
-import { parseSafeDate } from '@/shared/lib/helpers'
+import { formatDateToString, parseSafeDate } from '@/shared/lib/helpers'
 import { updateUser } from '@/features/auth'
 import { fetchUsers } from '@/entities/user/model/userSlice'
 import { selectCityOptions } from '@/entities/user/model/selectors'
@@ -21,6 +21,7 @@ import {
   maxLength,
   email,
   selectRequired,
+  dateOfBirth,
 } from '@/shared/lib/validators'
 import styles from './ProfilePage.module.css'
 
@@ -129,15 +130,16 @@ export default function ProfilePage() {
     const emailError = required(formData.email) || email(formData.email)
     if (emailError) errors.email = emailError
 
-    // проверяем, что имя содержит не менее 2-х и не более 50-ти символом, поле обязательное
+    // проверяем, что имя содержит не менее 2-х и не более 15-ти символом, поле обязательное
     const nameError =
-      required(formData.name) || minLength(2)(formData.name) || maxLength(50)(formData.name)
+      required(formData.name) || minLength(2)(formData.name) || maxLength(15)(formData.name)
     if (nameError) errors.name = nameError
 
     // Дата рождения: обязательное поле
-    if (!formData.birthDate) {
-      errors.birthDate = 'Поле обязательно для заполнения'
-    }
+    const birthDateError = formData.birthDate
+      ? dateOfBirth(formatDateToString(formData.birthDate))
+      : 'Поле обязательно для заполнения'
+    if (birthDateError) errors.birthDate = birthDateError
 
     // Пол: обязательное поле, выбор из списка
     const genderError = selectRequired(formData.gender)
