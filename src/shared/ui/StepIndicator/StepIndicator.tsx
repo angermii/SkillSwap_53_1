@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import styles from './stepindicator.module.css'
+import styles from './Stepindicator.module.css'
 
 interface StepIndicatorProps {
   currentStep: number
