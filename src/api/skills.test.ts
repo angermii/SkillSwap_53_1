@@ -44,7 +44,7 @@ describe('api/skills', () => {
       vi.stubGlobal('fetch', fetchMock)
 
       await expect(fetchSkills()).resolves.toEqual(skills)
-      expect(fetchMock).toHaveBeenCalledWith('/db/skills.json')
+      expect(fetchMock).toHaveBeenCalledWith(`${import.meta.env.BASE_URL}db/skills.json`)
     })
 
     it('бросает ошибку, если ответ неуспешный', async () => {

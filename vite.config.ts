@@ -5,6 +5,7 @@ import { resolve } from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/SkillSwap_53_1/',
   plugins: [react(), svgr()],
   resolve: {
     alias: {

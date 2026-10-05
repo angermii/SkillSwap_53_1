@@ -1,3 +1,4 @@
+import { publicAssetUrl } from '@/shared/lib/helpers'
 import type { GalleryImage } from './type'
 
 type ToGalleryImagesOptions = {
@@ -16,6 +17,6 @@ export const toGalleryImages = (
     .filter((src): src is string => typeof src === 'string' && src.trim().length > 0)
     .map((src, index) => ({
       id: `${idPrefix}-${index}`,
-      src,
+      src: publicAssetUrl(src) ?? src,
       alt: altPrefix ? `${altPrefix} — изображение ${index + 1}` : `Изображение ${index + 1}`,
     }))

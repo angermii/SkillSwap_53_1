@@ -15,7 +15,7 @@ const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'))
 
 export function AppRouter() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Suspense fallback={<div>Загрузка...</div>}>
         <Routes>
           {/* обычные страницы */}

@@ -74,3 +74,19 @@ export const parseDateInput = (value: string): Date | undefined => {
 
   return date
 }
+
+export const publicAssetUrl = (path?: string | null): string | undefined => {
+  if (!path) return undefined
+
+  // Не меняем абсолютные, временные и data URL,
+  if (/^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(path)) return path
+
+  const base = import.meta.env.BASE_URL
+  const relativePath = path.replace(/^\/+/, '')
+
+  // Не добавляем base повторно, если путь уже содержит его.
+  const relativeBase = base.replace(/^\/+/, '')
+  if (relativePath.startsWith(relativeBase)) return `/${relativePath}`
+
+  return `${base}${relativePath}`
+}

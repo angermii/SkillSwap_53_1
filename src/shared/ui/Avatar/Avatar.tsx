@@ -2,6 +2,7 @@ import type { ImgHTMLAttributes } from 'react'
 
 import { UserIcon } from '../icons'
 import styles from './Avatar.module.css'
+import { publicAssetUrl } from '@/shared/lib/helpers'
 
 export interface AvatarProps extends Omit<ImgHTMLAttributes<HTMLImageElement>, 'alt' | 'src'> {
   alt: string
@@ -34,7 +35,7 @@ export function Avatar({ alt, className, height, size, src, width, ...props }: A
       alt={alt}
       className={avatarClassName}
       height={avatarHeight}
-      src={src}
+      src={publicAssetUrl(src)}
       width={avatarWidth}
       {...props}
     />

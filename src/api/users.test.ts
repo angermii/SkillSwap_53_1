@@ -32,7 +32,7 @@ describe('api/users', () => {
       vi.stubGlobal('fetch', fetchMock)
 
       await expect(fetchUsers()).resolves.toEqual(users)
-      expect(fetchMock).toHaveBeenCalledWith('/db/users.json')
+      expect(fetchMock).toHaveBeenCalledWith(`${import.meta.env.BASE_URL}db/users.json`)
     })
 
     it('бросает ошибку, если ответ неуспешный', async () => {

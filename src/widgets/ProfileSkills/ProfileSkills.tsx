@@ -3,6 +3,7 @@ import { Button } from '@/shared/ui'
 import { useAppSelector } from '@/store/hooks'
 import { UserSkillWidget } from '@/widgets/UserSkillWidget'
 import { getAuthUserSkills } from '@/shared/lib/authUserMapper'
+import { publicAssetUrl } from '@/shared/lib/helpers'
 
 export function ProfileSkills() {
   const authUser = useAppSelector((state) => state.auth.user)
@@ -20,7 +21,7 @@ export function ProfileSkills() {
 
   const images = (skill.imageUrl ?? []).map((src, index) => ({
     id: `${skill.id}-image-${index}`,
-    src,
+    src: publicAssetUrl(src) ?? src,
     alt: `${skill.title} — изображение ${index + 1}`,
   }))
 
