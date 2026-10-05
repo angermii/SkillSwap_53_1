@@ -5,6 +5,7 @@ import { Calendar, DatePickerActions, Dropdown, Input } from '@/shared/ui'
 import { CalendarIcon } from '@/shared/ui/icons'
 import type { DatePickerProps } from './type'
 import styles from './DatePicker.module.css'
+import { parseDateInput } from '@/shared/lib/helpers'
 
 const formatDate = (date?: Date): string => {
   if (!date || Number.isNaN(date.getTime())) return ''
@@ -66,7 +67,10 @@ export const DatePicker = ({
   }
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setInputText(event.target.value)
+    const text = event.target.value
+    setInputText(text)
+    const date = parseDateInput(text)
+    setDraftDate(date)
   }
 
   const trigger = (

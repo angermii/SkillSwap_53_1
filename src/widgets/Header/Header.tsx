@@ -32,7 +32,7 @@ export const Header = ({
   return (
     <header className={clsx(styles.header, variant === 'pure' && styles.headerPure)}>
       <div className={styles.left}>
-        <Logo />
+        <Logo hideText />
         {/* Основная навигация скрывается в режиме pure */}
         {variant !== 'pure' && (
           <nav className={styles.navigation}>
@@ -48,7 +48,7 @@ export const Header = ({
                   onClick={() => setIsMenuOpen((prev) => !prev)}
                 >
                   <span className={styles.span}>Все навыки</span>
-                  <ChevronDownIcon />
+                  <ChevronDownIcon className={styles.icon} />
                 </button>
               }
               isOpen={isMenuOpen}
@@ -96,27 +96,14 @@ export const Header = ({
                 <MoonIcon />
               </button>
 
-              <Dropdown
-                trigger={
-                  <button
-                    className={styles.iconButton}
-                    onClick={() => setIsNotificationsOpen((prev) => !prev)}
-                  >
-                    <BellIcon />
-                  </button>
-                }
-                isOpen={isNotificationsOpen}
-                onClose={() => setIsNotificationsOpen(false)}
-                contentClassName={styles.notificationWidget}
-                align="end"
+              <button
+                className={styles.iconButton}
+                onClick={() => {
+                  setIsNotificationsOpen((prev) => !prev)
+                }}
               >
-                <Notifications
-                  notifications={notifications}
-                  readAll={readAll}
-                  clearAll={clearAll}
-                  onClick={onNotificationClick}
-                />
-              </Dropdown>
+                <BellIcon />
+              </button>
 
               <button className={styles.iconButton} onClick={onFavoritesClick}>
                 <HeartIcon />
@@ -126,6 +113,7 @@ export const Header = ({
             <Dropdown
               trigger={
                 <HeaderUser
+                  className={styles.iconButton}
                   name={user.name}
                   avatarSrc={user.avatarUrl ?? undefined}
                   onClick={() => setIsAccountOpen((prev) => !prev)}
@@ -136,7 +124,42 @@ export const Header = ({
               contentClassName={styles.dropdownAccount}
               align="end"
             >
+              <div className={styles.mobileMenu}>
+                <button className={styles.mobileMenuItem} onClick={onThemeClick}>
+                  <MoonIcon />
+                </button>
+
+                <button
+                  className={styles.mobileMenuItem}
+                  onClick={() => {
+                    setIsAccountOpen(false)
+                    setIsNotificationsOpen(true)
+                  }}
+                >
+                  <BellIcon />
+                </button>
+
+                <button className={styles.mobileMenuItem} onClick={onFavoritesClick}>
+                  <HeartIcon />
+                </button>
+              </div>
               <AccountMenu onLogout={onLogout} />
+            </Dropdown>
+
+            {/* notifications dropdown */}
+            <Dropdown
+              trigger={<></>}
+              isOpen={isNotificationsOpen}
+              onClose={() => setIsNotificationsOpen(false)}
+              contentClassName={styles.notificationWidget}
+              align="end"
+            >
+              <Notifications
+                notifications={notifications}
+                readAll={readAll}
+                clearAll={clearAll}
+                onClick={onNotificationClick}
+              />
             </Dropdown>
           </div>
         )}

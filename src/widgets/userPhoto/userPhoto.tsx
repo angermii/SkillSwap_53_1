@@ -1,7 +1,7 @@
-import { Avatar } from '@/shared/ui';
-import { IconButton } from '@/shared/ui';
-import { GalleryEditIcon } from '@/shared/ui/icons';
-import styles from './userPhoto.module.css';
+import { Avatar } from '@/shared/ui'
+import { IconButton } from '@/shared/ui'
+import { GalleryEditIcon } from '@/shared/ui/icons'
+import styles from './userPhoto.module.css'
 
 export type UserPhotoProps = {
   alt: string
@@ -12,7 +12,7 @@ export type UserPhotoProps = {
 export const UserPhoto = ({ alt, src, onClick }: UserPhotoProps) => {
   return (
     <div className={styles.wrapper}>
-      <Avatar alt={alt} src={src} size={244} />
+      <Avatar alt={alt} src={src} className={styles.avatar} />
       <IconButton
         icon={<GalleryEditIcon />}
         isActive={false}

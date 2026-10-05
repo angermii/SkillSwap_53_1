@@ -9,7 +9,7 @@ export interface AvatarProps extends Omit<ImgHTMLAttributes<HTMLImageElement>, '
   size?: number
 }
 
-export function Avatar({ alt, className, height, size = 48, src, width, ...props }: AvatarProps) {
+export function Avatar({ alt, className, height, size, src, width, ...props }: AvatarProps) {
   const avatarClassName = [styles.avatar, className].filter(Boolean).join(' ')
 
   const avatarWidth = width ?? size

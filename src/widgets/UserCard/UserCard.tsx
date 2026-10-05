@@ -23,13 +23,7 @@ export const UserCard = ({
         <div className={styles.header}>
           <UserInfo name={user.name} city={user.city} age={user.age} avatarSrc={user.avatarUrl} />
 
-          {isCompact && (
-            <LikeButton
-              count={likeCount}
-              isLiked={isLiked}
-              onClick={onLikeChange}
-            />
-          )}
+          {isCompact && <LikeButton count={likeCount} isLiked={isLiked} onClick={onLikeChange} />}
         </div>
 
         {!isCompact && user.description && <p className={styles.description}>{user.description}</p>}

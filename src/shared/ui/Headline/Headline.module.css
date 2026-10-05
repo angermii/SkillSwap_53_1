@@ -18,3 +18,10 @@
   display: flex;
   align-items: center;
 }
+
+@media (width <= 768px) {
+  .title {
+    font-size: var(--font-size-h2);
+    line-height: var(--line-height-h2);
+  }
+}

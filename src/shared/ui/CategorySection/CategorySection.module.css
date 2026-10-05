@@ -1,11 +1,11 @@
-.CategoryWrapper{
-  width: 488px;
+.CategoryWrapper {
+  width: 100%;
   display: inline-flex;
   flex-direction: row;
   gap: 12px;
 }
 
-.IconWrapper{
+.IconWrapper {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,34 +14,35 @@
   height: 40px;
 }
 
-.Section{
-  width: 436px;
+.Section {
+  width: 100%;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.Category{
-  font-family: Jost, sans-serif;
+.Category {
+  font-family: var(--font-family-heading);
   font-weight: var(--font-weight-medium);
-  line-height: 28px;
+  line-height: var(--line-height-h2);
   letter-spacing: -1.1%;
   text-align: left;
 }
 
-.SubList{
+.SubList {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.SubCat{
+.SubCat {
   list-style-type: none;
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
 }
 
-.SubButton{
+.SubButton {
   width: 100%;
   background: none;
   border: none;
@@ -49,32 +50,34 @@
   cursor: pointer;
   color: var(--color-text);
   text-align: left;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .yellow {
-  background-color: #ebe5c5;
+  background-color: var(--color-tag-languages);
 }
 
 .blue {
-  background-color: #e7f2f6;
+  background-color: var(--color-tag-education);
 }
 
 .green {
-  background-color: #e9f7e7;
+  background-color: var(--color-tag-health);
 }
 
 .purple {
-  background-color: #eee7f7;
+  background-color: var(--color-tag-business);
 }
 
 .pink {
-  background-color: #f7e7f2;
+  background-color: var(--color-tag-art);
 }
 
 .peach {
-  background-color: #f7ebe5;
+  background-color: var(--color-tag-home);
 }
 
 .gray {
-  background-color: #e8ecf7;
+  background-color: var(--color-tag-plus);
 }

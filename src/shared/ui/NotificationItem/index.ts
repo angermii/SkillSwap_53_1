@@ -1,2 +1,2 @@
-export {NotificationItem} from './NotificationItem';
+export { NotificationItem } from './NotificationItem'
 export type { Notification } from './types.ts'

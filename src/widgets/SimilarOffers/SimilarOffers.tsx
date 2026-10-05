@@ -1,16 +1,37 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { ChevronRightIcon, IconButton } from '@/shared/ui'
 import { UserCard } from '../UserCard'
 import type { SimilarOffersProps } from './type'
 import styles from './SimilarOffers.module.css'
 
+const minCardWidth = 285
+const gap = 24
+
 export const SimilarOffers = ({ cards, onDetailsClick, onLikeChange }: SimilarOffersProps) => {
   const [startIndex, setStartIndex] = useState(0)
+  const [visibleCount, setVisibleCount] = useState(1)
+
+  const cardsRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const element = cardsRef.current
+    if (!element) return
+
+    const observer = new ResizeObserver(([entry]) => {
+      const width = entry.contentRect.width
+
+      const count = Math.max(1, Math.floor((width + gap) / (minCardWidth + gap)))
+      setVisibleCount(Math.min(count, cards.length))
+    })
+    observer.observe(element)
+
+    return () => observer.disconnect()
+  }, [cards.length])
 
   if (cards.length === 0) return null
 
   const visibleCards = Array.from(
-    { length: Math.min(4, cards.length) },
+    { length: visibleCount },
     (_, index) => cards[(startIndex + index) % cards.length],
   )
 
@@ -22,7 +43,13 @@ export const SimilarOffers = ({ cards, onDetailsClick, onLikeChange }: SimilarOf
     <section className={styles.similarOffers}>
       <h2>Похожие предложения</h2>
 
-      <div className={styles.cards}>
+      <div
+        ref={cardsRef}
+        className={styles.cards}
+        style={{
+          gridTemplateColumns: `repeat(${visibleCount}, minmax(0, 1fr))`,
+        }}
+      >
         {visibleCards.map(({ skillId, user, isLiked, likeCount }) => (
           <UserCard
             key={skillId}
@@ -34,7 +61,7 @@ export const SimilarOffers = ({ cards, onDetailsClick, onLikeChange }: SimilarOf
           />
         ))}
 
-        {cards.length > 4 && (
+        {cards.length > visibleCount && (
           <IconButton
             icon={<ChevronRightIcon aria-hidden="true" />}
             isActive={false}

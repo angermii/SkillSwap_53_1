@@ -1,6 +1,6 @@
 .container {
-  width: 556px;
-  height: 692px;
+  width: 100%;
+  min-height: 692px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -13,7 +13,7 @@
 .formContent {
   display: flex;
   flex-direction: column;
-  width: 436px;
+  width: 100%;
   gap: 24px;
 }
 
@@ -52,7 +52,7 @@
 }
 
 .button {
-  width: 436px;
+  width: 100%;
   font-family: var(--font-family-body);
 }
 
@@ -62,4 +62,11 @@
   font-weight: var(--font-weight-regular);
   color: var(--color-link-button);
   margin: 0;
+}
+
+@media (width <= 768px) {
+  .container {
+    padding: 60px 30px;
+    justify-content: center;
+  }
 }

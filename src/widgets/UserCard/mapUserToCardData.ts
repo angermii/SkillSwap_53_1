@@ -45,7 +45,7 @@ export const groupSkillsByAuthor = (skills: Skill[]): Map<string, Skill[]> => {
 /**
  * Собирает данные пользователя, его навыки и подкатегории
  * в формат, необходимый компоненту UserCard
-*/
+ */
 export const mapUserToCardData = ({
   user,
   skills,

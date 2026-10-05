@@ -49,3 +49,31 @@
 .ModalButton {
   width: 100%;
 }
+
+@media (width <= 1024px) {
+  .page {
+    padding: 16px 0 30px;
+    grid-template-columns: 1fr 2fr;
+  }
+}
+
+@media (width <= 768px) {
+  .page {
+    padding: 16px 6px 30px;
+    gap: 12px;
+    grid-template-columns: 1fr;
+  }
+
+  .status {
+    padding: 24px 18px 30px;
+  }
+
+  .registrationModal {
+    padding: 60px 30px;
+  }
+
+  .activeFilters {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+}

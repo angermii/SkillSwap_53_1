@@ -1,4 +1,11 @@
-export type SkillCategory = 'business' | 'art' | 'languages' | 'education' | 'home' | 'health' | 'plus'
+export type SkillCategory =
+  | 'business'
+  | 'art'
+  | 'languages'
+  | 'education'
+  | 'home'
+  | 'health'
+  | 'plus'
 
 export type SkillTag = {
   id: string

@@ -4,7 +4,7 @@ import type { OnboardingProps } from './type'
 import styles from './Onboarding.module.css'
 
 export const Onboarding = ({
-  illustration,
+  illustration: Illustration,
   title,
   description,
   className,
@@ -13,7 +13,7 @@ export const Onboarding = ({
   return (
     <div {...props} className={clsx(styles.onboarding, className)}>
       <div className={styles.illustration} aria-hidden="true">
-        {illustration}
+        <Illustration />
       </div>
 
       <div className={styles.content}>

@@ -1,1 +1,1 @@
-export { HeaderUser } from './HeaderUser';
+export { HeaderUser } from './HeaderUser'

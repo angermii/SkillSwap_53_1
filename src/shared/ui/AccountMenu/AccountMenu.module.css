@@ -11,7 +11,7 @@
   align-items: center;
   gap: 9px;
   width: 100%;
-  padding: 13px 11px 10px ;
+  padding: 13px 11px 10px;
   border: none;
   border-radius: var(--radius-md);
   background: transparent;
@@ -23,7 +23,7 @@
   text-align: left;
   text-decoration: none;
   cursor: pointer;
-  transition: background-color 150ms ease;
+  transition: background-color 0.2s ease;
 }
 
 .item:hover {
@@ -40,4 +40,11 @@
   height: 24px;
   flex-shrink: 0;
   color: var(--color-text);
+}
+
+@media (width <= 768px) {
+  .menu {
+    min-width: 100%;
+    padding: 5px 14px 14px;
+  }
 }

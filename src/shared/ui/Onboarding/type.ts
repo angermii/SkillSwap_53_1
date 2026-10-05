@@ -1,7 +1,7 @@
-import type { HTMLAttributes, ReactElement } from 'react'
+import type { ComponentType, HTMLAttributes, SVGProps } from 'react'
 
 export type OnboardingProps = Omit<HTMLAttributes<HTMLDivElement>, 'title'> & {
-  illustration: ReactElement
+  illustration: ComponentType<SVGProps<SVGSVGElement>>
   title: string
   description: string
 }

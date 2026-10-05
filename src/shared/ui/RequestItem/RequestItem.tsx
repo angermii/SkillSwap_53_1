@@ -15,13 +15,9 @@ export const RequestItem = ({
 }: RequestItemProps) => {
   return (
     <div className={Styles.Wrapper}>
-      <button
-        type='button' 
-        className={Styles.Notification}
-        onClick={() => onClick?.(id)}
-      >
+      <button type="button" className={Styles.Notification} onClick={() => onClick?.(id)}>
         <div className={Styles.Item}>
-          <BulbIcon size={40} />
+          <BulbIcon size={40} className={Styles.icon} />
 
           <div className={Styles.Text}>
             <h4>{title}</h4>
@@ -34,19 +30,13 @@ export const RequestItem = ({
 
       <div className={Styles.Buttons}>
         {onAccept && (
-          <Button
-            onClick={() => onAccept?.(id)}
-            className={Styles.ButtonAccept}
-          >
+          <Button onClick={() => onAccept?.(id)} className={Styles.ButtonAccept}>
             Принять
           </Button>
         )}
 
         {onReject && (
-          <Button
-            onClick={() => onReject?.(id)}
-            className={Styles.ButtonReject}
-          >
+          <Button onClick={() => onReject?.(id)} className={Styles.ButtonReject}>
             Отклонить
           </Button>
         )}

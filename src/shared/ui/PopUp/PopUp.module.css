@@ -1,4 +1,4 @@
-.Wrapper{
+.Wrapper {
   display: inline-flex;
   min-height: 72px;
   width: 340px;
@@ -8,13 +8,13 @@
   position: relative;
 }
 
-.Close{
+.Close {
   position: absolute;
-  top: var( --space-xs);
-  right: var( --space-xs);
+  top: var(--space-xs);
+  right: var(--space-xs);
 }
 
-.Info{
+.Info {
   width: 282px;
   display: flex;
   flex-direction: row;
@@ -33,11 +33,11 @@
   line-height: var(--line-height-h3);
 }
 
-.Button{
+.Button {
   position: absolute;
   background-color: var(--color-card-input);
-  right: var( --space-sm);
-  bottom: var( --space-sm);
+  right: var(--space-sm);
+  bottom: var(--space-sm);
   border-radius: 20px;
   padding: 8px 12px;
   display: flex;
@@ -49,6 +49,6 @@
     font-size: var(--font-size-caption);
     line-height: var(--line-height-caption);
     letter-spacing: 2%;
-    color: var( --color-text);
+    color: var(--color-text);
   }
 }

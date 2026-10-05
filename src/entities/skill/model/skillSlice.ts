@@ -10,7 +10,12 @@ import type { Skill, SkillCategory, SkillSubcategory } from './types'
 import { getRegisteredUsers } from '@/features/auth'
 import { getAuthUserSkills } from '@/shared/lib/authUserMapper'
 
-export type SkillRequestKey = 'skills' | 'selectedSkill' | 'categories' | 'subcategories' | 'userSkills'
+export type SkillRequestKey =
+  | 'skills'
+  | 'selectedSkill'
+  | 'categories'
+  | 'subcategories'
+  | 'userSkills'
 
 const getRegisteredSkills = (): Skill[] =>
   getRegisteredUsers().flatMap(({ profile }) => getAuthUserSkills(profile))

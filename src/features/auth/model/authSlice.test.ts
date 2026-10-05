@@ -80,14 +80,10 @@ describe('authSlice', () => {
       token: 'mock_token_1',
     })
 
-    const storedAuthUser = JSON.parse(
-      localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_USER)!,
-    )
+    const storedAuthUser = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_USER)!)
     expect(storedAuthUser.skill).toEqual(mockSkill)
 
-    const registeredUsers = JSON.parse(
-      localStorage.getItem(LOCAL_STORAGE_KEYS.USERS)!,
-    )
+    const registeredUsers = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.USERS)!)
     expect(registeredUsers).toEqual([{ profile, password: 'password' }])
 
     const restoredStore = await createTestStore()

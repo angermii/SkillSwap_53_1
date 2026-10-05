@@ -1,1 +1,1 @@
-export { SocialLoginButtons } from './SocialLoginButtons';
+export { SocialLoginButtons } from './SocialLoginButtons'

@@ -20,7 +20,7 @@
 
 .compact,
 .small {
-  width: 556px;
+  width: min(556px, calc(100vw - 36px));
   padding: 80px 60px;
 }
 
@@ -34,8 +34,8 @@
 
 .large {
   align-items: stretch;
-  width: 1024px;
-  height: 532px;
+  width: min(1024px, calc(100vw - 100px));
+  max-height: calc(100vh - 100px);
   padding: 44px 60px 72px;
 }
 
@@ -69,6 +69,7 @@
 
 .content {
   width: 100%;
+  overflow-y: auto;
 }
 
 .description {

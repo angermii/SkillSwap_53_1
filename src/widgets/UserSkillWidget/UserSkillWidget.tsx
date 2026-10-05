@@ -65,7 +65,11 @@ export const UserSkillWidget = ({
         <SkillInfo title={skill.title} subtitle={skill.subtitle} description={skill.description}>
           {actions}
         </SkillInfo>
-        <GalleryCarousel images={gallery.images} maxThumbnails={gallery.maxThumbnails} />
+        <GalleryCarousel
+          images={gallery.images}
+          maxThumbnails={gallery.maxThumbnails}
+          className={styles.gallery}
+        />
       </div>
     </div>
   )

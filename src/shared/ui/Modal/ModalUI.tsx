@@ -39,9 +39,7 @@ export const ModalUI = memo(
             {title}
           </h2>
 
-          {description && (
-            <p className={styles.description}>{description}</p>
-          )}
+          {description && <p className={styles.description}>{description}</p>}
 
           <div className={styles.content}>{children}</div>
         </div>

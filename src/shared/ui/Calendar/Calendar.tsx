@@ -4,6 +4,7 @@ import clsx from 'clsx'
 
 import type { CalendarProps } from './type'
 import styles from './Calendar.module.css'
+import { useEffect, useState } from 'react'
 
 const isValidDate = (date?: Date): date is Date => !!date && !Number.isNaN(date.getTime())
 
@@ -17,21 +18,29 @@ export const Calendar = ({
 }: CalendarProps) => {
   const safeSelected = isValidDate(selected) ? selected : undefined
   const safeDefaultMonth = isValidDate(defaultMonth) ? defaultMonth : (safeSelected ?? new Date())
+
+  const [month, setMonth] = useState(safeDefaultMonth)
+  useEffect(() => {
+    if (safeSelected) setMonth(safeSelected)
+  }, [safeSelected])
+
   return (
     <DayPicker
-   mode="single"
-   selected={safeSelected}
-   onSelect={onSelect}
-   defaultMonth={safeDefaultMonth}
-   startMonth={new Date(fromYear, 0)}
-   endMonth={new Date(toYear, 11)}
-   locale={ru}
-   weekStartsOn={1}
-   captionLayout="dropdown"
-   hideNavigation
-   showOutsideDays
-   fixedWeeks
-   className={clsx(styles.root, className)}
+      mode="single"
+      selected={safeSelected}
+      onSelect={onSelect}
+      month={month}
+      onMonthChange={setMonth}
+      defaultMonth={safeDefaultMonth}
+      startMonth={new Date(fromYear, 0)}
+      endMonth={new Date(toYear, 11)}
+      locale={ru}
+      weekStartsOn={1}
+      captionLayout="dropdown"
+      hideNavigation
+      showOutsideDays
+      fixedWeeks
+      className={clsx(styles.root, className)}
       classNames={{
         months: styles.months,
         month: styles.month,

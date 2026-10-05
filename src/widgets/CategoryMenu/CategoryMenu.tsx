@@ -6,7 +6,7 @@ export interface CategoryMenuProps {
   onClick?: () => void
 }
 
-export const CategoryMenu = ({sections, onClick}: CategoryMenuProps) => {
+export const CategoryMenu = ({ sections, onClick }: CategoryMenuProps) => {
   return (
     <div className={Styles.Wrapper}>
       {sections.map((section, index) => (

@@ -96,6 +96,24 @@ export const MainLayout = () => {
     [categories, subcategories],
   )
 
+  // Темная тема
+
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    return (localStorage.getItem('theme') as 'light' | 'dark') || 'light'
+  })
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme)
+    localStorage.setItem('theme', theme)
+  }, [theme])
+
+  const toggleTheme = () => {
+    setTheme((prevTheme) => {
+      const newTheme = prevTheme === 'light' ? 'dark' : 'light'
+      return newTheme
+    })
+  }
+
   return (
     <>
       <Header
@@ -110,7 +128,7 @@ export const MainLayout = () => {
         onNotificationClick={handleNotificationClick}
         onLoginClick={() => navigate(ROUTES.LOGIN, { state: { from: location } })}
         onRegisterClick={() => navigate(ROUTES.REGISTER, { state: { from: location } })}
-        onThemeClick={() => {}}
+        onThemeClick={toggleTheme}
         onFavoritesClick={() => navigate(ROUTES.FAVORITES)}
         onLogout={handleLogout}
       />

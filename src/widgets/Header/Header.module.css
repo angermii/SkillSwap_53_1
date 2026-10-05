@@ -40,6 +40,7 @@
 .search {
   flex: 1;
   min-width: 0;
+  overflow: hidden;
 }
 
 .actions {
@@ -63,13 +64,13 @@
   position: relative;
   display: flex;
   align-items: center;
-  gap: 24px;
 }
 
 .icons {
   display: flex;
   align-items: center;
   gap: 20px;
+  margin-right: 24px;
 }
 
 .categoryButton {
@@ -88,6 +89,11 @@
   border: none;
   background: transparent;
   cursor: pointer;
+  color: var(--color-text);
+}
+
+.icon {
+  color: var(--color-text);
 }
 
 .user {
@@ -102,7 +108,14 @@
 }
 
 .dropdownHeader {
-  transform: translateX(-293px) translateY(22px);
+  position: absolute;
+  top: 58px;
+  left: -293px;
+  width: min(90vw, 1136px);
+  max-width: calc(100vw - 72px);
+  box-sizing: border-box;
+
+  /* transform: translateX(-293px) translateY(22px); */
 }
 
 .dropdownAccount {
@@ -110,5 +123,89 @@
 }
 
 .notificationWidget {
-  transform: translateX(175px) translateY(32px);
+  transform: translateY(43px);
+}
+
+.mobileMenuItem {
+  display: none;
+}
+
+@media (width <=1024px) {
+  .header {
+    gap: 24px;
+  }
+
+  .left {
+    gap: 24px;
+  }
+
+  .navigation {
+    gap: 16px;
+  }
+
+  .loggedOutActions {
+    gap: 24px;
+  }
+
+  .icons {
+    gap: 12px;
+    margin-right: 16px;
+  }
+
+  .dropdownHeader {
+    width: calc(100vw - 48px);
+    left: -269px;
+  }
+}
+
+@media (width <= 768px) {
+  .header {
+    gap: 16px;
+    height: 84px;
+    padding: 24px 24px 0;
+  }
+
+  .left {
+    gap: 16px;
+  }
+
+  .icpons {
+    gap: 10px;
+  }
+
+  .link {
+    display: none;
+  }
+
+  .icon {
+    display: none;
+  }
+
+  .icons {
+    display: none;
+  }
+
+  .mobileMenu {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 14px 0 0;
+  }
+
+  .mobileMenuItem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    color: var(--color-text);
+    cursor: pointer;
+  }
+
+  .notificationWidget {
+    transform: translateY(44px);
+  }
+
+  .dropdownHeader {
+    left: -44px;
+  }
 }

@@ -72,10 +72,7 @@ describe('api/skills', () => {
   describe('fetchSkillByUserId', () => {
     it('возвращает только навыки указанного автора', async () => {
       const own = makeSkill({ id: 'skill-1', authorId: 'user-1' })
-      vi.stubGlobal(
-        'fetch',
-        mockFetchOk([own, makeSkill({ id: 'skill-2', authorId: 'user-2' })]),
-      )
+      vi.stubGlobal('fetch', mockFetchOk([own, makeSkill({ id: 'skill-2', authorId: 'user-2' })]))
 
       await expect(fetchSkillByUserId('user-1')).resolves.toEqual([own])
     })

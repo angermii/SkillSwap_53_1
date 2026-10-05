@@ -2,7 +2,12 @@ import Styles from './PopUp.module.css'
 import { BulbIcon, Button, CloseIcon } from '@/shared/ui'
 import { PopUpProps } from '@/shared/ui/PopUp/types.ts'
 
-export const PopUp = ({ userName, type = 'withoutButton', onClickClose, onClickButton }: PopUpProps) => {
+export const PopUp = ({
+  userName,
+  type = 'withoutButton',
+  onClickClose,
+  onClickButton,
+}: PopUpProps) => {
   return (
     <div className={Styles.Wrapper}>
       <button onClick={onClickClose} className={Styles.Close}>

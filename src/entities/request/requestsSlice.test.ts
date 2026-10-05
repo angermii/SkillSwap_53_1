@@ -3,7 +3,6 @@ import { describe, expect, it, beforeEach, vi } from 'vitest'
 
 import { LOCAL_STORAGE_KEYS } from '@/shared/lib/constants'
 
-
 const createTestStore = async () => {
   vi.resetModules()
 
@@ -16,12 +15,10 @@ const createTestStore = async () => {
   })
 }
 
-
 describe('requestsSlice', () => {
   beforeEach(() => {
     localStorage.clear()
   })
-
 
   it('has empty initial state when localStorage is empty', async () => {
     const store = await createTestStore()
@@ -30,7 +27,6 @@ describe('requestsSlice', () => {
       requests: [],
     })
   })
-
 
   it('restores requests from localStorage on init', async () => {
     const savedRequests = [
@@ -45,29 +41,17 @@ describe('requestsSlice', () => {
       },
     ]
 
-
-    localStorage.setItem(
-      LOCAL_STORAGE_KEYS.REQUESTS,
-      JSON.stringify(savedRequests),
-    )
-
+    localStorage.setItem(LOCAL_STORAGE_KEYS.REQUESTS, JSON.stringify(savedRequests))
 
     const store = await createTestStore()
 
-
-    expect(store.getState().requests.requests)
-      .toEqual(savedRequests)
+    expect(store.getState().requests.requests).toEqual(savedRequests)
   })
 
-
   it('createRequest adds new request and saves to localStorage', async () => {
-    const {
-      createRequest,
-    } = await import('./requestsSlice')
-
+    const { createRequest } = await import('./requestsSlice')
 
     const store = await createTestStore()
-
 
     store.dispatch(
       createRequest({
@@ -78,12 +62,9 @@ describe('requestsSlice', () => {
       }),
     )
 
-
     const requests = store.getState().requests.requests
 
-
     expect(requests).toHaveLength(1)
-
 
     expect(requests[0]).toMatchObject({
       skillId: 'skill-1',
@@ -95,20 +76,13 @@ describe('requestsSlice', () => {
       isNotificationDismissed: false,
     })
 
-
-    const stored = JSON.parse(
-      localStorage.getItem(LOCAL_STORAGE_KEYS.REQUESTS)!,
-    )
-
+    const stored = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.REQUESTS)!)
 
     expect(stored).toEqual(requests)
   })
 
   it('readAllNotifications marks only received notifications as read', async () => {
-    const {
-      createRequest,
-      readAllNotifications,
-    } = await import('./requestsSlice')
+    const { createRequest, readAllNotifications } = await import('./requestsSlice')
 
     const store = await createTestStore()
 
@@ -141,10 +115,7 @@ describe('requestsSlice', () => {
   })
 
   it('readNotification marks only selected notification as read', async () => {
-    const {
-      createRequest,
-      readNotification,
-    } = await import('./requestsSlice')
+    const { createRequest, readNotification } = await import('./requestsSlice')
 
     const store = await createTestStore()
 
@@ -178,12 +149,8 @@ describe('requestsSlice', () => {
   })
 
   it('clearReadNotifications hides only read notifications', async () => {
-    const {
-      createRequest,
-      readNotification,
-      clearReadNotifications,
-      selectNotificationRequests,
-    } = await import('./requestsSlice')
+    const { createRequest, readNotification, clearReadNotifications, selectNotificationRequests } =
+      await import('./requestsSlice')
 
     const store = await createTestStore()
 
@@ -225,14 +192,9 @@ describe('requestsSlice', () => {
   })
 
   it('acceptRequest changes request status to accepted', async () => {
-    const {
-      createRequest,
-      acceptRequest,
-    } = await import('./requestsSlice')
-
+    const { createRequest, acceptRequest } = await import('./requestsSlice')
 
     const store = await createTestStore()
-
 
     store.dispatch(
       createRequest({
@@ -243,37 +205,21 @@ describe('requestsSlice', () => {
       }),
     )
 
+    const requestId = store.getState().requests.requests[0].id
 
-    const requestId =
-      store.getState().requests.requests[0].id
+    store.dispatch(acceptRequest(requestId))
 
+    const request = store.getState().requests.requests[0]
 
-    store.dispatch(
-      acceptRequest(requestId),
-    )
+    expect(request.status).toBe('accepted')
 
-
-    const request =
-      store.getState().requests.requests[0]
-
-
-    expect(request.status)
-      .toBe('accepted')
-
-    expect(request.updatedAt)
-      .toBeTruthy()
+    expect(request.updatedAt).toBeTruthy()
   })
 
-
   it('rejectRequest changes request status to rejected', async () => {
-    const {
-      createRequest,
-      rejectRequest,
-    } = await import('./requestsSlice')
-
+    const { createRequest, rejectRequest } = await import('./requestsSlice')
 
     const store = await createTestStore()
-
 
     store.dispatch(
       createRequest({
@@ -284,37 +230,21 @@ describe('requestsSlice', () => {
       }),
     )
 
+    const requestId = store.getState().requests.requests[0].id
 
-    const requestId =
-      store.getState().requests.requests[0].id
+    store.dispatch(rejectRequest(requestId))
 
+    const request = store.getState().requests.requests[0]
 
-    store.dispatch(
-      rejectRequest(requestId),
-    )
+    expect(request.status).toBe('rejected')
 
-
-    const request =
-      store.getState().requests.requests[0]
-
-
-    expect(request.status)
-      .toBe('rejected')
-
-    expect(request.updatedAt)
-      .toBeTruthy()
+    expect(request.updatedAt).toBeTruthy()
   })
 
-
   it('cancelRequest removes request and updates localStorage', async () => {
-    const {
-      createRequest,
-      cancelRequest,
-    } = await import('./requestsSlice')
-
+    const { createRequest, cancelRequest } = await import('./requestsSlice')
 
     const store = await createTestStore()
-
 
     store.dispatch(
       createRequest({
@@ -325,42 +255,21 @@ describe('requestsSlice', () => {
       }),
     )
 
+    const requestId = store.getState().requests.requests[0].id
 
-    const requestId =
-      store.getState().requests.requests[0].id
+    store.dispatch(cancelRequest(requestId))
 
+    expect(store.getState().requests.requests).toHaveLength(0)
 
-    store.dispatch(
-      cancelRequest(requestId),
-    )
+    const stored = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEYS.REQUESTS)!)
 
-
-    expect(
-      store.getState().requests.requests,
-    )
-      .toHaveLength(0)
-
-
-    const stored = JSON.parse(
-      localStorage.getItem(LOCAL_STORAGE_KEYS.REQUESTS)!,
-    )
-
-
-    expect(stored)
-      .toEqual([])
+    expect(stored).toEqual([])
   })
 
-
   it('selectPendingRequests returns only pending requests', async () => {
-    const {
-      createRequest,
-      acceptRequest,
-      selectPendingRequests,
-    } = await import('./requestsSlice')
-
+    const { createRequest, acceptRequest, selectPendingRequests } = await import('./requestsSlice')
 
     const store = await createTestStore()
-
 
     store.dispatch(
       createRequest({
@@ -371,24 +280,12 @@ describe('requestsSlice', () => {
       }),
     )
 
+    const id = store.getState().requests.requests[0].id
 
-    const id =
-      store.getState().requests.requests[0].id
+    store.dispatch(acceptRequest(id))
 
+    const result = selectPendingRequests(store.getState())
 
-    store.dispatch(
-      acceptRequest(id),
-    )
-
-
-    const result =
-      selectPendingRequests(
-        store.getState(),
-      )
-
-
-    expect(result)
-      .toHaveLength(0)
+    expect(result).toHaveLength(0)
   })
-
 })

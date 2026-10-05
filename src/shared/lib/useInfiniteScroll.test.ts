@@ -26,10 +26,7 @@ const triggerIntersection = (isIntersecting: boolean) => {
   const callback = observerCallbacks.at(-1)
 
   act(() => {
-    callback?.(
-      [{ isIntersecting } as IntersectionObserverEntry],
-      {} as IntersectionObserver,
-    )
+    callback?.([{ isIntersecting } as IntersectionObserverEntry], {} as IntersectionObserver)
   })
 }
 

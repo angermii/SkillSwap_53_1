@@ -2,7 +2,11 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import type { Location } from 'react-router-dom'
 import { useEffect, useMemo, useState } from 'react'
 
-import { LightBulbIllustration } from '@/shared/illustrations'
+import {
+  LightBulbIllustration,
+  SchoolBoardIllustration,
+  UserInfoIllustration,
+} from '@/shared/illustrations'
 import { Onboarding, ModalUI, Button, StepIndicator, EditIcon } from '@/shared/ui'
 import { RegistrationForm, UserSkillWidget, AuthForm } from '@/widgets'
 import type { RegistrationFormData, RegistrationFormErrors } from '@/widgets'
@@ -18,7 +22,16 @@ import { selectSkillCategories, selectSkillSubcategories } from '@/entities/skil
 import { fetchUsers } from '@/entities/user/model/userSlice'
 import { selectCityOptions } from '@/entities/user/model/selectors'
 
-import { required, selectRequired } from '@/shared/lib/validators'
+import {
+  dateOfBirth,
+  required,
+  selectRequired,
+  minLength,
+  maxLength,
+  alphabetRegex,
+} from '@/shared/lib/validators'
+
+import { formatDateToString } from '@/shared/lib/helpers'
 
 import type { Skill } from '@/shared/types'
 
@@ -183,7 +196,7 @@ export default function LoginPage() {
     const hasStateKeys = Object.keys(state).length > 0
     navigate(returnPath, {
       replace: true,
-      state: hasStateKeys ? state : undefined
+      state: hasStateKeys ? state : undefined,
     })
   }
 
@@ -200,7 +213,6 @@ export default function LoginPage() {
   }
 
   const handleRegisterClick = () => {
-  
     navigate(ROUTES.REGISTER, { state: location.state })
 
     setRegistrationStep(1)
@@ -305,8 +317,22 @@ export default function LoginPage() {
     const errors: RegistrationFormErrors = {}
 
     if (registrationStep === 2) {
-      const nameError = required(registrationData.name)
-      const birthDateError = registrationData.birthDate ? null : 'Поле обязательно для заполнения'
+      const nameRequiredError = required(registrationData.name)
+      const nameMinLengthError = minLength(2)(registrationData.name)
+        ? `Имя не может быть короче 2 символов`
+        : null
+      const nameMaxLengthError = maxLength(15)(registrationData.name)
+        ? `Имя не может быть длиннее 15 символов`
+        : null
+      const nameformatError = alphabetRegex(registrationData.name)
+        ? `Имя может содержать только буквы`
+        : null
+      const nameError =
+        nameRequiredError || nameMinLengthError || nameMaxLengthError || nameformatError
+
+      const birthDateError = registrationData.birthDate
+        ? dateOfBirth(formatDateToString(registrationData.birthDate))
+        : 'Поле обязательно для заполнения'
       const genderError = selectRequired(registrationData.gender)
       const cityError = selectRequired(registrationData.city)
       const learningSubcategoryError =
@@ -334,10 +360,36 @@ export default function LoginPage() {
     }
 
     if (registrationStep === 3) {
-      const skillNameError = required(registrationData.skillName)
+      const skillNameRequeredError = required(registrationData.skillName)
+      const skillNameRegexError = alphabetRegex(registrationData.skillName)
+        ? 'Название навыка может содержать только буквы'
+        : null
+      const skillNameMinLengthError = minLength(2)(registrationData.skillName)
+        ? `Название навыка не может быть короче 2 символов`
+        : null
+      const skillNameMaxLengthError = maxLength(30)(registrationData.skillName)
+        ? `Название навыка не может быть длиннее 30 символов`
+        : null
+      const skillNameError =
+        skillNameRequeredError ||
+        skillNameRegexError ||
+        skillNameMaxLengthError ||
+        skillNameMinLengthError
+
       const skillCategoryError = selectRequired(registrationData.skillCategory)
       const skillSubcategoryError = selectRequired(registrationData.skillSubcategory)
-      const skillDescriptionError = required(registrationData.skillDescription)
+
+      const skillDescriptionRequiredError = required(registrationData.skillDescription)
+      const skillDescriptionMinLengthError = minLength(10)(registrationData.skillDescription)
+        ? `Описание навыка не может быть короче 10 символов`
+        : null
+      const skillDescriptionMaxLengthError = maxLength(200)(registrationData.skillDescription)
+        ? `Описание навыка не может быть длиннее 200 символов`
+        : null
+      const skillDescriptionError =
+        skillDescriptionRequiredError ||
+        skillDescriptionMinLengthError ||
+        skillDescriptionMaxLengthError
 
       if (skillNameError) {
         errors.skillName = skillNameError
@@ -465,7 +517,7 @@ export default function LoginPage() {
     const hasStateKeys = Object.keys(state).length > 0
     navigate(returnPath, {
       replace: true,
-      state: hasStateKeys ? state : undefined
+      state: hasStateKeys ? state : undefined,
     })
   }
 
@@ -497,6 +549,56 @@ export default function LoginPage() {
         : subcategoryTitle || categoryTitle || 'Категория навыка',
     description: registrationData.skillDescription || 'Описание навыка пока не заполнено',
   }
+
+  // Определяем контент для Onboarding
+  const onboardingIllustration = useMemo(() => {
+    if (!isRegister) return LightBulbIllustration
+    switch (registrationStep) {
+      case 1:
+        return LightBulbIllustration
+      case 2:
+        return UserInfoIllustration
+
+      case 3:
+        return SchoolBoardIllustration
+      default:
+        return LightBulbIllustration
+    }
+  }, [isRegister, registrationStep])
+
+  const onboardingTitle = useMemo(() => {
+    if (isRegister) {
+      switch (registrationStep) {
+        case 1:
+          return 'Добро пожаловать в SkillSwap!'
+        case 2:
+          return 'Расскажите немного о себе'
+        case 3:
+          return 'Укажите чем вы готовы поделиться'
+        default:
+          return 'Добро пожаловать в SkillSwap!'
+      }
+    } else {
+      return 'С возвращением в SkillSwap!'
+    }
+  }, [isRegister, registrationStep])
+
+  const onboardingDescription = useMemo(() => {
+    if (isRegister) {
+      switch (registrationStep) {
+        case 1:
+          return 'Присоединяйтесь к SkillSwap и обменивайтесь знаниями и навыками с другими людьми'
+        case 2:
+          return 'Это поможет другим людям лучше вас узнать, чтобы выбрать для обмена'
+        case 3:
+          return 'Так другие люди смогут увидеть ваши предложения и прелодить вам обмен!'
+        default:
+          return 'Присоединяйтесь к SkillSwap и обменивайтесь знаниями и навыками с другими людьми'
+      }
+    } else {
+      return 'Обменивайтесь знаниями и навыками с другими людьми'
+    }
+  }, [isRegister, registrationStep])
 
   return (
     <main className={styles.page}>
@@ -544,13 +646,10 @@ export default function LoginPage() {
         )}
 
         <Onboarding
-          illustration={<LightBulbIllustration />}
-          title={isRegister ? 'Добро пожаловать в SkillSwap!' : 'С возвращением в SkillSwap!'}
-          description={
-            isRegister
-              ? 'Присоединяйтесь к SkillSwap и обменивайтесь знаниями и навыками с другими людьми'
-              : 'Обменивайтесь знаниями и навыками с другими людьми'
-          }
+          illustration={onboardingIllustration}
+          title={onboardingTitle}
+          description={onboardingDescription}
+          className={styles.onboarding}
         />
       </div>
 

@@ -2,7 +2,7 @@ import Styles from './Error.module.css'
 import { ReactNode } from 'react'
 
 export interface ErrorProps {
-  errorImg?: string
+  errorImg?: React.ComponentType<React.SVGProps<SVGSVGElement>>
   title?: string
   description?: string
   children?: ReactNode
@@ -10,12 +10,18 @@ export interface ErrorProps {
   imageHeight?: number
 }
 
-export const Error = ({ errorImg, title, description, children, imageHeight, imageWidth
+export const Error = ({
+  errorImg: SvgComponent,
+  title,
+  description,
+  children,
+  imageHeight,
+  imageWidth,
 }: ErrorProps) => {
   return (
     <div className={Styles.errorWrapper}>
       <div className={Styles.imgWrapper}>
-        <img src={errorImg} alt="" height={imageHeight} width={imageWidth} />
+        {SvgComponent && <SvgComponent width={imageWidth} height={imageHeight} />}{' '}
       </div>
       <div className={Styles.info}>
         <div className={Styles.textWrapper}>
